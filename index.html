@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>InstallScout — silent switch finder for Intune</title>
+  <meta name="description" content="InstallScout is a silent switch finder for Windows installers. It reads an EXE or MSI without running it, builds the silent command, and can package a Win32 app for Microsoft Intune.">
+  <link rel="canonical" href="https://mthorngaard.github.io/InstallScout-releases/">
+  <meta property="og:title" content="InstallScout — silent switch finder for Intune">
+  <meta property="og:description" content="Find silent install switches for a Windows installer, then build a PSADT Win32 package for Microsoft Intune.">
+  <meta property="og:url" content="https://mthorngaard.github.io/InstallScout-releases/">
+  <meta property="og:type" content="website">
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: #0b1f33;
+      color: #e8eef5;
+      line-height: 1.5;
+    }
+    main { max-width: 42rem; margin: 0 auto; padding: 3rem 1.25rem 4rem; }
+    h1 { font-size: 1.8rem; line-height: 1.25; margin: 0.75rem 0 1rem; }
+    h2 { font-size: 1.1rem; margin: 2rem 0 0.5rem; }
+    p { margin: 0.6rem 0; }
+    a { color: #7eb6ff; }
+    .mark { display: block; }
+    .actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 1.25rem 0; }
+    .actions a {
+      background: #2f80ed;
+      color: #fff;
+      text-decoration: none;
+      padding: 0.65rem 0.9rem;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+    .actions a.secondary { background: transparent; border: 1px solid #3d5a78; }
+    ul { padding-left: 1.2rem; }
+    li { margin: 0.35rem 0; }
+  </style>
+</head>
+<body>
+  <main>
+    <svg class="mark" width="72" height="72" viewBox="0 0 72 72" aria-hidden="true">
+      <circle cx="36" cy="36" r="28" fill="none" stroke="#2f80ed" stroke-width="6"/>
+      <circle cx="36" cy="36" r="3" fill="#2f80ed"/>
+      <path d="M36 36 L48 24" stroke="#7eb6ff" stroke-width="3" stroke-linecap="round"/>
+      <path d="M36 36 L28 46" stroke="#d6e4f5" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+    <h1>Silent switch finder for Intune</h1>
+    <p>InstallScout reads a Windows installer without running it. It finds the silent install switches for EXE, MSI, COM, and MSIX files and builds the silent command.</p>
+    <p>From that command it can build a PSAppDeployToolkit <code>.intunewin</code> package and upload the Win32 app to Microsoft Intune, with detection, a logo, and optional supersedence.</p>
+    <div class="actions">
+      <a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.45/InstallScoutPortable.exe">Download portable exe</a>
+      <a class="secondary" href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.45/InstallScout.msi">Download MSI</a>
+    </div>
+    <p>Version 1.8.45 for Windows 10 and 11. The portable exe runs without installation. The MSI installs to Program Files. The program does not run the installer. The interface is in English, and Dansk is in the top-right corner.</p>
+    <h2>What you get</h2>
+    <ul>
+      <li>A silent switch finder for the installer engine, including Inno, NSIS, MSI, InstallShield, WiX Burn, and others.</li>
+      <li>A check against WinGet and Chocolatey. The installer file is not uploaded.</li>
+      <li>A local Intune package, then an upload with install, uninstall, and detection.</li>
+    </ul>
+    <h2>Documentation</h2>
+    <p><a href="https://github.com/mthorngaard/InstallScout-releases/blob/main/docs/quickstart-en.md">Quick start</a> · <a href="https://github.com/mthorngaard/InstallScout-releases/blob/main/docs/guide.md">Guide</a> · <a href="https://github.com/mthorngaard/InstallScout-releases/blob/main/docs/reference-en.md">Technical reference</a></p>
+    <p>Dansk: <a href="https://github.com/mthorngaard/InstallScout-releases/blob/main/docs/quickstart.md">hurtig start</a>, <a href="https://github.com/mthorngaard/InstallScout-releases/blob/main/docs/vejledning.md">vejledning</a>, <a href="https://github.com/mthorngaard/InstallScout-releases/blob/main/docs/reference.md">reference</a>.</p>
+  </main>
+</body>
+</html>

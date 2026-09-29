@@ -1,5 +1,7 @@
 # InstallScout
 
+Public page: [mthorngaard.github.io/InstallScout-releases](https://mthorngaard.github.io/InstallScout-releases/)
+
 InstallScout is a silent switch finder for Windows installers. It reads an EXE, MSI, COM, or MSIX file without running it, finds the silent install switches, and builds the silent command. From there it can make a PSAppDeployToolkit (PSADT) `.intunewin` package and upload the Win32 app to Microsoft Intune with detection, a logo, and optional supersedence.
 
 Use it to find the silent switches first, then package that command for Intune as a system or user install. It runs on Windows 10 and Windows 11. The interface is in English. Switch to Dansk in the top-right corner.
