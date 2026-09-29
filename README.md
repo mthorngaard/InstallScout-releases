@@ -29,12 +29,6 @@ Upload to Intune also needs:
 - One-time admin consent in the tenant for the Graph permission `DeviceManagementApps.ReadWrite.All`. Sign-in uses the public Microsoft Graph PowerShell client unless you set another Client ID. InstallScout does not create an app registration.
 - Conditional Access can still block that sign-in.
 
-## Graph sign-in
-
-Sign-in opens in the browser with PKCE. Device code is not used.
-
-Windows DPAPI encrypts the access token and the refresh token for the current Windows user. The saved session is bound to the tenant and Client ID you selected. A different tenant or client does not reuse that session. A plaintext token file from an older version is deleted and cannot be used. Sign-out deletes the saved file.
-
 ## Documentation
 
 **Quick start:** [English](docs/quickstart-en.md) · [Dansk](docs/quickstart.md)  
