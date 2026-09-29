@@ -36,7 +36,7 @@ Click **Upload to Intune…**.
 5. Optionally pick older apps under supersedence. Nothing is selected beforehand. **Update** installs over the old app. **Replace** uninstalls it first.
 6. Click **Upload**.
 
-Requirement: an Entra user with `DeviceManagementApps.ReadWrite.All`. InstallScout does not create its own app.
+Requirement: an account that can create Win32 apps (**Intune Administrator**, or the Intune role **Application Manager**) and admin consent for `DeviceManagementApps.ReadWrite.All`. InstallScout does not create its own app.
 
 ## The same run from the command line
 

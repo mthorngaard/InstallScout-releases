@@ -417,8 +417,11 @@ Sign-in opens in the browser with PKCE. Device code is not used.
 
 Windows DPAPI encrypts the access token and the refresh token for the current Windows user, in `%LOCALAPPDATA%\InstallScout\graph.json`. The saved session is bound to the selected tenant and Client ID. A different pair does not reuse it. A plaintext token file from an older version is deleted and cannot be used. Sign-out deletes the file.
 
-- Entra user with `DeviceManagementApps.ReadWrite.All` (admin consent in the tenant).
-- Default Client ID: Microsoft Graph PowerShell (`14d82eec-204b-4c2f-b7e8-296a70dab67e`).
+- Windows 10 or 11. Switch lookup and a local package do not need Azure.
+- Microsoft Edge. Sign-in opens in an Edge profile.
+- An account that can create Win32 apps: the Entra role **Intune Administrator**, or the Intune role **Application Manager**. A custom role with the same app permissions works too.
+- Admin consent in the tenant for `DeviceManagementApps.ReadWrite.All`.
+- Default Client ID: Microsoft Graph PowerShell (`14d82eec-204b-4c2f-b7e8-296a70dab67e`). InstallScout does not create an app registration.
 - Conditional Access can still block. IT can create a public client with redirect `http://localhost` and set the Client ID in the dialog.
 
 ---

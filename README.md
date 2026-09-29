@@ -18,6 +18,17 @@ The current version is **1.8.47**: [releases](https://github.com/mthorngaard/Ins
 
 Drop an installer on the window, or use **Add files**. InstallScout does not run the installer. Review the silent command and test the package in a VM before you roll it out.
 
+## Prerequisites
+
+Windows 10 or Windows 11. Finding silent switches and building a local package does not need an Azure sign-in.
+
+Upload to Intune also needs:
+
+- Microsoft Edge. Sign-in opens in an Edge profile.
+- An account that can create Win32 apps. In Microsoft Entra, that is the **Intune Administrator** role. In Intune role-based access control, **Application Manager** is enough. A custom role with the same app permissions works too.
+- One-time admin consent in the tenant for the Graph permission `DeviceManagementApps.ReadWrite.All`. Sign-in uses the public Microsoft Graph PowerShell client unless you set another Client ID. InstallScout does not create an app registration.
+- Conditional Access can still block that sign-in.
+
 ## Graph sign-in
 
 Sign-in opens in the browser with PKCE. Device code is not used.

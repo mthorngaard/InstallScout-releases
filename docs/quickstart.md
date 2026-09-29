@@ -36,7 +36,7 @@ Klik **Upload til Intune…**.
 5. Vælg evt. ældre apps under supersedence. Ingenting er valgt på forhånd. **Update** installerer ovenpå. **Replace** afinstallerer først.
 6. Klik **Upload**.
 
-Krav: en Entra-bruger med `DeviceManagementApps.ReadWrite.All`. InstallScout opretter ikke sin egen app.
+Krav: en konto der kan oprette Win32-apps (**Intune Administrator**, eller Intune-rollen **Application Manager**) og admin-consent for `DeviceManagementApps.ReadWrite.All`. InstallScout opretter ikke sin egen app.
 
 ## Samme løb fra kommandolinjen
 

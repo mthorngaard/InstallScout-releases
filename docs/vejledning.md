@@ -417,8 +417,11 @@ Login åbner i browseren med PKCE. Device code bruges ikke.
 
 Windows DPAPI krypterer access-token og refresh-token for den aktuelle Windows-bruger i `%LOCALAPPDATA%\InstallScout\graph.json`. Den gemte session er bundet til den valgte tenant og det valgte Client ID. Et andet par genbruger den ikke. En tokenfil i klartekst fra en ældre version slettes og kan ikke bruges. Log af sletter filen.
 
-- Entra-bruger med `DeviceManagementApps.ReadWrite.All` (admin-consent i tenant).
-- Standard Client ID: Microsoft Graph PowerShell (`14d82eec-204b-4c2f-b7e8-296a70dab67e`).
+- Windows 10 eller 11. Opslag af switche og en lokal pakke kræver ikke Azure.
+- Microsoft Edge. Login åbner i en Edge-profil.
+- En konto der kan oprette Win32-apps: Entra-rollen **Intune Administrator**, eller Intune-rollen **Application Manager**. En brugerdefineret rolle med de samme app-rettigheder dur også.
+- Admin-consent i tenant for `DeviceManagementApps.ReadWrite.All`.
+- Standard Client ID: Microsoft Graph PowerShell (`14d82eec-204b-4c2f-b7e8-296a70dab67e`). InstallScout opretter ikke en app-registrering.
 - Conditional Access kan stadig blokere. IT kan oprette en public client med redirect `http://localhost` og sætte Client ID i dialogen.
 
 ---

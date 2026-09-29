@@ -156,7 +156,7 @@ OAuth 2.0 authorization code with PKCE. Device code is not used. A local HTTP li
 | Token file | `%LOCALAPPDATA%\InstallScout\graph.json`, Windows DPAPI for the current user (`ISC1`). Bound to the tenant and Client ID. Plaintext is deleted |
 | Refresh | Refresh token. A 401 is retried once after refresh. An expired session deletes the token file. A different tenant or Client ID does not reuse the session |
 
-A custom Client ID must be a public client with redirect `http://localhost` and the same application permission. InstallScout does not create an app registration.
+A custom Client ID must be a public client with redirect `http://localhost` and the same permission. InstallScout does not create an app registration. The signed-in user must be able to create Win32 apps. The Entra role Intune Administrator, or the Intune role Application Manager, includes that. The tenant still needs admin consent for `DeviceManagementApps.ReadWrite.All`.
 
 ### Create and upload
 
