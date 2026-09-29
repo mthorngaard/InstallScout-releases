@@ -12,6 +12,7 @@ The current version is **1.8.45**: [releases](https://github.com/mthorngaard/Ins
 
 | File | Use |
 |---|---|
+| [`InstallScout-1.8.45.zip`](https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.45/InstallScout-1.8.45.zip) | Both files in one download. |
 | `InstallScoutPortable.exe` | Copy it anywhere and run it. Nothing is installed. |
 | `InstallScout.msi` | Installs to Program Files and adds a Start menu shortcut. |
 
