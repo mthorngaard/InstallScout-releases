@@ -6,7 +6,7 @@ Use it to find the silent switches first, then package that command for Intune a
 
 ## Download
 
-The current version is **1.8.45**: [releases](https://github.com/mthorngaard-hue/InstallScout-releases/releases/latest)
+The current version is **1.8.45**: [releases](https://github.com/mthorngaard/InstallScout-releases/releases/latest)
 
 | File | Use |
 |---|---|
