@@ -1,6 +1,6 @@
 # InstallScout – quick start
 
-Version **1.8.45**. Fra en installer til en Win32-app i Intune. Programmet kører ikke installeren.
+Version **1.8.46**. Fra en installer til en Win32-app i Intune. Programmet kører ikke installeren.
 
 Den fulde vejledning er [vejledning.md](vejledning.md). Motorer, CLI og Graph står i [reference.md](reference.md). Word: [InstallScout-quickstart.docx](InstallScout-quickstart.docx).
 
@@ -23,18 +23,18 @@ Ret linjen, eller skriv et ekstra flag under **Ekstra switche** og klik **Tilfø
 
 Klik **Intune-pakke…** og vælg en mappe. Der gemmes en `.intunewin`, PSADT-kilden og `Detection.ps1`.
 
-**Send til Intune** er grå, indtil pakken findes. Ændrer du kommandoen bagefter, skal pakken laves igen.
+**Upload til Intune** er grå, indtil pakken findes. Ændrer du kommandoen bagefter, skal pakken laves igen.
 
-## 4. Send
+## 4. Upload
 
-Klik **Send til Intune…**.
+Klik **Upload til Intune…**.
 
 1. Ret **Navn i Intune**, hvis Company Portal skal hedde noget andet end produkt og version.
 2. Lad **System** stå, medmindre appen er per bruger (typisk Squirrel).
 3. Tjek logoet. En MSI har ofte intet ikon. Vælg en fil, indsæt et billede, eller fjern logoet.
 4. Feltet viser én Edge-profil. Fold det ud for at vælge en anden, og klik **Log på Intune**. Vent til der står *Logget på som …*. Login er bundet til tenant og Client ID.
 5. Vælg evt. ældre apps under supersedence. Ingenting er valgt på forhånd. **Update** installerer ovenpå. **Replace** afinstallerer først.
-6. Klik **Send**.
+6. Klik **Upload**.
 
 Krav: en Entra-bruger med `DeviceManagementApps.ReadWrite.All`. InstallScout opretter ikke sin egen app.
 

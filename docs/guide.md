@@ -4,7 +4,7 @@ InstallScout takes a Windows installer **all the way to Intune**. You give it an
 
 Silent switches are one step. The destination is the package in Intune.
 
-Version **1.8.45**. Quick start: [quickstart-en.md](quickstart-en.md). Technical reference: [reference-en.md](reference-en.md). Word edition: [InstallScout-guide.docx](InstallScout-guide.docx). Danish: [vejledning.md](vejledning.md).
+Version **1.8.46**. Quick start: [quickstart-en.md](quickstart-en.md). Technical reference: [reference-en.md](reference-en.md). Word edition: [InstallScout-guide.docx](InstallScout-guide.docx). Danish: [vejledning.md](vejledning.md).
 
 | File | Engine | Typical result |
 |---|---|---|
@@ -23,7 +23,7 @@ Double-click `InstallScoutPortable.exe` or run `Start.bat`. No installation is r
 
 Drop an installer on the window, or use **Add files** / **Add folder**. The empty start shows **Drop an installer here** in the file list and a short introduction on the Commands tab. EXE, MSI, COM and a whole folder can be dropped.
 
-The buttons sit on two rows. Top: add and **Analyze**. Below: copy, package and **Send to Intune**. The language is changed at the top right. The default is English.
+The buttons sit on two rows. Top: add and **Analyze**. Below: copy, package and **Upload to Intune**. The language is changed at the top right. The default is English.
 
 **Left:** files, engine and confidence (how sure the analysis is).  
 **Right:** recommended silent command (editable), the **Extra switches** field, plus the tabs Commands, Online, Intune, Detection, PSADT, Found switches, Evidence and notes, and MSI / Version.
@@ -39,7 +39,7 @@ The buttons sit on two rows. Top: add and **Analyze**. Below: copy, package and 
 | Copy command | Silent line to the clipboard |
 | PSADT package… | Folder with PSADT 4.1.8 |
 | Intune package… | Local `.intunewin` + detection — **required** before upload |
-| **Send to Intune…** | Sign in and create the Win32 app (logo, context, detection, **supersedence**) |
+| **Upload to Intune…** | Sign in and create the Win32 app (logo, context, detection, **supersedence**) |
 | **Add / Save command** | Extra switches, or save the edited line |
 | Use online switches | Overwrite the local command with the catalog |
 
@@ -57,7 +57,7 @@ flowchart LR
   B --> F[System or User]
   F --> E
   E --> G[Test in a VM]
-  G --> H[Send to Intune]
+  G --> H[Upload to Intune]
 ```
 
 The process ends with upload. The silent command is a middle step.
@@ -67,7 +67,7 @@ The process ends with upload. The silent command is a middle step.
 3. Read the **Online** tab when it fills in. A confident local engine is kept if the catalog disagrees. A weak local guess is replaced when WinGet or Chocolatey has a matching product. On **none**, use **Silent Install HQ** (name search only).
 4. Open **Intune** and check **Install context** (System/User).
 5. Build an **Intune package** (local `.intunewin`). Test with `Invoke-AppDeployToolkit.exe`.
-6. **Send to Intune** — the dialog opens tall enough to show the name, command, logo, supersedence and sign-in. One Edge profile is shown; open the field to pick another. **Sign in to Intune**, **Cancel** and **Send** share that row.
+6. **Upload to Intune** — the dialog opens tall enough to show the name, command, logo, supersedence and sign-in. One Edge profile is shown; open the field to pick another. **Sign in to Intune**, **Cancel** and **Upload** share that row.
 
 ---
 
@@ -155,7 +155,7 @@ The green line is **editable**. Under it are **Extra switches**, **Add** and **S
 ![Suggested switches. Tick a box to add that switch to the command. Here /analytics no is selected](images/en/11-foreslaaede-switche.png)
 
 - Changes are also saved when you package, copy or check online.
-- If the command changes, **build the Intune package again** before upload (Send to Intune otherwise stays grey, because the old `.intunewin` is invalid).
+- If the command changes, **build the Intune package again** before upload (Upload to Intune otherwise stays grey, because the old `.intunewin` is invalid).
 
 ---
 
@@ -222,7 +222,7 @@ Catalogs can be wrong (wrong edition, OpenJDK instead of Oracle). Always test in
 
 Intune Win32 must run as **system** or **user**. The wrong choice shows “installed” for the wrong account, missing Program Files files, or detection that never matches.
 
-InstallScout infers context automatically and shows it on the **Intune** tab, in `Intune.txt` and in the Send to Intune dialog. You can override it at upload.
+InstallScout infers context automatically and shows it on the **Intune** tab, in `Intune.txt` and in the Upload to Intune dialog. You can override it at upload.
 
 ```mermaid
 flowchart TD
@@ -272,7 +272,7 @@ User
 Squirrel/per-user installers place files in AppData and must run in user context.
 ```
 
-In **Send to Intune**, System/User is preselected, but you can change it if you know the package better than the guess.
+In **Upload to Intune**, System/User is preselected, but you can change it if you know the package better than the guess.
 
 **Why it matters**
 
@@ -285,10 +285,10 @@ In **Send to Intune**, System/User is preselected, but you can change it if you 
 
 ## 6. Upload to Intune
 
-Upload is a **two-step run**: first a local `.intunewin`, then **Send to Intune**. The program uploads the package you already saved — it does not repackage on send.
+Upload is a **two-step run**: first a local `.intunewin`, then **Upload to Intune**. The program uploads the package you already saved — it does not repackage on upload.
 
 ```text
-Analyze  →  Intune package… (local .intunewin)  →  Send to Intune… (Graph upload)
+Analyze  →  Intune package… (local .intunewin)  →  Upload to Intune… (Graph upload)
 ```
 
 What lands in Intune is a Win32 app with:
@@ -325,9 +325,9 @@ Intune treats the app as installed when `Detection.ps1` exits 0 and writes a lin
 - **Version.** When the installer has a version, `DisplayVersion` must be the same or newer. The comparison is numeric. For an installer at `2.7.961922`, that version and `2.8.1` count; `2.6` does not. `2.8.1` is only an example of the comparison. If no version was read, version is not required.
 - Product code is tried first. When it is missing, name, publisher and version are used. Both the machine and the user uninstall keys are read.
 
-Until a package exists for the selected file, **Send to Intune** is grey. After the package is saved, the button becomes active:
+Until a package exists for the selected file, **Upload to Intune** is grey. After the package is saved, the button becomes active:
 
-![Send to Intune is active when a local .intunewin exists](images/en/06-intune-pakke-klar.png)
+![Upload to Intune is active when a local .intunewin exists](images/en/06-intune-pakke-klar.png)
 
 Test the source before upload:
 
@@ -335,11 +335,11 @@ Test the source before upload:
 .\Invoke-AppDeployToolkit.exe -DeploymentType Install -DeployMode Silent
 ```
 
-### Step 2 — Send to Intune
+### Step 2 — Upload to Intune
 
-Click **Send to Intune…**. The dialog sizes itself so the content is visible without scrolling. One Edge profile is shown at the bottom. Open the field to pick another. **Sign in to Intune**, **Cancel** and **Send** share that row.
+Click **Upload to Intune…**. The dialog sizes itself so the content is visible without scrolling. One Edge profile is shown at the bottom. Open the field to pick another. **Sign in to Intune**, **Cancel** and **Upload** share that row.
 
-![Send to Intune with app logo, Choose file, Paste and Remove](images/en/09-send-logo.png)
+![Upload to Intune with app logo, Choose file, Paste and Remove](images/en/09-send-logo.png)
 
 **Logo**
 
@@ -359,15 +359,15 @@ Click **Send to Intune…**. The dialog sizes itself so the content is visible w
 6. **Edge profile for sign-in** shows the selected profile. The work profile is selected when it can be recognized. Open the list to pick another.
 7. **Sign in to Intune** — browser login (PKCE, localhost) in the selected Edge profile. Device code is not used, because Conditional Access often blocks it.
 8. After sign-in: optionally choose **supersedence** (see below). Nothing is selected automatically.
-9. **Send** — creates the app, uploads `.intunewin`, sets detection, logo and optional supersedence. The status line shows progress.
+9. **Upload** — creates the app, uploads `.intunewin`, sets detection, logo and optional supersedence. The status line shows progress.
 
 ### Supersedence
 
-In **Send to Intune** the new Win32 app can replace older versions in the tenant — the same feature as *Supersedence* in the Intune portal.
+In **Upload to Intune** the new Win32 app can replace older versions in the tenant — the same feature as *Supersedence* in the Intune portal.
 
 Wait until the status is **Signed in as …**, not only that the Edge profile opened. Only then does InstallScout look up Win32 apps. The search uses the **product name** (`startswith` on `displayName`), not the entire Win32 catalogue. The list shows apps whose names look like the product — e.g. *Git 2.50.0* when you send *Git 2.51.0*. The same vendor with a different product is typically omitted.
 
-![Send to Intune: supersedence list with Git 2.50.0 selected and Update](images/en/10-supersedence.png)
+![Upload to Intune: supersedence list with Git 2.50.0 selected and Update](images/en/10-supersedence.png)
 
 - Nothing is selected automatically. Ctrl+click to select (at most **10** — Intune’s limit).
 - **Update** (default) — install the new app without uninstalling the old one first.
@@ -469,10 +469,10 @@ Unknown engine: look at **Found switches** and **Evidence**. Analyze also asks W
 
 - The program **does not install** anything. Unpack never runs the installer. Test the silent line in a VM.
 - Online catalogs often know a different name or a newer build than your file. Wrapper VersionInfo (*Self Extractor*) is not a catalog product.
-- Context is a qualified guess. Override it in Send to Intune if you know better.
+- Context is a qualified guess. Override it in Upload to Intune if you know better.
 - Intune upload needs Graph permission and can hit Conditional Access.
 - Installer binaries are not sent over the network during the online check.
-- Send to Intune is inactive until a local `.intunewin` exists for the selected file.
+- Upload to Intune is inactive until a local `.intunewin` exists for the selected file.
 - MSI often has no usable icon. Use **Choose file…** or **Paste**.
 - Manual switches overwrite the recommended line in PSADT; test in a VM.
 - The supersedence list appears only after sign-in has finished (*Signed in as …*).

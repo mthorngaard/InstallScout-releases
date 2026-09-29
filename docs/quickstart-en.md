@@ -1,6 +1,6 @@
 # InstallScout – quick start
 
-Version **1.8.45**. From an installer to a Win32 app in Intune. The program does not run the installer.
+Version **1.8.46**. From an installer to a Win32 app in Intune. The program does not run the installer.
 
 The full guide is [guide.md](guide.md). Engines, the CLI, and Graph are in [reference-en.md](reference-en.md). Word: [InstallScout-quickstart-en.docx](InstallScout-quickstart-en.docx).
 
@@ -23,18 +23,18 @@ Edit the line, or type an extra flag under **Extra switches** and click **Add**.
 
 Click **Intune package…** and choose a folder. That saves an `.intunewin`, the PSADT source, and `Detection.ps1`.
 
-**Send to Intune** stays grey until the package exists. If you change the command afterwards, build the package again.
+**Upload to Intune** stays grey until the package exists. If you change the command afterwards, build the package again.
 
-## 4. Send
+## 4. Upload
 
-Click **Send to Intune…**.
+Click **Upload to Intune…**.
 
 1. Edit **Name in Intune** if Company Portal should not show the product name and version.
 2. Leave **System** unless the app is per user (typically Squirrel).
 3. Check the logo. An MSI often has no icon. Choose a file, paste an image, or remove the logo.
 4. The field shows one Edge profile. Open it to pick another, then click **Sign in to Intune**. Wait until it says *Signed in as …*. Sign-in is bound to the tenant and Client ID.
 5. Optionally pick older apps under supersedence. Nothing is selected beforehand. **Update** installs over the old app. **Replace** uninstalls it first.
-6. Click **Send**.
+6. Click **Upload**.
 
 Requirement: an Entra user with `DeviceManagementApps.ReadWrite.All`. InstallScout does not create its own app.
 

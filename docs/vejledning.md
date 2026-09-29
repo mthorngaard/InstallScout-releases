@@ -4,7 +4,7 @@ InstallScout tager en Windows-installer **hele vejen til Intune**. Du giver det 
 
 Silent-switche er ét trin. Målet er pakken i Intune.
 
-Version **1.8.45**. Quick start: [quickstart.md](quickstart.md). Teknisk reference: [reference.md](reference.md). Word-udgave: [InstallScout-vejledning.docx](InstallScout-vejledning.docx). English: [guide.md](guide.md) · [InstallScout-guide.docx](InstallScout-guide.docx).
+Version **1.8.46**. Quick start: [quickstart.md](quickstart.md). Teknisk reference: [reference.md](reference.md). Word-udgave: [InstallScout-vejledning.docx](InstallScout-vejledning.docx). English: [guide.md](guide.md) · [InstallScout-guide.docx](InstallScout-guide.docx).
 
 | Fil | Motor | Typisk resultat |
 |---|---|---|
@@ -23,7 +23,7 @@ Dobbeltklik `InstallScoutPortable.exe` eller kør `Start.bat`. Programmet kræve
 
 Træk en installer ind på vinduet, eller brug **Tilføj filer** / **Tilføj mappe**. Den tomme start viser **Træk en installer hertil** i fillisten og en kort introduktion under fanen Kommandoer. EXE, MSI, COM og en hel mappe kan slippes.
 
-Knapperne ligger på to rækker. Øverst: tilføj og **Analysér**. Nedenunder: kopiér, pakke og **Send til Intune**. Sproget skiftes øverst til højre. Standard er English.
+Knapperne ligger på to rækker. Øverst: tilføj og **Analysér**. Nedenunder: kopiér, pakke og **Upload til Intune**. Sproget skiftes øverst til højre. Standard er English.
 
 **Venstre:** filer, motor og sikkerhed (hvor sikker analysen er).  
 **Højre:** anbefalet silent-kommando (redigerbar), feltet **Ekstra switche**, plus fanerne Kommandoer, Online, Intune, Detection, PSADT, Fundne switche, Bevis og MSI/Version.
@@ -39,7 +39,7 @@ Under knapperne ligger **status og progress** på en egen linje, så de er synli
 | Kopiér kommando | Silent-linjen til udklipsholder |
 | PSADT-pakke… | Mappe med PSADT 4.1.8 |
 | Intune-pakke… | Lokal `.intunewin` + detection – **skal** laves før upload |
-| **Send til Intune…** | Log på og opret Win32-appen (logo, context, detection, **supersedence**) |
+| **Upload til Intune…** | Log på og opret Win32-appen (logo, context, detection, **supersedence**) |
 | **Tilføj / Gem kommando** | Manuelle extra switche eller gem den redigerede linje |
 | Brug online-switche | Overskriv den lokale kommando med katalogets |
 
@@ -57,7 +57,7 @@ flowchart LR
   B --> F[System eller User]
   F --> E
   E --> G[Test i VM]
-  G --> H[Send til Intune]
+  G --> H[Upload til Intune]
 ```
 
 Hele forløbet slutter med upload. Silent-kommandoen er et mellemtrin.
@@ -67,7 +67,7 @@ Hele forløbet slutter med upload. Silent-kommandoen er et mellemtrin.
 3. Læs fanen **Online**, når den bliver udfyldt. En sikker lokal motor beholdes, hvis kataloget er uenigt. Et svagt lokalt gæt skiftes, når WinGet eller Chocolatey har et matchende produkt. Ved **none**: **Silent Install HQ** (kun navnesøgning).
 4. Åbn **Intune** og tjek **Install context** (System/User).
 5. Lav **Intune-pakke** (lokal `.intunewin`). Test med `Invoke-AppDeployToolkit.exe`.
-6. **Send til Intune** – dialogen åbner, så navn, kommando, logo, afløsning og login er med fra start. Én Edge-profil vises; fold feltet ud for at vælge en anden. **Log på Intune**, **Annuller** og **Send** står på samme række.
+6. **Upload til Intune** – dialogen åbner, så navn, kommando, logo, afløsning og login er med fra start. Én Edge-profil vises; fold feltet ud for at vælge en anden. **Log på Intune**, **Annuller** og **Upload** står på samme række.
 
 ---
 
@@ -155,7 +155,7 @@ Den grønne linje er **redigerbar**. Under den ligger **Ekstra switche**, **Tilf
 ![Foreslåede switche. Sæt flueben for at tage switchen med i kommandoen. Her er /analytics no valgt](images/11-foreslaaede-switche.png)
 
 - Ændringer gemmes også, når du pakker, kopierer eller tjekker online.
-- Hvis kommandoen ændres, skal **Intune-pakken laves igen** før upload (Send til Intune bliver ellers grå, fordi den gamle `.intunewin` er ugyldig).
+- Hvis kommandoen ændres, skal **Intune-pakken laves igen** før upload (Upload til Intune bliver ellers grå, fordi den gamle `.intunewin` er ugyldig).
 
 ---
 
@@ -222,7 +222,7 @@ Kataloger kan tage fejl (forkert udgave, OpenJDK i stedet for Oracle). Test alti
 
 Intune Win32 skal køre som **system** eller **user**. Forkert valg giver “installed” for den forkerte konto, manglende Program Files-filer eller detection der aldrig rammer.
 
-InstallScout udleder context automatisk og viser den på **Intune**-fanen, i `Intune.txt` og i Send til Intune-dialogen. Du kan overstyre ved upload.
+InstallScout udleder context automatisk og viser den på **Intune**-fanen, i `Intune.txt` og i Upload til Intune-dialogen. Du kan overstyre ved upload.
 
 ```mermaid
 flowchart TD
@@ -272,7 +272,7 @@ User
 Squirrel/per-user-installere lægger filer i AppData og skal køre i user context.
 ```
 
-I **Send til Intune** er System/User forhåndsvalgt, men du kan skifte, hvis du kender pakken bedre end automatikken.
+I **Upload til Intune** er System/User forhåndsvalgt, men du kan skifte, hvis du kender pakken bedre end automatikken.
 
 **Hvorfor det betyder noget**
 
@@ -285,10 +285,10 @@ I **Send til Intune** er System/User forhåndsvalgt, men du kan skifte, hvis du 
 
 ## 6. Upload til Intune
 
-Upload er et **to-trins løb**: først en lokal `.intunewin`, derefter **Send til Intune**. Programmet uploader den pakke, du allerede har gemt – den pakker ikke forfra ved send.
+Upload er et **to-trins løb**: først en lokal `.intunewin`, derefter **Upload til Intune**. Programmet uploader den pakke, du allerede har gemt – den pakker ikke forfra ved upload.
 
 ```text
-Analysér  →  Intune-pakke… (lokal .intunewin)  →  Send til Intune… (Graph-upload)
+Analysér  →  Intune-pakke… (lokal .intunewin)  →  Upload til Intune… (Graph-upload)
 ```
 
 Det, der lander i Intune, er en Win32-app med:
@@ -325,9 +325,9 @@ Intune regner appen som installeret, når `Detection.ps1` afslutter med kode 0 o
 - **Version.** Når installeren har en version, skal `DisplayVersion` være den samme eller nyere. Sammenligningen er numerisk. For en installer på `2.7.961922` tæller den version og `2.8.1`; `2.6` gør ikke. `2.8.1` er kun et eksempel på sammenligningen. Hvis der ikke blev læst en version, kræves version ikke.
 - Product code prøves først. Når den mangler, bruges navn, udgiver og version. Både maskinens og brugerens afinstallationsnøgler læses.
 
-Indtil pakken findes for den valgte fil, er **Send til Intune** grå. Når pakken er gemt, bliver knappen aktiv:
+Indtil pakken findes for den valgte fil, er **Upload til Intune** grå. Når pakken er gemt, bliver knappen aktiv:
 
-![Send til Intune er aktiv, når der findes en lokal .intunewin](images/06-intune-pakke-klar.png)
+![Upload til Intune er aktiv, når der findes en lokal .intunewin](images/06-intune-pakke-klar.png)
 
 Test kilden før upload:
 
@@ -335,11 +335,11 @@ Test kilden før upload:
 .\Invoke-AppDeployToolkit.exe -DeploymentType Install -DeployMode Silent
 ```
 
-### Trin 2 – Send til Intune
+### Trin 2 – Upload til Intune
 
-Klik **Send til Intune…**. Dialogen tilpasser højden, så indholdet er synligt uden at scrolle. Nederst vises én Edge-profil. Fold feltet ud for at vælge en anden. **Log på Intune**, **Annuller** og **Send** står på samme række.
+Klik **Upload til Intune…**. Dialogen tilpasser højden, så indholdet er synligt uden at scrolle. Nederst vises én Edge-profil. Fold feltet ud for at vælge en anden. **Log på Intune**, **Annuller** og **Upload** står på samme række.
 
-![Send til Intune med app-logo, Vælg fil, Indsæt og Fjern](images/09-send-logo.png)
+![Upload til Intune med app-logo, Vælg fil, Indsæt og Fjern](images/09-send-logo.png)
 
 **Logo**
 
@@ -359,15 +359,15 @@ Klik **Send til Intune…**. Dialogen tilpasser højden, så indholdet er synlig
 6. Feltet **Edge-profil til login** viser den valgte profil. Arbejdsprofilen vælges, når den kan genkendes. Fold listen ud for at vælge en anden.
 7. **Log på Intune** – browser-login (PKCE, localhost) i den valgte Edge-profil. Device code bruges ikke, fordi Conditional Access ofte blokerer det.
 8. Efter login: vælg evt. **supersedence** (se nedenfor). Ingenting vælges automatisk.
-9. **Send** – opretter appen, uploader `.intunewin`, sætter detection, logo og evt. supersedence. Statuslinjen viser fremdrift.
+9. **Upload** – opretter appen, uploader `.intunewin`, sætter detection, logo og evt. supersedence. Statuslinjen viser fremdrift.
 
 ### Supersedence
 
-I **Send til Intune** kan den nye Win32-app afløse ældre versioner i tenant – samme funktion som *Supersedence* i Intune-portalen.
+I **Upload til Intune** kan den nye Win32-app afløse ældre versioner i tenant – samme funktion som *Supersedence* i Intune-portalen.
 
 Vent til status er **Logget på som …**, ikke kun at Edge-profilen er åbnet. Først da slår InstallScout Win32-apps op. Søget bruger **produktnavnet** (`startswith` på `displayName`), ikke hele Win32-kataloget. Listen viser apps, der ligner navnet – fx *Git 2.50.0* når du sender *Git 2.51.0*. Samme vendor med et andet produkt kommer typisk ikke med.
 
-![Send til Intune: supersedence-liste med Git 2.50.0 valgt og Update](images/10-supersedence.png)
+![Upload til Intune: supersedence-liste med Git 2.50.0 valgt og Update](images/10-supersedence.png)
 
 - Ingenting vælges automatisk. Markér med Ctrl+klik (højst **10** – Intunes grænse).
 - **Update** (standard) – installer den nye uden at afinstallere den gamle først.
@@ -469,10 +469,10 @@ Ukendt motor: kig i **Fundne switche** og **Bevis**. Analysér spørger også Wi
 
 - Programmet **installerer ikke** noget. Udpakning kører aldrig installeren. Test silent-linjen i en VM.
 - Online-kataloger kender ofte et andet navn eller en nyere build end din fil. Wrapper-VersionInfo (*Self Extractor*) er ikke et katalogprodukt.
-- Context er et kvalificeret gæt. Overstyr i Send til Intune, hvis du ved bedre.
+- Context er et kvalificeret gæt. Overstyr i Upload til Intune, hvis du ved bedre.
 - Intune-upload kræver Graph-rettighed og kan ramme Conditional Access.
 - Binære installere sendes ikke på nettet ved online-tjek.
-- Send til Intune er inaktiv, indtil der findes en lokal `.intunewin` for den valgte fil.
+- Upload til Intune er inaktiv, indtil der findes en lokal `.intunewin` for den valgte fil.
 - MSI har ofte intet brugbart ikon. Brug **Vælg fil…** eller **Indsæt**.
 - Manuelle switche overskriver den anbefalede linje i PSADT; test i en VM.
 - Supersedence-listen vises først, når login er færdig (*Logget på som …*).
