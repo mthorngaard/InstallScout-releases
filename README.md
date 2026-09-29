@@ -17,6 +17,12 @@ The current version is **1.8.45**: [releases](https://github.com/mthorngaard/Ins
 
 Drop an installer on the window, or use **Add files**. InstallScout does not run the installer. Review the silent command and test the package in a VM before you roll it out.
 
+## Graph sign-in
+
+Sign-in opens in the browser with PKCE. Device code is not used.
+
+Windows DPAPI encrypts the access token and the refresh token for the current Windows user. The saved session is bound to the tenant and Client ID you selected. A different tenant or client does not reuse that session. A plaintext token file from an older version is deleted and cannot be used. Sign-out deletes the saved file.
+
 ## Documentation
 
 **Quick start:** [English](docs/quickstart-en.md) · [Dansk](docs/quickstart.md)  

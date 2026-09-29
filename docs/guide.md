@@ -413,11 +413,13 @@ After success, a link to the app in the Intune portal opens.
 
 ### Sign-in and permissions
 
+Sign-in opens in the browser with PKCE. Device code is not used.
+
+Windows DPAPI encrypts the access token and the refresh token for the current Windows user, in `%LOCALAPPDATA%\InstallScout\graph.json`. The saved session is bound to the selected tenant and Client ID. A different pair does not reuse it. A plaintext token file from an older version is deleted and cannot be used. Sign-out deletes the file.
+
 - Entra user with `DeviceManagementApps.ReadWrite.All` (admin consent in the tenant).
 - Default Client ID: Microsoft Graph PowerShell (`14d82eec-204b-4c2f-b7e8-296a70dab67e`).
 - Conditional Access can still block. IT can create a public client with redirect `http://localhost` and set the Client ID in the dialog.
-- The session is bound to the selected tenant and Client ID. A different pair does not reuse the previous sign-in.
-- The access token and refresh token are stored with Windows DPAPI for the current user in `%LOCALAPPDATA%\InstallScout\graph.json`. An older plaintext file is deleted and cannot be used.
 
 ---
 

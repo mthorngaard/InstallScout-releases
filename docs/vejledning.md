@@ -413,11 +413,13 @@ Efter succes åbnes et link til appen i Intune-portalen.
 
 ### Login og rettigheder
 
+Login åbner i browseren med PKCE. Device code bruges ikke.
+
+Windows DPAPI krypterer access-token og refresh-token for den aktuelle Windows-bruger i `%LOCALAPPDATA%\InstallScout\graph.json`. Den gemte session er bundet til den valgte tenant og det valgte Client ID. Et andet par genbruger den ikke. En tokenfil i klartekst fra en ældre version slettes og kan ikke bruges. Log af sletter filen.
+
 - Entra-bruger med `DeviceManagementApps.ReadWrite.All` (admin-consent i tenant).
 - Standard Client ID: Microsoft Graph PowerShell (`14d82eec-204b-4c2f-b7e8-296a70dab67e`).
 - Conditional Access kan stadig blokere. IT kan oprette en public client med redirect `http://localhost` og sætte Client ID i dialogen.
-- Sessionen er bundet til den valgte tenant og det valgte Client ID. Et andet par genbruger ikke det gamle login.
-- Access-token og refresh-token gemmes med Windows DPAPI for den aktuelle bruger i `%LOCALAPPDATA%\InstallScout\graph.json`. En ældre fil i klartekst slettes og kan ikke bruges.
 
 ---
 

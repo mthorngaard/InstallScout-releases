@@ -62,6 +62,9 @@
       <li>A check against WinGet and Chocolatey. The installer file is not uploaded.</li>
       <li>A local Intune package, then an upload with install, uninstall, and detection.</li>
     </ul>
+    <h2>Graph sign-in</h2>
+    <p>Sign-in opens in the browser with PKCE. Device code is not used.</p>
+    <p>Windows DPAPI encrypts the access token and the refresh token for the current Windows user. The saved session is bound to the tenant and Client ID you selected. A different tenant or client does not reuse that session. A plaintext token file from an older version is deleted and cannot be used. Sign-out deletes the saved file.</p>
     <h2>Documentation</h2>
     <p><a href="https://github.com/mthorngaard/InstallScout-releases/blob/main/docs/quickstart-en.md">Quick start</a> · <a href="https://github.com/mthorngaard/InstallScout-releases/blob/main/docs/guide.md">Guide</a> · <a href="https://github.com/mthorngaard/InstallScout-releases/blob/main/docs/reference-en.md">Technical reference</a></p>
     <p>Dansk: <a href="https://github.com/mthorngaard/InstallScout-releases/blob/main/docs/quickstart.md">hurtig start</a>, <a href="https://github.com/mthorngaard/InstallScout-releases/blob/main/docs/vejledning.md">vejledning</a>, <a href="https://github.com/mthorngaard/InstallScout-releases/blob/main/docs/reference.md">reference</a>.</p>
