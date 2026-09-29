@@ -1,8 +1,8 @@
 # InstallScout
 
-InstallScout reads a Windows installer without running it, builds the silent command and a PSADT Win32 package, and uploads the app to Intune with detection, logo, and optional supersedence.
+InstallScout is a Windows tool for silent installs and Microsoft Intune. It reads an EXE, MSI, COM, or MSIX installer without running it, finds the silent install switches, builds a PSAppDeployToolkit (PSADT) `.intunewin` package, and uploads the Win32 app to Intune with detection, a logo, and optional supersedence.
 
-The program is for Windows 10 and 11. The interface is in English. Switch to Dansk in the top-right corner.
+Use it to package a Windows installer for Intune and Company Portal: silent command, system or user context, and a Win32 app. It runs on Windows 10 and Windows 11. The interface is in English. Switch to Dansk in the top-right corner.
 
 ## Download
 
