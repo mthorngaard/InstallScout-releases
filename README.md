@@ -8,11 +8,11 @@ Use it to find the silent switches first, then package that command for Intune a
 
 ## Download
 
-The current version is **1.8.46**: [releases](https://github.com/mthorngaard/InstallScout-releases/releases/latest)
+The current version is **1.8.47**: [releases](https://github.com/mthorngaard/InstallScout-releases/releases/latest)
 
 | File | Use |
 |---|---|
-| [`InstallScout-1.8.46.zip`](https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.46/InstallScout-1.8.46.zip) | Both files in one download. |
+| [`InstallScout-1.8.47.zip`](https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.47/InstallScout-1.8.47.zip) | Both files in one download. |
 | `InstallScoutPortable.exe` | Copy it anywhere and run it. Nothing is installed. |
 | `InstallScout.msi` | Installs to Program Files and adds a Start menu shortcut. |
 
