@@ -1,6 +1,6 @@
 # InstallScout – quick start
 
-Version **1.8.47**. Fra en installer til en Win32-app i Intune. Programmet kører ikke installeren.
+Version **1.8.48**. Fra en installer til en Win32-app i Intune. Programmet kører ikke installeren.
 
 Den fulde vejledning er [vejledning.md](vejledning.md). Motorer, CLI og Graph står i [reference.md](reference.md). Word: [InstallScout-quickstart.docx](InstallScout-quickstart.docx).
 
