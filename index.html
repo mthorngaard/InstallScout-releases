@@ -25,7 +25,12 @@
     h2 { font-size: 1.1rem; margin: 2rem 0 0.5rem; }
     p { margin: 0.6rem 0; }
     a { color: #7eb6ff; }
-    .mark { display: block; }
+    .mark {
+      display: block;
+      width: 88px;
+      height: 88px;
+      border-radius: 20px;
+    }
     .actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 1.25rem 0; }
     .actions a {
       background: #2f80ed;
@@ -42,12 +47,7 @@
 </head>
 <body>
   <main>
-    <svg class="mark" width="72" height="72" viewBox="0 0 72 72" aria-hidden="true">
-      <circle cx="36" cy="36" r="28" fill="none" stroke="#2f80ed" stroke-width="6"/>
-      <circle cx="36" cy="36" r="3" fill="#2f80ed"/>
-      <path d="M36 36 L48 24" stroke="#7eb6ff" stroke-width="3" stroke-linecap="round"/>
-      <path d="M36 36 L28 46" stroke="#d6e4f5" stroke-width="3" stroke-linecap="round"/>
-    </svg>
+    <img class="mark" src="assets/installscout.png" width="88" height="88" alt="InstallScout">
     <h1>Silent switch finder for Intune</h1>
     <p>InstallScout reads a Windows installer without running it. It finds the silent install switches for EXE, MSI, COM, and MSIX files and builds the silent command.</p>
     <p>From that command it can build a PSAppDeployToolkit <code>.intunewin</code> package and upload the Win32 app to Microsoft Intune, with detection, a logo, and optional supersedence.</p>
