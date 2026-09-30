@@ -41,6 +41,14 @@
       font-weight: 600;
     }
     .actions a.secondary { background: transparent; border: 1px solid #3d5a78; }
+    .notice {
+      margin: 1rem 0 1.5rem;
+      padding: 0.85rem 1rem;
+      border-left: 3px solid #e0a84a;
+      background: #152a40;
+      color: #f0e6d2;
+    }
+    .notice strong { color: #fff; }
     ul { padding-left: 1.2rem; }
     li { margin: 0.35rem 0; }
   </style>
@@ -57,7 +65,7 @@
       <a class="secondary" href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.47/InstallScout.msi">MSI</a>
     </div>
     <p>Version 1.8.47 for Windows 10 and 11. The zip contains the portable exe and the MSI. The portable exe runs without installation. The MSI installs to Program Files. The program does not run the installer. The interface is in English, and Dansk is in the top-right corner.</p>
-    <p>The download is not code-signed. Windows or company security may warn or block it. Choose Keep / Run anyway, ask IT to allow the file, or try it in a VM or Windows Sandbox without those policies.</p>
+    <p class="notice"><strong>Not code-signed.</strong> Windows or company security may warn or block it. Choose Keep / Run anyway, ask IT to allow the file, or try it in a VM or Windows Sandbox without those policies.</p>
     <h2>What you get</h2>
     <ul>
       <li>A silent switch finder for the installer engine, including Inno, NSIS, MSI, InstallShield, WiX Burn, and others.</li>
