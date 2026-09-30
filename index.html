@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>InstallScout — silent switch finder for Intune</title>
-  <meta name="description" content="InstallScout is a silent switch finder for Windows installers. It reads an EXE or MSI without running it, builds the silent command, and can package a Win32 app for Microsoft Intune.">
+  <title>InstallScout — from silent switch finder to Intune upload</title>
+  <meta name="description" content="InstallScout finds silent install switches for Windows EXE, MSI, COM, and MSIX files, builds a PSADT .intunewin package, and uploads the Win32 app to Microsoft Intune. It does not run the installer.">
   <link rel="canonical" href="https://mthorngaard.github.io/InstallScout-releases/">
-  <meta property="og:title" content="InstallScout — silent switch finder for Intune">
-  <meta property="og:description" content="Find silent install switches for a Windows installer, then build a PSADT Win32 package for Microsoft Intune.">
+  <meta property="og:title" content="InstallScout — from silent switch finder to Intune upload">
+  <meta property="og:description" content="From silent switch finder to Intune upload: analyze the installer, build a PSADT Win32 package, and upload the app with detection and logo.">
   <meta property="og:url" content="https://mthorngaard.github.io/InstallScout-releases/">
   <meta property="og:type" content="website">
   <style>
@@ -56,9 +56,8 @@
 <body>
   <main>
     <img class="mark" src="assets/installscout.png" width="88" height="88" alt="InstallScout">
-    <h1>Silent switch finder for Intune</h1>
-    <p>InstallScout reads a Windows installer without running it. It finds the silent install switches for EXE, MSI, COM, and MSIX files and builds the silent command.</p>
-    <p>From that command it can build a PSAppDeployToolkit <code>.intunewin</code> package and upload the Win32 app to Microsoft Intune, with detection, a logo, and optional supersedence.</p>
+    <h1>InstallScout</h1>
+    <p>From silent switch finder to Intune upload. InstallScout reads a Windows installer without running it, finds the silent switches, builds a PSADT <code>.intunewin</code> package, and uploads the Win32 app to Microsoft Intune with detection, a logo, and optional supersedence.</p>
     <div class="actions">
       <a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.47/InstallScout-1.8.47.zip">Download 1.8.47 (.zip)</a>
       <a class="secondary" href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.47/InstallScoutPortable.exe">Portable exe</a>
@@ -70,7 +69,7 @@
     <ul>
       <li>A silent switch finder for the installer engine, including Inno, NSIS, MSI, InstallShield, WiX Burn, and others.</li>
       <li>A check against WinGet and Chocolatey. The installer file is not uploaded.</li>
-      <li>A local Intune package, then an upload with install, uninstall, and detection.</li>
+      <li>One path to Intune: local <code>.intunewin</code> package, then upload with install, uninstall, detection, and logo.</li>
     </ul>
     <h2>Prerequisites</h2>
     <p>Windows 10 or Windows 11. Finding silent switches and building a local package does not need an Azure sign-in.</p>
