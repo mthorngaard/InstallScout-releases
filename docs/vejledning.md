@@ -4,7 +4,7 @@ InstallScout tager en Windows-installer **hele vejen til Intune**. Du giver det 
 
 Silent-switche er ét trin. Målet er pakken i Intune.
 
-Version **1.8.49**. Quick start: [quickstart.md](quickstart.md). Teknisk reference: [reference.md](reference.md). Word-udgave: [InstallScout-vejledning.docx](InstallScout-vejledning.docx). English: [guide.md](guide.md) · [InstallScout-guide.docx](InstallScout-guide.docx).
+Version **1.8.50**. Quick start: [quickstart.md](quickstart.md). Teknisk reference: [reference.md](reference.md). Word-udgave: [InstallScout-vejledning.docx](InstallScout-vejledning.docx). English: [guide.md](guide.md) · [InstallScout-guide.docx](InstallScout-guide.docx).
 
 | Fil | Motor | Typisk resultat |
 |---|---|---|
@@ -81,8 +81,8 @@ Lokal analyse kigger i binæren – markører, PE-sektioner, VersionInfo, MSI-eg
 
 | Situation | Hvad InstallScout gør |
 |---|---|
-| Wrapper: 7-Zip SFX, WinRAR SFX, IExpress, WiX Burn, InstallShield, Advanced Installer, Self Extractor | Leder efter ZIP, indlejret MSI og CAB |
-| Ukendt motor eller meget lav sikkerhed | Samme billige udpakning (ZIP / MSI / CAB) |
+| Wrapper: 7-Zip SFX, WinRAR SFX, IExpress, WiX Burn, InstallShield, Advanced Installer, Self Extractor | Leder efter ZIP, indlejret MSI, CAB og 7z (medfølgende `7za`) |
+| Ukendt motor eller meget lav sikkerhed | Samme billige udpakning (ZIP / MSI / CAB / 7z) |
 | Rene motorer: Inno, NSIS, Squirrel, DDPM, Wacom, Chrome, Python, … | Pakker **ikke** ud – den ydre EXE har allerede den rigtige dialect |
 | Self Extractor **med** ydre silent-flag (`/sAll`, `--silent`, `/silent`) | Beholder den ydre kommando (typisk Adobe-stil `/sAll /rs /rps /msi /quiet`) |
 | Self Extractor **uden** de flag | Bruger den indre setup, når den findes (ofte en MSI) |
@@ -474,6 +474,7 @@ Ukendt motor: kig i **Fundne switche** og **Bevis**. Analysér spørger også Wi
 
 - Downloadet er **ikke codesigned**. Windows eller virksomhedens sikkerhed kan advare eller blokere det. Vælg Behold / Kør alligevel, bed IT om at tillade filen, eller prøv den i en VM eller Windows Sandbox uden de politikker.
 - Programmet **installerer ikke** noget. Udpakning kører aldrig installeren. Test silent-linjen i en VM.
+- En medfølgende 7-Zip Extra `7za` bruges til indre 7z-payloads, så system-7-Zip ikke er påkrævet.
 - Online-kataloger kender ofte et andet navn eller en nyere build end din fil. Wrapper-VersionInfo (*Self Extractor*) er ikke et katalogprodukt.
 - Context er et kvalificeret gæt. Overstyr i Upload til Intune, hvis du ved bedre.
 - Intune-upload kræver Graph-rettighed og kan ramme Conditional Access.

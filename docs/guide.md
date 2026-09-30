@@ -4,7 +4,7 @@ InstallScout takes a Windows installer **all the way to Intune**. You give it an
 
 Silent switches are one step. The destination is the package in Intune.
 
-Version **1.8.49**. Quick start: [quickstart-en.md](quickstart-en.md). Technical reference: [reference-en.md](reference-en.md). Word edition: [InstallScout-guide.docx](InstallScout-guide.docx). Danish: [vejledning.md](vejledning.md).
+Version **1.8.50**. Quick start: [quickstart-en.md](quickstart-en.md). Technical reference: [reference-en.md](reference-en.md). Word edition: [InstallScout-guide.docx](InstallScout-guide.docx). Danish: [vejledning.md](vejledning.md).
 
 | File | Engine | Typical result |
 |---|---|---|
@@ -81,8 +81,8 @@ Local analysis looks inside the binary — markers, PE sections, VersionInfo, MS
 
 | Situation | What InstallScout does |
 |---|---|
-| Wrapper: 7-Zip SFX, WinRAR SFX, IExpress, WiX Burn, InstallShield, Advanced Installer, Self Extractor | Looks for ZIP, embedded MSI and CAB |
-| Unknown engine or very low confidence | Same cheap unpack (ZIP / MSI / CAB) |
+| Wrapper: 7-Zip SFX, WinRAR SFX, IExpress, WiX Burn, InstallShield, Advanced Installer, Self Extractor | Looks for ZIP, embedded MSI, CAB, and 7z (bundled `7za`) |
+| Unknown engine or very low confidence | Same cheap unpack (ZIP / MSI / CAB / 7z) |
 | Clean engines: Inno, NSIS, Squirrel, DDPM, Wacom, Chrome, Python, … | **Does not** unpack — the outer EXE already has the right dialect |
 | Self Extractor **with** outer silent flags (`/sAll`, `--silent`, `/silent`) | Keeps the outer command (typical Adobe-style `/sAll /rs /rps /msi /quiet`) |
 | Self Extractor **without** those flags | Adopts the inner setup when it is found (often an MSI) |
@@ -474,6 +474,7 @@ Unknown engine: look at **Found switches** and **Evidence**. Analyze also asks W
 
 - The download is **not code-signed**. Windows or company security may warn or block it. Choose Keep / Run anyway, ask IT to allow the file, or try it in a VM or Windows Sandbox without those policies.
 - The program **does not install** anything. Unpack never runs the installer. Test the silent line in a VM.
+- A bundled 7-Zip Extra `7za` is used for inner 7z payloads, so system 7-Zip is not required.
 - Online catalogs often know a different name or a newer build than your file. Wrapper VersionInfo (*Self Extractor*) is not a catalog product.
 - Context is a qualified guess. Override it in Upload to Intune if you know better.
 - Intune upload needs Graph permission and can hit Conditional Access.

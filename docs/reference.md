@@ -1,6 +1,6 @@
 # InstallScout – teknisk reference
 
-Version **1.8.49**. Kort forløb: [quickstart.md](quickstart.md). Brugerforløbet står i [vejledning.md](vejledning.md). Denne fil beskriver motorer, kommandolinje og Microsoft Graph. Word: [InstallScout-reference.docx](InstallScout-reference.docx).
+Version **1.8.50**. Kort forløb: [quickstart.md](quickstart.md). Brugerforløbet står i [vejledning.md](vejledning.md). Denne fil beskriver motorer, kommandolinje og Microsoft Graph. Word: [InstallScout-reference.docx](InstallScout-reference.docx).
 
 InstallScout kører ikke installeren. Den læser filen, bygger en silent-kommando, pakker PSADT 4.1.8 til `.intunewin` og opretter en Win32-app.
 
@@ -10,7 +10,7 @@ InstallScout kører ikke installeren. Den læser filen, bygger en silent-kommand
 
 En motor genkendes på byte-markører i filen, PE-sektioner og søskendefiler. Den motor med højest score vinder. `base_confidence` nedenfor er startværdien, før ekstra bevis lægges til.
 
-Wrappers (7-Zip SFX, WinRAR SFX, IExpress, Self Extractor, ukendt EXE) pakkes ud lokalt, når den ydre fil ikke selv har en pålidelig silent-linje. Rene motorer som Inno, NSIS, Wacom og DDPM pakkes ikke ud.
+Wrappers (7-Zip SFX, WinRAR SFX, IExpress, Self Extractor, ukendt EXE) pakkes ud lokalt, når den ydre fil ikke selv har en pålidelig silent-linje. Rene motorer som Inno, NSIS, Wacom og DDPM pakkes ikke ud. InstallScout medbringer 7-Zip Extra `7za` til 7z-payloads, så system-7-Zip ikke er påkrævet.
 
 `/install` sættes ikke på. Det er allerede standard for WiX Burn. `/norestart` sættes heller ikke på. Inno Setup beholder sin egen `/NORESTART`.
 

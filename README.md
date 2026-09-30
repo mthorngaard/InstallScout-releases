@@ -8,11 +8,11 @@ Use it for the full path: find the switches, package the command, then upload to
 
 ## Download
 
-The current version is **1.8.49**: [releases](https://github.com/mthorngaard/InstallScout-releases/releases/latest)
+The current version is **1.8.50**: [releases](https://github.com/mthorngaard/InstallScout-releases/releases/latest)
 
 | File | Use |
 |---|---|
-| [`InstallScout-1.8.49.zip`](https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.49/InstallScout-1.8.49.zip) | Both files in one download. |
+| [`InstallScout-1.8.50.zip`](https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.50/InstallScout-1.8.50.zip) | Both files in one download. |
 | `InstallScoutPortable.exe` | Copy it anywhere and run it. Nothing is installed. |
 | `InstallScout.msi` | Installs to Program Files and adds a Start menu shortcut. |
 
@@ -42,3 +42,5 @@ Word copies sit next to the Markdown files: [quick start](docs/InstallScout-quic
 ## Credits
 
 Intune packages are built with [PSAppDeployToolkit](https://github.com/PSAppDeployToolkit/PSAppDeployToolkit) 4.1.8 by the PSAppDeployToolkit Team. That toolkit is licensed under the [GNU Lesser General Public License v3.0](https://github.com/PSAppDeployToolkit/PSAppDeployToolkit/blob/main/COPYING.Lesser).
+
+Inner setup unpacking uses [7-Zip](https://www.7-zip.org/) Extra (`7za`) by Igor Pavlov, licensed under the GNU LGPL.

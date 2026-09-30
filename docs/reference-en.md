@@ -1,6 +1,6 @@
 # InstallScout – technical reference
 
-Version **1.8.49**. Short path: [quickstart-en.md](quickstart-en.md). The user workflow is in [guide.md](guide.md). This file covers engines, the command line, and Microsoft Graph. Word: [InstallScout-reference-en.docx](InstallScout-reference-en.docx).
+Version **1.8.50**. Short path: [quickstart-en.md](quickstart-en.md). The user workflow is in [guide.md](guide.md). This file covers engines, the command line, and Microsoft Graph. Word: [InstallScout-reference-en.docx](InstallScout-reference-en.docx).
 
 InstallScout does not run the installer. It reads the file, builds a silent command, wraps PSADT 4.1.8 as `.intunewin`, and creates a Win32 app.
 
@@ -10,7 +10,7 @@ InstallScout does not run the installer. It reads the file, builds a silent comm
 
 An engine is recognized from byte markers in the file, PE section names, and sibling files. The highest score wins. `base_confidence` below is the starting value before extra evidence is added.
 
-Wrappers (7-Zip SFX, WinRAR SFX, IExpress, Self Extractor, unknown EXE) are unpacked locally when the outer file has no reliable silent line. Clean engines such as Inno, NSIS, Wacom, and DDPM are not unpacked.
+Wrappers (7-Zip SFX, WinRAR SFX, IExpress, Self Extractor, unknown EXE) are unpacked locally when the outer file has no reliable silent line. Clean engines such as Inno, NSIS, Wacom, and DDPM are not unpacked. InstallScout ships a bundled 7-Zip Extra `7za` for 7z payloads, so a system 7-Zip install is not required.
 
 `/install` is not added. It is already the default for WiX Burn. `/norestart` is not added either. Inno Setup keeps its own `/NORESTART`.
 
