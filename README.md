@@ -16,6 +16,8 @@ The current version is **1.8.47**: [releases](https://github.com/mthorngaard/Ins
 | `InstallScoutPortable.exe` | Copy it anywhere and run it. Nothing is installed. |
 | `InstallScout.msi` | Installs to Program Files and adds a Start menu shortcut. |
 
+The download is not code-signed. Windows or company security may warn or block it. Choose Keep / Run anyway, ask IT to allow the file, or try it in a VM or Windows Sandbox without those policies.
+
 Drop an installer on the window, or use **Add files**. InstallScout does not run the installer. Review the silent command and test the package in a VM before you roll it out.
 
 ## Prerequisites
