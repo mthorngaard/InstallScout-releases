@@ -8,6 +8,8 @@ The full guide is [guide.md](guide.md). Engines, the CLI, and Graph are in [refe
 
 Double-click `InstallScoutPortable.exe`. Nothing has to be installed. The language is English. Switch to Dansk in the top-right corner. Drop an installer on the window, or use **Add files…**.
 
+The download is **not code-signed**. Windows or company security may warn or block it. Choose Keep / Run anyway, ask IT to allow the file, or try it in a VM or Windows Sandbox without those policies.
+
 To put it on the Start menu, run `portable\Install.bat`. The portable exe stays where it is and can still be copied on its own.
 
 ## 2. Analyze

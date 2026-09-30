@@ -8,6 +8,8 @@ Den fulde vejledning er [vejledning.md](vejledning.md). Motorer, CLI og Graph st
 
 Dobbeltklik `InstallScoutPortable.exe`. Der skal ikke installeres noget. Sproget er English. Skift til Dansk øverst til højre. Træk en installer ind på vinduet, eller brug **Tilføj filer…**.
 
+Downloadet er **ikke codesigned**. Windows eller virksomhedens sikkerhed kan advare eller blokere det. Vælg Behold / Kør alligevel, bed IT om at tillade filen, eller prøv den i en VM eller Windows Sandbox uden de politikker.
+
 Vil du have den i Start-menuen, så kør `portable\Install.bat`. Den portable exe bliver liggende og kan stadig kopieres for sig selv.
 
 ## 2. Analysér

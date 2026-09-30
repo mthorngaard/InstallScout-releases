@@ -19,6 +19,8 @@ Version **1.8.47**. Quick start: [quickstart-en.md](quickstart-en.md). Technical
 
 Double-click `InstallScoutPortable.exe` or run `Start.bat`. No installation is required. The UI defaults to **English**; switch to Dansk in the top-right corner.
 
+The download is **not code-signed**. Windows or company security may warn or block it. Choose Keep / Run anyway, ask IT to allow the file, or try it in a VM or Windows Sandbox without those policies.
+
 ![Empty InstallScout window with Drop an installer here and a short introduction](images/en/01-start.png)
 
 Drop an installer on the window, or use **Add files** / **Add folder**. The empty start shows **Drop an installer here** in the file list and a short introduction on the Commands tab. EXE, MSI, COM and a whole folder can be dropped.
@@ -470,6 +472,7 @@ Unknown engine: look at **Found switches** and **Evidence**. Analyze also asks W
 
 ## 9. Limits
 
+- The download is **not code-signed**. Windows or company security may warn or block it. Choose Keep / Run anyway, ask IT to allow the file, or try it in a VM or Windows Sandbox without those policies.
 - The program **does not install** anything. Unpack never runs the installer. Test the silent line in a VM.
 - Online catalogs often know a different name or a newer build than your file. Wrapper VersionInfo (*Self Extractor*) is not a catalog product.
 - Context is a qualified guess. Override it in Upload to Intune if you know better.

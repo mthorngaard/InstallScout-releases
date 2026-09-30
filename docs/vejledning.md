@@ -19,6 +19,8 @@ Version **1.8.47**. Quick start: [quickstart.md](quickstart.md). Teknisk referen
 
 Dobbeltklik `InstallScoutPortable.exe` eller kør `Start.bat`. Programmet kræver ikke installation.
 
+Downloadet er **ikke codesigned**. Windows eller virksomhedens sikkerhed kan advare eller blokere det. Vælg Behold / Kør alligevel, bed IT om at tillade filen, eller prøv den i en VM eller Windows Sandbox uden de politikker.
+
 ![Tomt InstallScout-vindue med træk-en-installer-hertil og en kort introduktion](images/01-start.png)
 
 Træk en installer ind på vinduet, eller brug **Tilføj filer** / **Tilføj mappe**. Den tomme start viser **Træk en installer hertil** i fillisten og en kort introduktion under fanen Kommandoer. EXE, MSI, COM og en hel mappe kan slippes.
@@ -470,6 +472,7 @@ Ukendt motor: kig i **Fundne switche** og **Bevis**. Analysér spørger også Wi
 
 ## 9. Grænser
 
+- Downloadet er **ikke codesigned**. Windows eller virksomhedens sikkerhed kan advare eller blokere det. Vælg Behold / Kør alligevel, bed IT om at tillade filen, eller prøv den i en VM eller Windows Sandbox uden de politikker.
 - Programmet **installerer ikke** noget. Udpakning kører aldrig installeren. Test silent-linjen i en VM.
 - Online-kataloger kender ofte et andet navn eller en nyere build end din fil. Wrapper-VersionInfo (*Self Extractor*) er ikke et katalogprodukt.
 - Context er et kvalificeret gæt. Overstyr i Upload til Intune, hvis du ved bedre.
