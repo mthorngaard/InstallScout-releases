@@ -4,7 +4,7 @@ InstallScout tager en Windows-installer **hele vejen til Intune**. Du giver det 
 
 Silent-switche er ét trin. Målet er pakken i Intune.
 
-Version **1.8.50**. Quick start: [quickstart.md](quickstart.md). Teknisk reference: [reference.md](reference.md). Word-udgave: [InstallScout-vejledning.docx](InstallScout-vejledning.docx). English: [guide.md](guide.md) · [InstallScout-guide.docx](InstallScout-guide.docx).
+Version **1.8.51**. Quick start: [quickstart.md](quickstart.md). Teknisk reference: [reference.md](reference.md). Word-udgave: [InstallScout-vejledning.docx](InstallScout-vejledning.docx). English: [guide.md](guide.md) · [InstallScout-guide.docx](InstallScout-guide.docx).
 
 | Fil | Motor | Typisk resultat |
 |---|---|---|
@@ -472,6 +472,7 @@ Ukendt motor: kig i **Fundne switche** og **Bevis**. Analysér spørger også Wi
 
 ## 9. Grænser
 
+- Øverst til højre skifter du sprog og **Mørk / Lys**-tema. Valget huskes.
 - Downloadet er **ikke codesigned**. Windows eller virksomhedens sikkerhed kan advare eller blokere det. Vælg Behold / Kør alligevel, bed IT om at tillade filen, eller prøv den i en VM eller Windows Sandbox uden de politikker.
 - Programmet **installerer ikke** noget. Udpakning kører aldrig installeren. Test silent-linjen i en VM.
 - En medfølgende 7-Zip Extra `7za` bruges til indre 7z-payloads, så system-7-Zip ikke er påkrævet.
