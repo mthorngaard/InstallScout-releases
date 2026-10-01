@@ -4,7 +4,7 @@ InstallScout takes a Windows installer **all the way to Intune**. You give it an
 
 Silent switches are one step. The destination is the package in Intune.
 
-Version **1.8.51**. Quick start: [quickstart-en.md](quickstart-en.md). Technical reference: [reference-en.md](reference-en.md). Word edition: [InstallScout-guide.docx](InstallScout-guide.docx). Danish: [vejledning.md](vejledning.md).
+Version **1.8.50**. Quick start: [quickstart-en.md](quickstart-en.md). Technical reference: [reference-en.md](reference-en.md). Word edition: [InstallScout-guide.docx](InstallScout-guide.docx). Danish: [vejledning.md](vejledning.md).
 
 | File | Engine | Typical result |
 |---|---|---|
@@ -472,7 +472,6 @@ Unknown engine: look at **Found switches** and **Evidence**. Analyze also asks W
 
 ## 9. Limits
 
-- The top-right corner switches language and **Dark / Light** theme. The choice is remembered.
 - The download is **not code-signed**. Windows or company security may warn or block it. Choose Keep / Run anyway, ask IT to allow the file, or try it in a VM or Windows Sandbox without those policies.
 - The program **does not install** anything. Unpack never runs the installer. Test the silent line in a VM.
 - A bundled 7-Zip Extra `7za` is used for inner 7z payloads, so system 7-Zip is not required.
