@@ -1,6 +1,6 @@
 # InstallScout – teknisk reference
 
-Version **1.8.50**. Kort forløb: [quickstart.md](quickstart.md). Brugerforløbet står i [vejledning.md](vejledning.md). Denne fil beskriver motorer, kommandolinje og Microsoft Graph. Word: [InstallScout-reference.docx](InstallScout-reference.docx).
+Version **1.8.51**. Kort forløb: [quickstart.md](quickstart.md). Brugerforløbet står i [vejledning.md](vejledning.md). Denne fil beskriver motorer, kommandolinje og Microsoft Graph. Word: [InstallScout-reference.docx](InstallScout-reference.docx).
 
 InstallScout kører ikke installeren. Den læser filen, bygger en silent-kommando, pakker PSADT 4.1.8 til `.intunewin` og opretter en Win32-app.
 
@@ -21,7 +21,7 @@ Wrappers (7-Zip SFX, WinRAR SFX, IExpress, Self Extractor, ukendt EXE) pakkes ud
 | `msi` | Windows Installer (MSI) | `msiexec /i "{file}" /qn` | `msiexec /i "{file}" /qb` | `msiexec /x "{product_code}" /qn` | 0.97 |
 | `inno` | Inno Setup | `"{file}" /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-` | `"{file}" /SILENT /NORESTART` | `"{app}\unins000.exe" /VERYSILENT /NORESTART` | 0.95 |
 | `wixburn` | WiX Burn | `"{file}" /quiet` | `"{file}" /passive` | `"{file}" /uninstall /quiet` | 0.93 |
-| `ddpm` | Dell Display and Peripheral Manager | `"{file}" /Silent` | `"{file}" /Silent /CreateDebugLog="%TEMP%\DDPM-install.log"` | `"{file}" /uninst` | 0.93 |
+| `ddpm` | Dell Display and Peripheral Manager | `"{file}" /Silent` | `"{file}" /Silent /CreateDebugLog="%TEMP%\DDPM-install.log"` | `"{file}" /uninst /Silent` | 0.93 |
 | `advanced_installer` | Advanced Installer | `"{file}" /exenoui /qn` | `"{file}" /exenoui /passive /qn` | `"{file}" /exenoui /x // /qn` | 0.92 |
 | `nsis` | NSIS | `"{file}" /S` | | `"{app}\uninstall.exe" /S` | 0.90 |
 | `wacom` | Wacom Tablet Driver | `"{file}" /s` | `"{file}" /s /opt nowdc` | `"{file}" /s /u` | 0.90 |
