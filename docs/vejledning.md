@@ -4,7 +4,7 @@ InstallScout tager en Windows-installer **hele vejen til Intune**. Du giver det 
 
 Silent-switche er ét trin. Målet er pakken i Intune.
 
-Version **1.8.53**. Quick start: [quickstart.md](quickstart.md). Teknisk reference: [reference.md](reference.md). Word-udgave: [InstallScout-vejledning.docx](InstallScout-vejledning.docx). English: [guide.md](guide.md) · [InstallScout-guide.docx](InstallScout-guide.docx).
+Version **1.8.54**. Quick start: [quickstart.md](quickstart.md). Teknisk reference: [reference.md](reference.md). Word-udgave: [InstallScout-vejledning.docx](InstallScout-vejledning.docx). English: [guide.md](guide.md) · [InstallScout-guide.docx](InstallScout-guide.docx).
 
 | Fil | Motor | Typisk resultat |
 |---|---|---|
@@ -322,9 +322,9 @@ Intune regner appen som installeret, når `Detection.ps1` afslutter med kode 0 o
 | EXE uden product code | Visningsnavn, udgiver og version |
 | MSIX | Pakkenavn, og versionen når den kendes |
 
-- **Navn.** Afinstallationsnavnet må være produktet uden et efterstillet Installer, Setup eller Bootstrapper. `Logi Options+ Installer` matcher `Logi Options+`. Et generisk restord som Advanced bruges ikke som navn.
+- **Navn.** Afinstallationsnavnet må være produktet uden et efterstillet Installer, Setup, Bootstrapper eller Driver. `Logi Options+ Installer` matcher `Logi Options+`. `Wacom Tablet Driver` matcher `Wacom Tablet`. Nøglens navn tæller også. Et generisk restord som Advanced bruges ikke som navn.
 - **Udgiver.** Selskabsendelser ignoreres, så `Logitech, Inc.` matcher `Logitech`, og `Microsoft Corporation` matcher `Microsoft`.
-- **Version.** Når installeren har en version, skal `DisplayVersion` være den samme eller nyere. Sammenligningen er numerisk. For en installer på `2.7.961922` tæller den version og `2.8.1`; `2.6` gør ikke. `2.8.1` er kun et eksempel på sammenligningen. Hvis der ikke blev læst en version, kræves version ikke.
+- **Version.** Når installeren har en version, skal `DisplayVersion` være den samme eller nyere. Sammenligningen er numerisk. For en installer på `2.7.961922` tæller den version og `2.8.1`; `2.6` gør ikke. `2.8.1` er kun et eksempel på sammenligningen. En bindestregsrevision som `6.4.14-1` er også opfyldt af `6.4.14`. Hvis der ikke blev læst en version, kræves version ikke. En nøgle der hedder produktet, tæller stadig, når de felter aldrig blev skrevet.
 - Product code prøves først. Når den mangler, bruges navn, udgiver og version. Både maskinens og brugerens afinstallationsnøgler læses.
 
 Indtil pakken findes for den valgte fil, er **Upload til Intune** grå. Når pakken er gemt, bliver knappen aktiv:

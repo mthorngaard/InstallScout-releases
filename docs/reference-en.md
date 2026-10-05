@@ -1,6 +1,6 @@
 # InstallScout – technical reference
 
-Version **1.8.53**. Short path: [quickstart-en.md](quickstart-en.md). The user workflow is in [guide.md](guide.md). This file covers engines, the command line, and Microsoft Graph. Word: [InstallScout-reference-en.docx](InstallScout-reference-en.docx).
+Version **1.8.54**. Short path: [quickstart-en.md](quickstart-en.md). The user workflow is in [guide.md](guide.md). This file covers engines, the command line, and Microsoft Graph. Word: [InstallScout-reference-en.docx](InstallScout-reference-en.docx).
 
 InstallScout does not run the installer. It reads the file, builds a silent command, wraps PSADT 4.1.8 as `.intunewin`, and creates a Win32 app.
 
@@ -79,9 +79,9 @@ At most 10. File flags come first (`/analytics no`, `/sso no`, and other `name y
 | EXE without a product code | DisplayName, Publisher, and version `>=` |
 | MSIX | Package name, and version when known |
 
-A trailing Installer, Setup, or Bootstrapper word may be absent from DisplayName. `Logi Options+ Installer` matches `Logi Options+`. A leftover generic word such as Advanced is not used. Legal suffixes are ignored, so `Logitech, Inc.` matches `Logitech`. Versions are compared numerically. The same version and newer count. Older does not.
+A trailing Installer, Setup, Bootstrapper, or Driver word may be absent from DisplayName. `Logi Options+ Installer` matches `Logi Options+`, and `Wacom Tablet Driver` matches `Wacom Tablet`. The uninstall key name counts too. A key named as the product still counts when DisplayName, publisher, and version are missing, as long as the key has some other value. A value that is present must still match. A leftover generic word such as Advanced is not used. Legal suffixes are ignored, so `Logitech, Inc.` matches `Logitech`. Versions are compared numerically. The same version and newer count. Older does not. A hyphen revision such as `6.4.14-1` is satisfied by both `6.4.14-1` and `6.4.14`.
 
-Keys read: `HKLM` and `HKCU`, both views including `WOW6432Node`, under `SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall`.
+Keys read: `HKLM` and `HKCU` under `SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall`, in both the 32-bit and 64-bit views. That still holds when the script itself runs as 32-bit.
 
 ---
 

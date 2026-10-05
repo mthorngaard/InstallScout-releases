@@ -4,7 +4,7 @@ InstallScout takes a Windows installer **all the way to Intune**. You give it an
 
 Silent switches are one step. The destination is the package in Intune.
 
-Version **1.8.53**. Quick start: [quickstart-en.md](quickstart-en.md). Technical reference: [reference-en.md](reference-en.md). Word edition: [InstallScout-guide.docx](InstallScout-guide.docx). Danish: [vejledning.md](vejledning.md).
+Version **1.8.54**. Quick start: [quickstart-en.md](quickstart-en.md). Technical reference: [reference-en.md](reference-en.md). Word edition: [InstallScout-guide.docx](InstallScout-guide.docx). Danish: [vejledning.md](vejledning.md).
 
 | File | Engine | Typical result |
 |---|---|---|
@@ -322,9 +322,9 @@ Intune treats the app as installed when `Detection.ps1` exits 0 and writes a lin
 | EXE without a product code | Display name, publisher and version |
 | MSIX | Package name, and the version when it is known |
 
-- **Name.** The uninstall name may be the product without a trailing Installer, Setup or Bootstrapper word. `Logi Options+ Installer` matches `Logi Options+`. A leftover generic word such as Advanced is not used as the name.
+- **Name.** The uninstall name may be the product without a trailing Installer, Setup, Bootstrapper, or Driver word. `Logi Options+ Installer` matches `Logi Options+`. `Wacom Tablet Driver` matches `Wacom Tablet`. The registry key name counts as well. A leftover generic word such as Advanced is not used as the name.
 - **Publisher.** Legal suffixes are ignored, so `Logitech, Inc.` matches `Logitech`, and `Microsoft Corporation` matches `Microsoft`.
-- **Version.** When the installer has a version, `DisplayVersion` must be the same or newer. The comparison is numeric. For an installer at `2.7.961922`, that version and `2.8.1` count; `2.6` does not. `2.8.1` is only an example of the comparison. If no version was read, version is not required.
+- **Version.** When the installer has a version, `DisplayVersion` must be the same or newer. The comparison is numeric. For an installer at `2.7.961922`, that version and `2.8.1` count; `2.6` does not. `2.8.1` is only an example of the comparison. A hyphen revision such as `6.4.14-1` is also satisfied by `6.4.14`. If no version was read, version is not required. A key named as the product still counts when those values were never written.
 - Product code is tried first. When it is missing, name, publisher and version are used. Both the machine and the user uninstall keys are read.
 
 Until a package exists for the selected file, **Upload to Intune** is grey. After the package is saved, the button becomes active:

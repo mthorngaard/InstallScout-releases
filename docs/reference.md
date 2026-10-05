@@ -1,6 +1,6 @@
 # InstallScout – teknisk reference
 
-Version **1.8.53**. Kort forløb: [quickstart.md](quickstart.md). Brugerforløbet står i [vejledning.md](vejledning.md). Denne fil beskriver motorer, kommandolinje og Microsoft Graph. Word: [InstallScout-reference.docx](InstallScout-reference.docx).
+Version **1.8.54**. Kort forløb: [quickstart.md](quickstart.md). Brugerforløbet står i [vejledning.md](vejledning.md). Denne fil beskriver motorer, kommandolinje og Microsoft Graph. Word: [InstallScout-reference.docx](InstallScout-reference.docx).
 
 InstallScout kører ikke installeren. Den læser filen, bygger en silent-kommando, pakker PSADT 4.1.8 til `.intunewin` og opretter en Win32-app.
 
@@ -79,9 +79,9 @@ Op til 10 forslag. Først flag fundet i filen (`/analytics no`, `/sso no` og and
 | EXE uden product code | DisplayName, Publisher og version `>=` |
 | MSIX | Pakkenavn, og version når den kendes |
 
-Et efterstillet Installer, Setup eller Bootstrapper må mangle i DisplayName. `Logi Options+ Installer` matcher `Logi Options+`. Et generisk restord som Advanced bruges ikke. Selskabsendelser ignoreres, så `Logitech, Inc.` matcher `Logitech`. Version sammenlignes numerisk. Samme version og nyere tæller. Ældre gør ikke.
+Et efterstillet Installer, Setup, Bootstrapper eller Driver må mangle i DisplayName. `Logi Options+ Installer` matcher `Logi Options+`, og `Wacom Tablet Driver` matcher `Wacom Tablet`. Nøglens navn tæller også. En nøgle der hedder produktet, tæller selv om DisplayName, udgiver og version mangler, når nøglen i øvrigt har indhold. Et udfyldt felt skal stadig matche. Et generisk restord som Advanced bruges ikke. Selskabsendelser ignoreres, så `Logitech, Inc.` matcher `Logitech`. Version sammenlignes numerisk. Samme version og nyere tæller. Ældre gør ikke. En bindestregsrevision som `6.4.14-1` er opfyldt af både `6.4.14-1` og `6.4.14`.
 
-Nøgler der læses: `HKLM` og `HKCU`, begge med `WOW6432Node`, under `SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall`.
+Nøgler der læses: `HKLM` og `HKCU` under `SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall`, i både 32-bit- og 64-bit-visningen. Det gælder også, når scriptet selv kører som 32-bit.
 
 ---
 

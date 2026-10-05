@@ -8,11 +8,11 @@ Use it for the full path: find the switches, package the command, then upload to
 
 ## Download
 
-The current version is **1.8.53**: [releases](https://github.com/mthorngaard/InstallScout-releases/releases/latest)
+The current version is **1.8.54**: [releases](https://github.com/mthorngaard/InstallScout-releases/releases/latest)
 
 | File | Use |
 |---|---|
-| [`InstallScout-1.8.53.zip`](https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.53/InstallScout-1.8.53.zip) | Both files in one download. |
+| [`InstallScout-1.8.54.zip`](https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.54/InstallScout-1.8.54.zip) | Both files in one download. |
 | `InstallScoutPortable.exe` | Copy it anywhere and run it. Nothing is installed. |
 | `InstallScout.msi` | Installs to Program Files and adds a Start menu shortcut. |
 
