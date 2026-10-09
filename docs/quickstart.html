@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>InstallScout hurtig start — fra installer til Intune</title>
+  <meta name="description" content="Analysér en Windows-installer, byg en PSADT .intunewin-pakke, og upload Win32-appen til Microsoft Intune.">
+  <link rel="canonical" href="https://mthorngaard.github.io/InstallScout-releases/docs/quickstart.html">
+  <link rel="alternate" hreflang="en" href="https://mthorngaard.github.io/InstallScout-releases/docs/quickstart-en.html">
+  <link rel="alternate" hreflang="da" href="https://mthorngaard.github.io/InstallScout-releases/docs/quickstart.html">
+  <link rel="alternate" hreflang="x-default" href="https://mthorngaard.github.io/InstallScout-releases/docs/quickstart-en.html">
+  <meta property="og:title" content="InstallScout hurtig start — fra installer til Intune">
+  <meta property="og:description" content="Analysér en Windows-installer, byg en PSADT .intunewin-pakke, og upload Win32-appen til Microsoft Intune.">
+  <meta property="og:url" content="https://mthorngaard.github.io/InstallScout-releases/docs/quickstart.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://mthorngaard.github.io/InstallScout-releases/assets/installscout.png">
+  <meta property="og:locale" content="da_DK">
+  <meta property="og:locale:alternate" content="en_US">
+  <link rel="icon" href="../assets/installscout.png">
+  <link rel="stylesheet" href="../assets/docs.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "InstallScout hurtig start — fra installer til Intune",
+  "description": "Analysér en Windows-installer, byg en PSADT .intunewin-pakke, og upload Win32-appen til Microsoft Intune.",
+  "inLanguage": "da",
+  "mainEntityOfPage": "https://mthorngaard.github.io/InstallScout-releases/docs/quickstart.html",
+  "isPartOf": {
+    "@type": "SoftwareApplication",
+    "@id": "https://mthorngaard.github.io/InstallScout-releases/#app",
+    "name": "InstallScout",
+    "url": "https://mthorngaard.github.io/InstallScout-releases/"
+  }
+}
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="../"><img src="../assets/installscout.png" width="40" height="40" alt="">InstallScout</a>
+      <nav aria-label="Dokumentation"><a href="quickstart.html" aria-current="page">Hurtig start</a><a href="vejledning.html">Vejledning</a><a href="reference.html">Reference</a><a href="quickstart-en.html" hreflang="en">English</a></nav>
+    </header>
+    <article>
+<h1>InstallScout – quick start</h1>
+<p>Version <strong>1.8.54</strong>. Fra en installer til en Win32-app i Intune. Programmet kører ikke installeren.</p>
+<p>Den fulde vejledning er <a href="vejledning.html">vejledning.html</a>. Motorer, CLI og Graph står i <a href="reference.html">reference.html</a>. Word: <a href="InstallScout-quickstart.docx">InstallScout-quickstart.docx</a>.</p>
+<h2>1. Start</h2>
+<p>Dobbeltklik <code>InstallScoutPortable.exe</code>. Der skal ikke installeres noget. Sproget er English. Skift til Dansk øverst til højre. Træk en installer ind på vinduet, eller brug <strong>Tilføj filer…</strong>.</p>
+<p>Downloadet er <strong>ikke codesigned</strong>. Windows eller virksomhedens sikkerhed kan advare eller blokere det. Vælg Behold / Kør alligevel, bed IT om at tillade filen, eller prøv den i en VM eller Windows Sandbox uden de politikker.</p>
+<p>Vil du have den i Start-menuen, så kør <code>portable\Install.bat</code>. Den portable exe bliver liggende og kan stadig kopieres for sig selv.</p>
+<h2>2. Analysér</h2>
+<ol><li><strong>Tilføj filer…</strong> og vælg en EXE, MSI, COM eller MSIX.</li><li>Klik <strong>Analysér</strong>.</li></ol>
+<p>Den grønne linje er silent-kommandoen. Under den kan der ligge <strong>Foreslåede switche</strong>. Sæt flueben for at tage en switch med, og fjern det for at tage den ud. <code>/install</code> og <code>/norestart</code> sættes ikke på automatisk. Inno beholder <code>/NORESTART</code>.</p>
+<p>Ret linjen, eller skriv et ekstra flag under <strong>Ekstra switche</strong> og klik <strong>Tilføj</strong>. Test kommandoen i en VM, før du ruller den ud.</p>
+<h2>3. Pak</h2>
+<p>Klik <strong>Intune-pakke…</strong> og vælg en mappe. Der gemmes en <code>.intunewin</code>, PSADT-kilden og <code>Detection.ps1</code>.</p>
+<p><strong>Upload til Intune</strong> er grå, indtil pakken findes. Ændrer du kommandoen bagefter, skal pakken laves igen.</p>
+<h2>4. Upload</h2>
+<p>Klik <strong>Upload til Intune…</strong>.</p>
+<ol><li>Ret <strong>Navn i Intune</strong>, hvis Company Portal skal hedde noget andet end produkt og version.</li><li>Lad <strong>System</strong> stå, medmindre appen er per bruger (typisk Squirrel).</li><li>Tjek logoet. En MSI har ofte intet ikon. Vælg en fil, indsæt et billede, eller fjern logoet.</li><li>Feltet viser én Edge-profil. Fold det ud for at vælge en anden, og klik <strong>Log på Intune</strong>. Vent til der står <em>Logget på som …</em>. Login er bundet til tenant og Client ID.</li><li>Vælg evt. ældre apps under supersedence. Ingenting er valgt på forhånd. <strong>Update</strong> installerer ovenpå. <strong>Replace</strong> afinstallerer først.</li><li>Klik <strong>Upload</strong>.</li></ol>
+<p>Krav: en konto der kan oprette Win32-apps (<strong>Intune Administrator</strong>, eller Intune-rollen <strong>Application Manager</strong>) og admin-consent for <code>DeviceManagementApps.ReadWrite.All</code>. InstallScout opretter ikke sin egen app.</p>
+<h2>Samme løb fra kommandolinjen</h2>
+<pre><code class="language-powershell">.\InstallScoutPortable.exe --cli .\setup.exe --intune C:\out\intune --publish-intune --icon .\logo.png</code></pre>
+<p>Uden <code>--icon</code> bruges ikonet fra EXE’en, hvis der er et.</p>
+<h2>Detection, kort</h2>
+<p>Intune ser appen som installeret, når <code>Detection.ps1</code> skriver en linje og afslutter med kode 0.</p>
+<ul><li>En MSI matches på product code.</li><li>En EXE matches på navn, udgiver og version. Versionen skal være den samme eller nyere.</li><li><code>Logi Options+ Installer</code> matcher <code>Logi Options+</code>. <code>Logitech, Inc.</code> matcher <code>Logitech</code>.</li></ul>
+    </article>
+    <footer>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.54/InstallScout-1.8.54.zip">Hent 1.8.54 (.zip)</a> · <a href="../">InstallScout</a></p>
+    </footer>
+  </div>
+</body>
+</html>

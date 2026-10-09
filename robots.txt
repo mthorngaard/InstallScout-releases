@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /*.md$
+Disallow: /*.docx$
+
+Sitemap: https://mthorngaard.github.io/InstallScout-releases/sitemap.xml

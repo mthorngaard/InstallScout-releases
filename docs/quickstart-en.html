@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>InstallScout quick start — from installer to Intune</title>
+  <meta name="description" content="Analyze a Windows installer, build a PSADT .intunewin package, and upload the Win32 app to Microsoft Intune. The installer is not run.">
+  <link rel="canonical" href="https://mthorngaard.github.io/InstallScout-releases/docs/quickstart-en.html">
+  <link rel="alternate" hreflang="en" href="https://mthorngaard.github.io/InstallScout-releases/docs/quickstart-en.html">
+  <link rel="alternate" hreflang="da" href="https://mthorngaard.github.io/InstallScout-releases/docs/quickstart.html">
+  <link rel="alternate" hreflang="x-default" href="https://mthorngaard.github.io/InstallScout-releases/docs/quickstart-en.html">
+  <meta property="og:title" content="InstallScout quick start — from installer to Intune">
+  <meta property="og:description" content="Analyze a Windows installer, build a PSADT .intunewin package, and upload the Win32 app to Microsoft Intune. The installer is not run.">
+  <meta property="og:url" content="https://mthorngaard.github.io/InstallScout-releases/docs/quickstart-en.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://mthorngaard.github.io/InstallScout-releases/assets/installscout.png">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="da_DK">
+  <link rel="icon" href="../assets/installscout.png">
+  <link rel="stylesheet" href="../assets/docs.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "InstallScout quick start — from installer to Intune",
+  "description": "Analyze a Windows installer, build a PSADT .intunewin package, and upload the Win32 app to Microsoft Intune. The installer is not run.",
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://mthorngaard.github.io/InstallScout-releases/docs/quickstart-en.html",
+  "isPartOf": {
+    "@type": "SoftwareApplication",
+    "@id": "https://mthorngaard.github.io/InstallScout-releases/#app",
+    "name": "InstallScout",
+    "url": "https://mthorngaard.github.io/InstallScout-releases/"
+  }
+}
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="../"><img src="../assets/installscout.png" width="40" height="40" alt="">InstallScout</a>
+      <nav aria-label="Documentation"><a href="quickstart-en.html" aria-current="page">Quick start</a><a href="guide.html">Guide</a><a href="reference-en.html">Reference</a><a href="quickstart.html" hreflang="da">Dansk</a></nav>
+    </header>
+    <article>
+<h1>InstallScout – quick start</h1>
+<p>Version <strong>1.8.54</strong>. From an installer to a Win32 app in Intune. The program does not run the installer.</p>
+<p>The full guide is <a href="guide.html">guide.html</a>. Engines, the CLI, and Graph are in <a href="reference-en.html">reference-en.html</a>. Word: <a href="InstallScout-quickstart-en.docx">InstallScout-quickstart-en.docx</a>.</p>
+<h2>1. Start</h2>
+<p>Double-click <code>InstallScoutPortable.exe</code>. Nothing has to be installed. The language is English. Switch to Dansk in the top-right corner. Drop an installer on the window, or use <strong>Add files…</strong>.</p>
+<p>The download is <strong>not code-signed</strong>. Windows or company security may warn or block it. Choose Keep / Run anyway, ask IT to allow the file, or try it in a VM or Windows Sandbox without those policies.</p>
+<p>To put it on the Start menu, run <code>portable\Install.bat</code>. The portable exe stays where it is and can still be copied on its own.</p>
+<h2>2. Analyze</h2>
+<ol><li><strong>Add files…</strong> and choose an EXE, MSI, COM, or MSIX.</li><li>Click <strong>Analyze</strong>.</li></ol>
+<p>The green line is the silent command. <strong>Suggested switches</strong> may appear under it. Tick a switch to add it, and untick to remove it. <code>/install</code> and <code>/norestart</code> are not added automatically. Inno keeps <code>/NORESTART</code>.</p>
+<p>Edit the line, or type an extra flag under <strong>Extra switches</strong> and click <strong>Add</strong>. Test the command in a VM before you roll it out.</p>
+<h2>3. Package</h2>
+<p>Click <strong>Intune package…</strong> and choose a folder. That saves an <code>.intunewin</code>, the PSADT source, and <code>Detection.ps1</code>.</p>
+<p><strong>Upload to Intune</strong> stays grey until the package exists. If you change the command afterwards, build the package again.</p>
+<h2>4. Upload</h2>
+<p>Click <strong>Upload to Intune…</strong>.</p>
+<ol><li>Edit <strong>Name in Intune</strong> if Company Portal should not show the product name and version.</li><li>Leave <strong>System</strong> unless the app is per user (typically Squirrel).</li><li>Check the logo. An MSI often has no icon. Choose a file, paste an image, or remove the logo.</li><li>The field shows one Edge profile. Open it to pick another, then click <strong>Sign in to Intune</strong>. Wait until it says <em>Signed in as …</em>. Sign-in is bound to the tenant and Client ID.</li><li>Optionally pick older apps under supersedence. Nothing is selected beforehand. <strong>Update</strong> installs over the old app. <strong>Replace</strong> uninstalls it first.</li><li>Click <strong>Upload</strong>.</li></ol>
+<p>Requirement: an account that can create Win32 apps (<strong>Intune Administrator</strong>, or the Intune role <strong>Application Manager</strong>) and admin consent for <code>DeviceManagementApps.ReadWrite.All</code>. InstallScout does not create its own app.</p>
+<h2>The same run from the command line</h2>
+<pre><code class="language-powershell">.\InstallScoutPortable.exe --cli .\setup.exe --intune C:\out\intune --publish-intune --icon .\logo.png</code></pre>
+<p>Without <code>--icon</code>, the icon is taken from the EXE when one is present.</p>
+<h2>Detection, in short</h2>
+<p>Intune treats the app as installed when <code>Detection.ps1</code> writes a line and exits 0.</p>
+<ul><li>An MSI is matched on its product code.</li><li>An EXE is matched on name, publisher, and version. The version must be the same or newer.</li><li><code>Logi Options+ Installer</code> matches <code>Logi Options+</code>. <code>Logitech, Inc.</code> matches <code>Logitech</code>.</li></ul>
+    </article>
+    <footer>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.54/InstallScout-1.8.54.zip">Download 1.8.54 (.zip)</a> · <a href="../">InstallScout</a></p>
+    </footer>
+  </div>
+</body>
+</html>

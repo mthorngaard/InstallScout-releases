@@ -33,9 +33,9 @@ Upload to Intune also needs:
 
 ## Documentation
 
-**Quick start:** [English](docs/quickstart-en.md) · [Dansk](docs/quickstart.md)  
-**Guide:** [English](docs/guide.md) · [Dansk](docs/vejledning.md)  
-**Technical reference:** [English](docs/reference-en.md) · [Dansk](docs/reference.md)
+**Quick start:** [English](https://mthorngaard.github.io/InstallScout-releases/docs/quickstart-en.html) · [Dansk](https://mthorngaard.github.io/InstallScout-releases/docs/quickstart.html)  
+**Guide:** [English](https://mthorngaard.github.io/InstallScout-releases/docs/guide.html) · [Dansk](https://mthorngaard.github.io/InstallScout-releases/docs/vejledning.html)  
+**Technical reference:** [English](https://mthorngaard.github.io/InstallScout-releases/docs/reference-en.html) · [Dansk](https://mthorngaard.github.io/InstallScout-releases/docs/reference.html)
 
 Word copies sit next to the Markdown files: [quick start](docs/InstallScout-quickstart-en.docx), [guide](docs/InstallScout-guide.docx), and [reference](docs/InstallScout-reference-en.docx). Danish Word files use the same names without `-en`.
 

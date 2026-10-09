@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Find silent switche og upload til Intune — InstallScout</title>
+  <meta name="description" content="Find silent switche til Inno, NSIS, MSI og InstallShield, byg en .intunewin-pakke, og upload Win32-appen til Intune.">
+  <link rel="canonical" href="https://mthorngaard.github.io/InstallScout-releases/docs/vejledning.html">
+  <link rel="alternate" hreflang="en" href="https://mthorngaard.github.io/InstallScout-releases/docs/guide.html">
+  <link rel="alternate" hreflang="da" href="https://mthorngaard.github.io/InstallScout-releases/docs/vejledning.html">
+  <link rel="alternate" hreflang="x-default" href="https://mthorngaard.github.io/InstallScout-releases/docs/guide.html">
+  <meta property="og:title" content="Find silent switche og upload til Intune — InstallScout">
+  <meta property="og:description" content="Find silent switche til Inno, NSIS, MSI og InstallShield, byg en .intunewin-pakke, og upload Win32-appen til Intune.">
+  <meta property="og:url" content="https://mthorngaard.github.io/InstallScout-releases/docs/vejledning.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://mthorngaard.github.io/InstallScout-releases/assets/installscout.png">
+  <meta property="og:locale" content="da_DK">
+  <meta property="og:locale:alternate" content="en_US">
+  <link rel="icon" href="../assets/installscout.png">
+  <link rel="stylesheet" href="../assets/docs.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Find silent switche og upload til Intune — InstallScout",
+  "description": "Find silent switche til Inno, NSIS, MSI og InstallShield, byg en .intunewin-pakke, og upload Win32-appen til Intune.",
+  "inLanguage": "da",
+  "mainEntityOfPage": "https://mthorngaard.github.io/InstallScout-releases/docs/vejledning.html",
+  "isPartOf": {
+    "@type": "SoftwareApplication",
+    "@id": "https://mthorngaard.github.io/InstallScout-releases/#app",
+    "name": "InstallScout",
+    "url": "https://mthorngaard.github.io/InstallScout-releases/"
+  }
+}
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="../"><img src="../assets/installscout.png" width="40" height="40" alt="">InstallScout</a>
+      <nav aria-label="Dokumentation"><a href="quickstart.html">Hurtig start</a><a href="vejledning.html" aria-current="page">Vejledning</a><a href="reference.html">Reference</a><a href="guide.html" hreflang="en">English</a></nav>
+    </header>
+    <article>
+<h1>InstallScout – vejledning</h1>
+<p>InstallScout tager en Windows-installer <strong>hele vejen til Intune</strong>. Du giver det en EXE, MSI, COM eller MSIX. Det kører ikke installeren – det analyserer filen, lader dig rette silent-kommandoen, laver en lokal <code>.intunewin</code> og <strong>uploader Win32-appen</strong> med install, uninstall, detection og app-logo.</p>
+<p>Silent-switche er ét trin. Målet er pakken i Intune.</p>
+<p>Version <strong>1.8.54</strong>. Quick start: <a href="quickstart.html">quickstart.html</a>. Teknisk reference: <a href="reference.html">reference.html</a>. Word-udgave: <a href="InstallScout-vejledning.docx">InstallScout-vejledning.docx</a>. English: <a href="guide.html">guide.html</a> · <a href="InstallScout-guide.docx">InstallScout-guide.docx</a>.</p>
+<div class="table-wrap"><table><thead><tr><th>Fil</th><th>Motor</th><th>Typisk resultat</th></tr></thead><tbody><tr><td><code>Git-2.51.0-64-bit.exe</code></td><td>Inno Setup</td><td>Lokal og online enige om <code>/VERYSILENT …</code> · <strong>System</strong> · pakkes ikke ud</td></tr><tr><td><code>jre-8u491-windows-x64.exe</code></td><td>InstallShield</td><td>Lokal <code>/s /v&quot;/qn&quot;</code> · online Java 8 <code>/S</code> · <strong>System</strong></td></tr><tr><td><code>AcroRdrDC….exe</code></td><td>Self Extractor</td><td>Ydre <code>/sAll /rs /rps /msi /quiet</code> · online <strong>Acrobat Reader</strong> · <strong>System</strong></td></tr><tr><td><code>SlackSetup.exe</code></td><td>Squirrel</td><td>Per-user · <strong>User</strong></td></tr></tbody></table></div>
+<hr>
+<h2>1. Start og vindue</h2>
+<p>Dobbeltklik <code>InstallScoutPortable.exe</code> eller kør <code>Start.bat</code>. Programmet kræver ikke installation. <strong>Om…</strong> ved siden af sprogfeltet viser version, udvikler og links til GitHub.</p>
+<p>Downloadet er <strong>ikke codesigned</strong>. Windows eller virksomhedens sikkerhed kan advare eller blokere det. Vælg Behold / Kør alligevel, bed IT om at tillade filen, eller prøv den i en VM eller Windows Sandbox uden de politikker.</p>
+<figure><img src="images/01-start.png" alt="Tomt InstallScout-vindue med træk-en-installer-hertil og en kort introduktion"><figcaption>Tomt InstallScout-vindue med træk-en-installer-hertil og en kort introduktion</figcaption></figure>
+<p>Træk en installer ind på vinduet, eller brug <strong>Tilføj filer</strong> / <strong>Tilføj mappe</strong>. Den tomme start viser <strong>Træk en installer hertil</strong> i fillisten og en kort introduktion under fanen Kommandoer. EXE, MSI, COM og en hel mappe kan slippes.</p>
+<p>Knapperne ligger på to rækker. Øverst: tilføj og <strong>Analysér</strong>. Nedenunder: kopiér, pakke og <strong>Upload til Intune</strong>. Sproget skiftes øverst til højre. Standard er English.</p>
+<p><strong>Venstre:</strong> filer, motor og sikkerhed (hvor sikker analysen er).<br><strong>Højre:</strong> anbefalet silent-kommando (redigerbar), feltet <strong>Ekstra switche</strong>, plus fanerne Kommandoer, Online, Intune, Detection, PSADT, Fundne switche, Bevis og MSI/Version.</p>
+<p>Under knapperne ligger <strong>status og progress</strong> på en egen linje, så de er synlige også når vinduet ikke er maksimeret.</p>
+<div class="table-wrap"><table><thead><tr><th>Knap</th><th>Funktion</th></tr></thead><tbody><tr><td>Tilføj filer / mappe</td><td>Vælg EXE, MSI, COM, MSIX</td></tr><tr><td><strong>Analysér</strong></td><td>Lokal læsning af filen</td></tr><tr><td><strong>Analysér</strong></td><td>Læser filen lokalt og slår derefter op i WinGet og Chocolatey (kun navn/vendor)</td></tr><tr><td><strong>Silent Install HQ</strong></td><td>Åbner en navnesøgning i browseren – filen uploades ikke, kommandoen overskrives ikke</td></tr><tr><td>Kopiér kommando</td><td>Silent-linjen til udklipsholder</td></tr><tr><td>PSADT-pakke…</td><td>Mappe med PSADT 4.1.8</td></tr><tr><td>Intune-pakke…</td><td>Lokal <code>.intunewin</code> + detection – <strong>skal</strong> laves før upload</td></tr><tr><td><strong>Upload til Intune…</strong></td><td>Log på og opret Win32-appen (logo, context, detection, <strong>supersedence</strong>)</td></tr><tr><td><strong>Tilføj / Gem kommando</strong></td><td>Manuelle extra switche eller gem den redigerede linje</td></tr><tr><td>Brug online-switche</td><td>Overskriv den lokale kommando med katalogets</td></tr></tbody></table></div>
+<hr>
+<h2>2. Arbejdsgang</h2>
+<ul class="flow"><li>Tilføj installer → Analysér</li><li>Analysér → Silent-kommando</li><li>Silent-kommando → Intune-pakke</li><li>Analysér → WinGet og Chocolatey</li><li>WinGet og Chocolatey → Intune-pakke</li><li>Analysér → System eller User</li><li>System eller User → Intune-pakke</li><li>Intune-pakke → Test i VM</li><li>Test i VM → Upload til Intune</li></ul>
+<p>Hele forløbet slutter med upload. Silent-kommandoen er et mellemtrin.</p>
+<ol><li>Tilføj filen og klik <strong>Analysér</strong>.</li><li>Læs den grønne silent-kommando. Ret den, eller tilføj extra switche, og klik <strong>Gem kommando</strong> / <strong>Tilføj</strong>.</li><li>Læs fanen <strong>Online</strong>, når den bliver udfyldt. En sikker lokal motor beholdes, hvis kataloget er uenigt. Et svagt lokalt gæt skiftes, når WinGet eller Chocolatey har et matchende produkt. Ved <strong>none</strong>: <strong>Silent Install HQ</strong> (kun navnesøgning).</li><li>Åbn <strong>Intune</strong> og tjek <strong>Install context</strong> (System/User).</li><li>Lav <strong>Intune-pakke</strong> (lokal <code>.intunewin</code>). Test med <code>Invoke-AppDeployToolkit.exe</code>.</li><li><strong>Upload til Intune</strong> – dialogen åbner, så navn, kommando, logo, afløsning og login er med fra start. Én Edge-profil vises; fold feltet ud for at vælge en anden. <strong>Log på Intune</strong>, <strong>Annuller</strong> og <strong>Upload</strong> står på samme række.</li></ol>
+<hr>
+<h2>3. Lokal kontrol af switche</h2>
+<p>Lokal analyse kigger i binæren – markører, PE-sektioner, VersionInfo, MSI-egenskaber og tekst-switche i filen. Den vælger en motor (Inno, NSIS, InstallShield, MSI, Self Extractor, …) og bygger kommandoen ud fra den motors kendte silent-flag.</p>
+<p><strong>Indre setup (udpakning)</strong> sker lokalt og <strong>uden at køre installeren</strong>. Målet er silent-linjen (og filen i <code>Files\</code>) fra den payload, der faktisk installerer produktet.</p>
+<div class="table-wrap"><table><thead><tr><th>Situation</th><th>Hvad InstallScout gør</th></tr></thead><tbody><tr><td>Wrapper: 7-Zip SFX, WinRAR SFX, IExpress, WiX Burn, InstallShield, Advanced Installer, Self Extractor</td><td>Leder efter ZIP, indlejret MSI, CAB og 7z (medfølgende <code>7za</code>)</td></tr><tr><td>Ukendt motor eller meget lav sikkerhed</td><td>Samme billige udpakning (ZIP / MSI / CAB / 7z)</td></tr><tr><td>Rene motorer: Inno, NSIS, Squirrel, DDPM, Wacom, Chrome, Python, …</td><td>Pakker <strong>ikke</strong> ud – den ydre EXE har allerede den rigtige dialect</td></tr><tr><td>Self Extractor <strong>med</strong> ydre silent-flag (<code>/sAll</code>, <code>--silent</code>, <code>/silent</code>)</td><td>Beholder den ydre kommando (typisk Adobe-stil <code>/sAll /rs /rps /msi /quiet</code>)</td></tr><tr><td>Self Extractor <strong>uden</strong> de flag</td><td>Bruger den indre setup, når den findes (ofte en MSI)</td></tr></tbody></table></div>
+<p>Installeren køres aldrig for at pakke ud. Store vendor-SFX’er udtrækkes derfor ikke bare for at bekræfte et <code>/sAll</code>, der allerede står i filen.</p>
+<p><strong>Hvad du skal kigge efter</strong></p>
+<ul><li><strong>Motor + sikkerhed</strong> – 75 %+ er typisk brugbart. Under ~40 % skal du læse bevis-fanen.</li><li><strong>Anbefalet silent install</strong> – den kommando, PSADT og Intune bruger.</li><li><strong>Fundne switche</strong> – rå flag, der faktisk står i filen.</li><li><strong>Bevis og noter</strong> – hvorfor motoren blev valgt, og faldgruber (fx at <code>/S</code> ikke virker på Inno).</li></ul>
+<h3>Eksempel: Git (Inno Setup)</h3>
+<figure><img src="images/02-lokal-analyse.png" alt="Git analyseret som Inno Setup med VERYSILENT-kommando"><figcaption>Git analyseret som Inno Setup med VERYSILENT-kommando</figcaption></figure>
+<p>Her er den lokale konklusion:</p>
+<pre><code class="language-text">Motor: Inno Setup · sikkerhed 95 %
+&quot;C:\pkg\Git-2.51.0-64-bit.exe&quot; /VERYSILENT /NORESTART /SUPPRESSMSGBOXES /SP-</code></pre>
+<p>Inno bruger <strong>ikke</strong> <code>/S</code>. Det står i noterne. Kommandoer-fanen viser også PowerShell-varianten.</p>
+<h3>Eksempel: Java 8 (InstallShield + indlejret MSI)</h3>
+<p>Java Platform SE 8 detekteres som InstallShield. Silent-linjen bliver:</p>
+<pre><code class="language-text">jre-8u491-windows-x64.exe /s /v&quot;/qn&quot;</code></pre>
+<p><code>/s</code> er InstallShield; <code>/v&quot;/qn&quot;</code> sendes videre til den indlejrede MSI. Det er den lokale, filbaserede sandhed – også selv om WinGet kalder produktet noget andet.</p>
+<p>I PSADT-pakken startes en InstallShield-linje med anførselstegn via <code>cmd /d /s /c</code>, så <code>/v&quot;/qn&quot;</code> bevares. Pakken hæver sig selv, hvis den ikke allerede kører som administrator. Intune som SYSTEM er allerede administrator og springer det over.</p>
+<h3>Eksempel: vendor Self Extractor (Adobe og andre)</h3>
+<p><code>FileDescription</code> / <code>ProductName</code> <strong>Self Extractor</strong> er en vendor-wrapper-klasse, ikke et produkt. Adobe, Lenovo og andre bruger samme etiket.</p>
+<ul><li>Hvis <code>/sAll</code> eller <code>/rps</code> står i filen, bliver linjen <code>&quot;fil.exe&quot; /sAll /rs /rps /msi /quiet</code>.</li><li>Hvis <code>--silent</code> eller <code>/silent</code> står i filen, bruges den dialect i stedet.</li><li>Hvis der ikke er et ydre silent-flag, udpakkes den indre MSI/EXE, og de switche bruges.</li><li>UI kan stadig vise <em>Adobe Self Extractor</em> som motor-navn (fra VersionInfo). <strong>Produktet</strong> til Intune og online-søgning er det rigtige navn eller filstammen (<code>AcroRdrDC</code>), ikke wrapper-etiketten.</li></ul>
+<p><strong>Andre typiske lokale defaults</strong></p>
+<div class="table-wrap"><table><thead><tr><th>Motor</th><th>Silent</th></tr></thead><tbody><tr><td>MSI / WiX</td><td><code>msiexec /i fil.msi /qn</code></td></tr><tr><td>NSIS</td><td><code>/S</code> (stort S)</td></tr><tr><td>Advanced Installer</td><td><code>/exenoui /qn</code></td></tr><tr><td>WiX Burn</td><td><code>/quiet</code></td></tr><tr><td>7-Zip SFX / Wacom</td><td><code>/s</code></td></tr><tr><td>Self Extractor</td><td><code>/sAll …</code> (uninstall <code>/uninst</code>) eller høstet <code>--silent</code> / <code>/silent</code></td></tr><tr><td>DDPM</td><td><code>/Silent</code> (ikke InstallShield <code>/s /v&quot;/qn&quot;</code>)</td></tr></tbody></table></div>
+<p><code>/install</code> sættes ikke på. Det er allerede standardhandlingen for WiX Burn. <code>/norestart</code> sættes heller ikke på. Inno Setup beholder sin egen <code>/NORESTART</code>. Skriv <code>/norestart</code> under <strong>Ekstra switche</strong>, hvis en stille installation ikke må genstarte pc&#x27;en.</p>
+<h3>Manuelle switche</h3>
+<p>Den grønne linje er <strong>redigerbar</strong>. Under den ligger <strong>Ekstra switche</strong>, <strong>Tilføj</strong> og <strong>Gem kommando</strong>.</p>
+<figure><img src="images/08-manuelle-switche.png" alt="Ekstra switche-felt, Tilføj og Gem kommando under silent-linjen"><figcaption>Ekstra switche-felt, Tilføj og Gem kommando under silent-linjen</figcaption></figure>
+<ul><li>Ret hele kommandoen og klik <strong>Gem kommando</strong> (eller Enter i linjen).</li><li>Skriv kun de extra flag i <strong>Ekstra switche</strong>, fx <code>/LOG=C:\logs\app.log</code> eller <code>ALLUSERS=1</code>, og klik <strong>Tilføj</strong>. Stien til installeren røres ikke.</li><li><strong>Foreslåede switche</strong> vises under feltet, når filen eller motoren har valgfrie flag. Hver linje har en kort beskrivelse. Sæt flueben for at tage switchen med i kommandoen, og fjern det for at tage den ud. Logi Options+ <code>/analytics no</code> og <code>/sso no</code> er eksempler på flag læst i installeren; Inno <code>/LOG</code> og MSI <code>ALLUSERS=1</code> er eksempler, der følger motoren.</li></ul>
+<figure><img src="images/11-foreslaaede-switche.png" alt="Foreslåede switche. Sæt flueben for at tage switchen med i kommandoen. Her er /analytics no valgt"><figcaption>Foreslåede switche. Sæt flueben for at tage switchen med i kommandoen. Her er /analytics no valgt</figcaption></figure>
+<ul><li>Ændringer gemmes også, når du pakker, kopierer eller tjekker online.</li><li>Hvis kommandoen ændres, skal <strong>Intune-pakken laves igen</strong> før upload (Upload til Intune bliver ellers grå, fordi den gamle <code>.intunewin</code> er ugyldig).</li></ul>
+<hr>
+<h2>4. Online kontrol af switche</h2>
+<p><strong>Analysér</strong> slår produktet op i WinGet og Chocolatey, når det lokale resultat er vist:</p>
+<ul><li>WinGet (winget.run + <code>winget.exe</code> på maskinen)</li><li>Chocolatey Community</li></ul>
+<p><strong>Silent Install HQ</strong> åbner en browsersøgning på produktnavnet på <a href="https://silentinstallhq.com/">silentinstallhq.com</a>. Installer-filen <strong>uploades ikke</strong>, og silent-kommandoen <strong>overskrives ikke</strong>. Brug den, når WinGet/Chocolatey er i <strong>conflict</strong> eller <strong>none</strong> – vendor-specifikke CLI’er ligger ofte der.</p>
+<p>Der sendes <strong>kun produktnavn og vendor</strong> – ikke installer-filen.</p>
+<p>Søgningen bruger både det lange produktnavn og katalognavne. Wrapper-etiketter strippes, så WinGet ikke slås op på <em>Adobe Self Extractor</em>. Kompakte filnavne udvides til navne, katalogerne faktisk indekserer:</p>
+<div class="table-wrap"><table><thead><tr><th>I filen</th><th>Online-søgning</th></tr></thead><tbody><tr><td><em>Java Platform SE 8 U491</em></td><td><strong>Java 8</strong> (<code>Oracle.JavaRuntimeEnvironment</code>)</td></tr><tr><td><em>Adobe Self Extractor</em> + <code>AcroRdrDC….exe</code></td><td><strong>Acrobat Reader</strong></td></tr><tr><td><code>GoogleChromeStandaloneEnterprise64.exe</code></td><td><strong>Google Chrome</strong></td></tr><tr><td><code>npp.8.6.Installer.x64.exe</code></td><td><strong>Notepad++</strong></td></tr></tbody></table></div>
+<p>Fanen <strong>Online</strong> viser et resultat:</p>
+<div class="table-wrap"><table><thead><tr><th>Resultat</th><th>Betydning</th></tr></thead><tbody><tr><td><strong>match</strong></td><td>Samme installer-familie (Inno, MSI, NSIS, …)</td></tr><tr><td><strong>partial</strong></td><td>Nogle flag overlapper</td></tr><tr><td><strong>conflict</strong></td><td>Anden familie – læs kilderne, test i VM</td></tr><tr><td><strong>none</strong></td><td>Ingen træffer (fx intern/unavngivet pakke)</td></tr><tr><td><strong>error</strong></td><td>Netværk eller kildefejl</td></tr></tbody></table></div>
+<h3>Eksempel: Git – lokal og online enige</h3>
+<figure><img src="images/03-online-kontrol.png" alt="Online-fane: match på Git fra winget.exe og Chocolatey"><figcaption>Online-fane: match på Git fra winget.exe og Chocolatey</figcaption></figure>
+<pre><code class="language-text">Søgning: Git
+Resultat: match
+Online silent-switche matcher (inno): /VERYSILENT /NORESTART /SUPPRESSMSGBOXES /SP-
+
+Lokale switche: /VERYSILENT /NORESTART /SUPPRESSMSGBOXES /SP-
+
+winget.exe: Git.Git
+Chocolatey: git</code></pre>
+<p>Her kan du trygt beholde den lokale kommando.</p>
+<h3>Eksempel: Java – kataloget er grovere end filen</h3>
+<p>Online finder <strong>Java 8</strong> med <code>/S</code>. Lokalt er InstallShield <code>/s /v&quot;/qn&quot;</code>. Begge kan være “stille nok”, men den lokale linje er mere præcis til <em>denne</em> Oracle-wrapper.</p>
+<ul><li>Behold lokale switche, når de matcher motoren i filen.</li><li>Brug <strong>Brug online-switche</strong>, hvis den lokale motor er usikker, og kataloget er tydeligt (som Git/Inno).</li><li>Lav Intune-pakken <strong>igen</strong>, hvis du overskriver kommandoen.</li></ul>
+<p>Kataloger kan tage fejl (forkert udgave, OpenJDK i stedet for Oracle). Test altid i en VM.</p>
+<hr>
+<h2>5. User- vs system-context</h2>
+<p>Intune Win32 skal køre som <strong>system</strong> eller <strong>user</strong>. Forkert valg giver “installed” for den forkerte konto, manglende Program Files-filer eller detection der aldrig rammer.</p>
+<p>InstallScout udleder context automatisk og viser den på <strong>Intune</strong>-fanen, i <code>Intune.txt</code> og i Upload til Intune-dialogen. Du kan overstyre ved upload.</p>
+<ul class="flow"><li>Analyse → Squirrel?</li><li>Squirrel? — ja → User</li><li>Analyse → Note: per-user?</li><li>Note: per-user? — ja → User</li><li>Analyse → ALLUSERS=0 eller AppData i args?</li><li>ALLUSERS=0 eller AppData i args? — ja → User</li><li>Analyse → ALLUSERS=1?</li><li>ALLUSERS=1? — ja → System</li><li>Analyse → MSI / InstallShield / Advanced Installer / WiX / Wacom / MSIX?</li><li>MSI / InstallShield / Advanced Installer / WiX / Wacom / MSIX? — ja → System</li><li>Analyse → Inno, NSIS, 7-Zip SFX uden per-user-markør</li><li>Inno, NSIS, 7-Zip SFX uden per-user-markør → System</li></ul>
+<p>Stien til installeren under <code>%LOCALAPPDATA%\Temp</code> tæller <strong>ikke</strong> som user-context – kun argumenterne efter filstien.</p>
+<h3>Standard: System (maskininstallation)</h3>
+<p>De fleste virksomheds-Win32-pakker skal køre som system: MSI med <code>ALLUSERS=1</code>, InstallShield, Advanced Installer, Inno/NSIS uden per-user-flag.</p>
+<figure><img src="images/04-intune-system-context.png" alt="Java/InstallShield på Intune-fanen med Install context System"><figcaption>Java/InstallShield på Intune-fanen med Install context System</figcaption></figure>
+<pre><code class="language-text">Install context
+System
+InstallShield er typisk maskininstallation og kræver system context.
+
+Minimum operating system     Windows 10 22H2
+Installation time required   60
+Device restart behavior      No specific action</code></pre>
+<p>Samme standardfelter bruges ved upload til Intune.</p>
+<h3>Undtagelsen: User (per-bruger)</h3>
+<p>Squirrel (Slack, flere Electron-apps), <code>InstallAllUsers=0</code> / <code>ALLUSERS=0</code>, eller installation der eksplicit peger på AppData.</p>
+<figure><img src="images/05-intune-user-context.png" alt="Slack/Squirrel på Intune-fanen med Install context User"><figcaption>Slack/Squirrel på Intune-fanen med Install context User</figcaption></figure>
+<pre><code class="language-text">Install context
+User
+Squirrel/per-user-installere lægger filer i AppData og skal køre i user context.</code></pre>
+<p>I <strong>Upload til Intune</strong> er System/User forhåndsvalgt, men du kan skifte, hvis du kender pakken bedre end automatikken.</p>
+<p><strong>Hvorfor det betyder noget</strong></p>
+<div class="table-wrap"><table><thead><tr><th>Context</th><th>Typisk mål</th><th>Detection</th></tr></thead><tbody><tr><td>System</td><td><code>C:\Program Files</code>, HKLM Uninstall</td><td>Maskin-ARP / MSI ProductCode</td></tr><tr><td>User</td><td><code>%LOCALAPPDATA%</code>, HKCU Uninstall</td><td>Brugerens Uninstall-nøgle – virker ikke, hvis appen kører som system</td></tr></tbody></table></div>
+<hr>
+<h2>6. Upload til Intune</h2>
+<p>Upload er et <strong>to-trins løb</strong>: først en lokal <code>.intunewin</code>, derefter <strong>Upload til Intune</strong>. Programmet uploader den pakke, du allerede har gemt – den pakker ikke forfra ved upload.</p>
+<pre><code class="language-text">Analysér  →  Intune-pakke… (lokal .intunewin)  →  Upload til Intune… (Graph-upload)</code></pre>
+<p>Det, der lander i Intune, er en Win32-app med:</p>
+<ul><li>install- og uninstall-kommando (<code>Invoke-AppDeployToolkit.exe … Silent</code>)</li><li>custom detection-script (<code>Detection.ps1</code>, 64-bit PowerShell). Se <strong>Detection</strong> nedenfor.</li><li><strong>Install context</strong> (System eller User – forhåndsudfyldt, kan overstyres)</li><li><strong>App-logo</strong> (<code>largeIcon</code> i Company Portal – fra EXE, fil eller udklipsholder)</li><li>Minimum OS <strong>Windows 10 22H2</strong>, <strong>60</strong> minutter, genstart <strong>No specific action</strong></li></ul>
+<h3>Trin 1 – lokal Intune-pakke</h3>
+<p><strong>Intune-pakke…</strong> gemmer:</p>
+<div class="table-wrap"><table><thead><tr><th>Fil</th><th>Indhold</th></tr></thead><tbody><tr><td><code>*.intunewin</code></td><td>Krypteret Win32-indhold (samme format som Microsoft Win32 Content Prep)</td></tr><tr><td>PSADT-kilde</td><td><code>Invoke-AppDeployToolkit.exe</code> + script + <code>Files\</code></td></tr><tr><td><code>Intune.txt</code></td><td>Felter til portalen</td></tr><tr><td><code>Detection.ps1</code></td><td>Custom detection</td></tr></tbody></table></div>
+<h3>Detection</h3>
+<p>Intune regner appen som installeret, når <code>Detection.ps1</code> afslutter med kode 0 og skriver en linje til STDOUT. Tomt output betyder ikke installeret. Scriptet kaster ikke en fejl. Samme regler gælder for alle leverandører.</p>
+<div class="table-wrap"><table><thead><tr><th>Det installeren har</th><th>Det der matches</th></tr></thead><tbody><tr><td>Product code (MSI, eller en GUID i afinstallationskommandoen)</td><td>Den kode i afinstallationsregistret, og versionen</td></tr><tr><td>EXE uden product code</td><td>Visningsnavn, udgiver og version</td></tr><tr><td>MSIX</td><td>Pakkenavn, og versionen når den kendes</td></tr></tbody></table></div>
+<ul><li><strong>Navn.</strong> Afinstallationsnavnet må være produktet uden et efterstillet Installer, Setup, Bootstrapper eller Driver. <code>Logi Options+ Installer</code> matcher <code>Logi Options+</code>. <code>Wacom Tablet Driver</code> matcher <code>Wacom Tablet</code>. Nøglens navn tæller også. Et generisk restord som Advanced bruges ikke som navn.</li><li><strong>Udgiver.</strong> Selskabsendelser ignoreres, så <code>Logitech, Inc.</code> matcher <code>Logitech</code>, og <code>Microsoft Corporation</code> matcher <code>Microsoft</code>.</li><li><strong>Version.</strong> Når installeren har en version, skal <code>DisplayVersion</code> være den samme eller nyere. Sammenligningen er numerisk. For en installer på <code>2.7.961922</code> tæller den version og <code>2.8.1</code>; <code>2.6</code> gør ikke. <code>2.8.1</code> er kun et eksempel på sammenligningen. En bindestregsrevision som <code>6.4.14-1</code> er også opfyldt af <code>6.4.14</code>. Hvis der ikke blev læst en version, kræves version ikke. En nøgle der hedder produktet, tæller stadig, når de felter aldrig blev skrevet.</li><li>Product code prøves først. Når den mangler, bruges navn, udgiver og version. Både maskinens og brugerens afinstallationsnøgler læses.</li></ul>
+<p>Indtil pakken findes for den valgte fil, er <strong>Upload til Intune</strong> grå. Når pakken er gemt, bliver knappen aktiv:</p>
+<figure><img src="images/06-intune-pakke-klar.png" alt="Upload til Intune er aktiv, når der findes en lokal .intunewin"><figcaption>Upload til Intune er aktiv, når der findes en lokal .intunewin</figcaption></figure>
+<p>Test kilden før upload:</p>
+<pre><code class="language-powershell">.\Invoke-AppDeployToolkit.exe -DeploymentType Install -DeployMode Silent</code></pre>
+<h3>Trin 2 – Upload til Intune</h3>
+<p>Klik <strong>Upload til Intune…</strong>. Dialogen tilpasser højden, så indholdet er synligt uden at scrolle. Nederst vises én Edge-profil. Fold feltet ud for at vælge en anden. <strong>Log på Intune</strong>, <strong>Annuller</strong> og <strong>Upload</strong> står på samme række.</p>
+<figure><img src="images/09-send-logo.png" alt="Upload til Intune med app-logo, Vælg fil, Indsæt og Fjern"><figcaption>Upload til Intune med app-logo, Vælg fil, Indsæt og Fjern</figcaption></figure>
+<p><strong>Logo</strong></p>
+<ul><li>InstallScout prøver først at trække ikonet ud af EXE’en (og kigger efter <code>logo.png</code> / <code>icon.ico</code> ved siden af filen).</li><li><strong>Vælg fil…</strong> – PNG, JPEG, ICO, GIF eller BMP.</li><li><strong>Indsæt</strong> (Ctrl+V) – billede eller fil fra udklipsholderen.</li><li><strong>Fjern</strong> – upload uden logo.</li><li>MSI har ofte kun Windows’ standardikon; brug fil eller indsæt.</li></ul>
+<p><strong>I dialogen</strong></p>
+<ol><li>Ret <strong>Navn i Intune</strong>, hvis det fundne navn ikke skal stå i Company Portal. Versionen bliver i Display version.</li><li>Tjek install, uninstall og detection-opsummering.</li><li>Bekræft <strong>Install context</strong> (System/User). Skift kun hvis du kender pakken bedre.</li><li>Tjek <strong>app-logo</strong> (preview). Overstyr med fil eller indsæt, hvis automatikken rammer forkert.</li><li>Tenant og Client ID kan stå tomme: da bruges <em>organizations</em> og Microsoft Graph PowerShell. InstallScout opretter <strong>ikke</strong> en Entra-app.</li><li>Feltet <strong>Edge-profil til login</strong> viser den valgte profil. Arbejdsprofilen vælges, når den kan genkendes. Fold listen ud for at vælge en anden.</li><li><strong>Log på Intune</strong> – browser-login (PKCE, localhost) i den valgte Edge-profil. Device code bruges ikke, fordi Conditional Access ofte blokerer det.</li><li>Efter login: vælg evt. <strong>supersedence</strong> (se nedenfor). Ingenting vælges automatisk.</li><li><strong>Upload</strong> – opretter appen, uploader <code>.intunewin</code>, sætter detection, logo og evt. supersedence. Statuslinjen viser fremdrift.</li></ol>
+<h3>Supersedence</h3>
+<p>I <strong>Upload til Intune</strong> kan den nye Win32-app afløse ældre versioner i tenant – samme funktion som <em>Supersedence</em> i Intune-portalen.</p>
+<p>Vent til status er <strong>Logget på som …</strong>, ikke kun at Edge-profilen er åbnet. Først da slår InstallScout Win32-apps op. Søget bruger <strong>produktnavnet</strong> (<code>startswith</code> på <code>displayName</code>), ikke hele Win32-kataloget. Listen viser apps, der ligner navnet – fx <em>Git 2.50.0</em> når du sender <em>Git 2.51.0</em>. Samme vendor med et andet produkt kommer typisk ikke med.</p>
+<figure><img src="images/10-supersedence.png" alt="Upload til Intune: supersedence-liste med Git 2.50.0 valgt og Update"><figcaption>Upload til Intune: supersedence-liste med Git 2.50.0 valgt og Update</figcaption></figure>
+<ul><li>Ingenting vælges automatisk. Markér med Ctrl+klik (højst <strong>10</strong> – Intunes grænse).</li><li><strong>Update</strong> (standard) – installer den nye uden at afinstallere den gamle først.</li><li><strong>Replace</strong> – afinstallér den gamle, installer derefter den nye.</li><li>Relationerne skrives først, når den nye app er oprettet (Graph <code>updateRelationships</code>).</li><li>Hvis supersedence fejler, bliver den nye app stående. Dialogen viser hvilke apps der blev superseded, eller fejlen. Du kan sætte relationen i portalen bagefter.</li></ul>
+<pre><code class="language-powershell">.\InstallScoutPortable.exe --cli .\setup.exe --intune C:\out\intune --publish-intune --supersede update
+.\InstallScoutPortable.exe --cli .\setup.exe --intune C:\out\intune --publish-intune --supersede replace --supersede-id &lt;app-guid&gt;</code></pre>
+<p><code>--supersede update|replace</code> matcher på produktnavnet som i GUI. <code>--supersede-id</code> kan gentages, hvis du kender Intune-app-id’et.</p>
+<p>Efter succes åbnes et link til appen i Intune-portalen.</p>
+<p><strong>Hvad Graph skriver på appen</strong></p>
+<div class="table-wrap"><table><thead><tr><th>Felt</th><th>Værdi</th></tr></thead><tbody><tr><td>App-type</td><td>Win32 (<code>win32LobApp</code>)</td></tr><tr><td>Install command</td><td><code>.\Invoke-AppDeployToolkit.exe -DeploymentType Install -DeployMode Silent</code></td></tr><tr><td>Uninstall command</td><td><code>.\Invoke-AppDeployToolkit.exe -DeploymentType Uninstall -DeployMode Silent</code></td></tr><tr><td>Detection</td><td>PowerShell-script, ikke 32-bit, uden signaturkrav</td></tr><tr><td>runAsAccount</td><td><code>system</code> eller <code>user</code></td></tr><tr><td>Minimum OS</td><td>Windows 10 22H2</td></tr><tr><td>Max runtime</td><td>60 minutter</td></tr><tr><td>Restart</td><td>No specific action (<code>suppress</code>)</td></tr><tr><td>Logo</td><td><code>largeIcon</code> (PNG/JPEG fra EXE, fil eller udklipsholder)</td></tr><tr><td>Supersedence</td><td>Valgfrit: <strong>Update</strong> eller <strong>Replace</strong> mod op til 10 ældre Win32-apps</td></tr></tbody></table></div>
+<h3>PSADT-pakke uden Intune</h3>
+<p><strong>PSADT-pakke…</strong> er den samme kilde uden <code>.intunewin</code> – nyttig til VM-test, før du pakker til Intune.</p>
+<h3>Kommandolinje-upload</h3>
+<pre><code class="language-powershell">.\InstallScoutPortable.exe --cli .\setup.exe --intune C:\out\intune --publish-intune --icon .\logo.png</code></pre>
+<p><code>--publish-intune</code> kræver <code>--intune</code> (lokal pakke først), ligesom i GUI. Uden <code>--icon</code> trækkes logoet fra EXE’en, hvis det findes.</p>
+<h3>Login og rettigheder</h3>
+<p>Login åbner i browseren med PKCE. Device code bruges ikke.</p>
+<p>Windows DPAPI krypterer access-token og refresh-token for den aktuelle Windows-bruger i <code>%LOCALAPPDATA%\InstallScout\graph.json</code>. Den gemte session er bundet til den valgte tenant og det valgte Client ID. Et andet par genbruger den ikke. En tokenfil i klartekst fra en ældre version slettes og kan ikke bruges. Log af sletter filen.</p>
+<ul><li>Windows 10 eller 11. Opslag af switche og en lokal pakke kræver ikke Azure.</li><li>Microsoft Edge. Login åbner i en Edge-profil.</li><li>En konto der kan oprette Win32-apps: Entra-rollen <strong>Intune Administrator</strong>, eller Intune-rollen <strong>Application Manager</strong>. En brugerdefineret rolle med de samme app-rettigheder dur også.</li><li>Admin-consent i tenant for <code>DeviceManagementApps.ReadWrite.All</code>.</li><li>Standard Client ID: Microsoft Graph PowerShell (<code>14d82eec-204b-4c2f-b7e8-296a70dab67e</code>). InstallScout opretter ikke en app-registrering.</li><li>Conditional Access kan stadig blokere. IT kan oprette en public client med redirect <code>http://localhost</code> og sætte Client ID i dialogen.</li></ul>
+<hr>
+<h2>7. Kommandolinje</h2>
+<p><code>InstallScoutPortable.exe</code> uden argumenter åbner GUI. Til scripts:</p>
+<pre><code class="language-powershell"># Lokal analyse
+.\InstallScoutPortable.exe --cli &quot;C:\installers\Git-64-bit.exe&quot;
+
+# Lokal + online
+.\InstallScoutPortable.exe --cli &quot;C:\installers\jre-8u491-windows-x64.exe&quot; --online
+
+# Silent Install HQ (navnesøgning i browseren; uploader ikke filen)
+.\InstallScoutPortable.exe --cli &quot;C:\installers\DDPM-Setup.exe&quot; --sihq
+
+# JSON
+.\InstallScoutPortable.exe --cli .\setup.exe --json --out .\analyse.json
+
+# Extra switche
+.\InstallScoutPortable.exe --cli .\setup.exe --switches &quot;/LOG=C:\logs\app.log&quot;
+
+# Lokal Intune-pakke
+.\InstallScoutPortable.exe --cli .\setup.exe --intune C:\out\intune
+
+# Pakke + upload + logo (kræver --intune)
+.\InstallScoutPortable.exe --cli .\setup.exe --intune C:\out\intune --publish-intune --icon .\logo.png
+
+# Upload og supersede matchende Win32-apps
+.\InstallScoutPortable.exe --cli .\setup.exe --intune C:\out\intune --publish-intune --supersede update</code></pre>
+<p>Fra kilde: <code>python -m installscout</code> med de samme flag.</p>
+<hr>
+<h2>8. Understøttede motorer</h2>
+<p>MSI, Inno Setup, NSIS, InstallShield, WiX Burn, Advanced Installer, InstallAware, BitRock, Squirrel, Wise, install4j, Qt Installer, 7-Zip SFX, Wacom, WinRAR SFX, IExpress, Self Extractor, DDPM, MSIX/AppX, ClickOnce.</p>
+<p>Ukendt motor: kig i <strong>Fundne switche</strong> og <strong>Bevis</strong>. Analysér spørger også WinGet og Chocolatey og bruger det hit, når det lokale gæt er svagt. Wrappers og ukendte EXE’er udpakkes lokalt først, så en indre MSI kan erstatte <em>Unknown 15 %</em>.</p>
+<hr>
+<h2>9. Grænser</h2>
+<ul><li><strong>Om…</strong> tjekker GitHub for en nyere udgivelse. Knappen viser <strong>Om · Opdatering</strong>, når der findes én.</li><li>Downloadet er <strong>ikke codesigned</strong>. Windows eller virksomhedens sikkerhed kan advare eller blokere det. Vælg Behold / Kør alligevel, bed IT om at tillade filen, eller prøv den i en VM eller Windows Sandbox uden de politikker.</li><li>Programmet <strong>installerer ikke</strong> noget. Udpakning kører aldrig installeren. Test silent-linjen i en VM.</li><li>En medfølgende 7-Zip Extra <code>7za</code> bruges til indre 7z-payloads, så system-7-Zip ikke er påkrævet.</li><li>Online-kataloger kender ofte et andet navn eller en nyere build end din fil. Wrapper-VersionInfo (<em>Self Extractor</em>) er ikke et katalogprodukt.</li><li>Context er et kvalificeret gæt. Overstyr i Upload til Intune, hvis du ved bedre.</li><li>Intune-upload kræver Graph-rettighed og kan ramme Conditional Access.</li><li>Binære installere sendes ikke på nettet ved online-tjek.</li><li>Upload til Intune er inaktiv, indtil der findes en lokal <code>.intunewin</code> for den valgte fil.</li><li>MSI har ofte intet brugbart ikon. Brug <strong>Vælg fil…</strong> eller <strong>Indsæt</strong>.</li><li>Manuelle switche overskriver den anbefalede linje i PSADT; test i en VM.</li><li>Supersedence-listen vises først, når login er færdig (<em>Logget på som …</em>).</li><li>Hvis supersedence fejler, ligger den nye Win32-app stadig i Intune.</li></ul>
+    </article>
+    <footer>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.54/InstallScout-1.8.54.zip">Hent 1.8.54 (.zip)</a> · <a href="../">InstallScout</a></p>
+    </footer>
+  </div>
+</body>
+</html>

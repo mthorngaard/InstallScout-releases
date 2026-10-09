@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Find silent install switches and upload to Intune — InstallScout</title>
+  <meta name="description" content="Find silent install switches for Inno, NSIS, MSI, and InstallShield, then build an .intunewin package and upload the Win32 app to Intune.">
+  <link rel="canonical" href="https://mthorngaard.github.io/InstallScout-releases/docs/guide.html">
+  <link rel="alternate" hreflang="en" href="https://mthorngaard.github.io/InstallScout-releases/docs/guide.html">
+  <link rel="alternate" hreflang="da" href="https://mthorngaard.github.io/InstallScout-releases/docs/vejledning.html">
+  <link rel="alternate" hreflang="x-default" href="https://mthorngaard.github.io/InstallScout-releases/docs/guide.html">
+  <meta property="og:title" content="Find silent install switches and upload to Intune — InstallScout">
+  <meta property="og:description" content="Find silent install switches for Inno, NSIS, MSI, and InstallShield, then build an .intunewin package and upload the Win32 app to Intune.">
+  <meta property="og:url" content="https://mthorngaard.github.io/InstallScout-releases/docs/guide.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://mthorngaard.github.io/InstallScout-releases/assets/installscout.png">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="da_DK">
+  <link rel="icon" href="../assets/installscout.png">
+  <link rel="stylesheet" href="../assets/docs.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Find silent install switches and upload to Intune — InstallScout",
+  "description": "Find silent install switches for Inno, NSIS, MSI, and InstallShield, then build an .intunewin package and upload the Win32 app to Intune.",
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://mthorngaard.github.io/InstallScout-releases/docs/guide.html",
+  "isPartOf": {
+    "@type": "SoftwareApplication",
+    "@id": "https://mthorngaard.github.io/InstallScout-releases/#app",
+    "name": "InstallScout",
+    "url": "https://mthorngaard.github.io/InstallScout-releases/"
+  }
+}
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="../"><img src="../assets/installscout.png" width="40" height="40" alt="">InstallScout</a>
+      <nav aria-label="Documentation"><a href="quickstart-en.html">Quick start</a><a href="guide.html" aria-current="page">Guide</a><a href="reference-en.html">Reference</a><a href="vejledning.html" hreflang="da">Dansk</a></nav>
+    </header>
+    <article>
+<h1>InstallScout – user guide</h1>
+<p>InstallScout takes a Windows installer <strong>all the way to Intune</strong>. You give it an EXE, MSI, COM or MSIX. It does not run the installer — it analyzes the file, lets you edit the silent command, builds a local <code>.intunewin</code> and <strong>uploads the Win32 app</strong> with install, uninstall, detection and app logo.</p>
+<p>Silent switches are one step. The destination is the package in Intune.</p>
+<p>Version <strong>1.8.54</strong>. Quick start: <a href="quickstart-en.html">quickstart-en.html</a>. Technical reference: <a href="reference-en.html">reference-en.html</a>. Word edition: <a href="InstallScout-guide.docx">InstallScout-guide.docx</a>. Danish: <a href="vejledning.html">vejledning.html</a>.</p>
+<div class="table-wrap"><table><thead><tr><th>File</th><th>Engine</th><th>Typical result</th></tr></thead><tbody><tr><td><code>Git-2.51.0-64-bit.exe</code></td><td>Inno Setup</td><td>Local and online agree on <code>/VERYSILENT …</code> · <strong>System</strong> · not unpacked</td></tr><tr><td><code>jre-8u491-windows-x64.exe</code></td><td>InstallShield</td><td>Local <code>/s /v&quot;/qn&quot;</code> · online Java 8 <code>/S</code> · <strong>System</strong></td></tr><tr><td><code>AcroRdrDC….exe</code></td><td>Self Extractor</td><td>Outer <code>/sAll /rs /rps /msi /quiet</code> · online <strong>Acrobat Reader</strong> · <strong>System</strong></td></tr><tr><td><code>SlackSetup.exe</code></td><td>Squirrel</td><td>Per-user · <strong>User</strong></td></tr></tbody></table></div>
+<hr>
+<h2>1. Start and window</h2>
+<p>Double-click <code>InstallScoutPortable.exe</code> or run <code>Start.bat</code>. No installation is required. The UI defaults to <strong>English</strong>; switch to Dansk in the top-right corner. <strong>About…</strong> next to the language field shows the version, developer, and links to GitHub.</p>
+<p>The download is <strong>not code-signed</strong>. Windows or company security may warn or block it. Choose Keep / Run anyway, ask IT to allow the file, or try it in a VM or Windows Sandbox without those policies.</p>
+<figure><img src="images/en/01-start.png" alt="Empty InstallScout window with Drop an installer here and a short introduction"><figcaption>Empty InstallScout window with Drop an installer here and a short introduction</figcaption></figure>
+<p>Drop an installer on the window, or use <strong>Add files</strong> / <strong>Add folder</strong>. The empty start shows <strong>Drop an installer here</strong> in the file list and a short introduction on the Commands tab. EXE, MSI, COM and a whole folder can be dropped.</p>
+<p>The buttons sit on two rows. Top: add and <strong>Analyze</strong>. Below: copy, package and <strong>Upload to Intune</strong>. The language is changed at the top right. The default is English.</p>
+<p><strong>Left:</strong> files, engine and confidence (how sure the analysis is).<br><strong>Right:</strong> recommended silent command (editable), the <strong>Extra switches</strong> field, plus the tabs Commands, Online, Intune, Detection, PSADT, Found switches, Evidence and notes, and MSI / Version.</p>
+<p><strong>Status and progress</strong> sit on their own row under the buttons, so they stay visible when the window is not maximized.</p>
+<div class="table-wrap"><table><thead><tr><th>Button</th><th>Action</th></tr></thead><tbody><tr><td>Add files… / Add folder…</td><td>Choose EXE, MSI, COM, MSIX</td></tr><tr><td><strong>Analyze</strong></td><td>Read the file locally</td></tr><tr><td><strong>Analyze</strong></td><td>Read the file locally, then look up WinGet and Chocolatey (name/vendor only)</td></tr><tr><td><strong>Silent Install HQ</strong></td><td>Opens a name search in the browser — file is not uploaded, command is not overwritten</td></tr><tr><td>Copy command</td><td>Silent line to the clipboard</td></tr><tr><td>PSADT package…</td><td>Folder with PSADT 4.1.8</td></tr><tr><td>Intune package…</td><td>Local <code>.intunewin</code> + detection — <strong>required</strong> before upload</td></tr><tr><td><strong>Upload to Intune…</strong></td><td>Sign in and create the Win32 app (logo, context, detection, <strong>supersedence</strong>)</td></tr><tr><td><strong>Add / Save command</strong></td><td>Extra switches, or save the edited line</td></tr><tr><td>Use online switches</td><td>Overwrite the local command with the catalog</td></tr></tbody></table></div>
+<hr>
+<h2>2. Workflow</h2>
+<ul class="flow"><li>Add installer → Analyze</li><li>Analyze → Silent command</li><li>Silent command → Intune package</li><li>Analyze → WinGet and Chocolatey</li><li>WinGet and Chocolatey → Intune package</li><li>Analyze → System or User</li><li>System or User → Intune package</li><li>Intune package → Test in a VM</li><li>Test in a VM → Upload to Intune</li></ul>
+<p>The process ends with upload. The silent command is a middle step.</p>
+<ol><li>Add the file and click <strong>Analyze</strong>.</li><li>Read the green silent command. Edit it, or add extra switches, then click <strong>Save command</strong> / <strong>Add</strong>.</li><li>Read the <strong>Online</strong> tab when it fills in. A confident local engine is kept if the catalog disagrees. A weak local guess is replaced when WinGet or Chocolatey has a matching product. On <strong>none</strong>, use <strong>Silent Install HQ</strong> (name search only).</li><li>Open <strong>Intune</strong> and check <strong>Install context</strong> (System/User).</li><li>Build an <strong>Intune package</strong> (local <code>.intunewin</code>). Test with <code>Invoke-AppDeployToolkit.exe</code>.</li><li><strong>Upload to Intune</strong> — the dialog opens tall enough to show the name, command, logo, supersedence and sign-in. One Edge profile is shown; open the field to pick another. <strong>Sign in to Intune</strong>, <strong>Cancel</strong> and <strong>Upload</strong> share that row.</li></ol>
+<hr>
+<h2>3. Local switch check</h2>
+<p>Local analysis looks inside the binary — markers, PE sections, VersionInfo, MSI properties and text switches in the file. It picks an engine (Inno, NSIS, InstallShield, MSI, Self Extractor, …) and builds the command from that engine’s known silent flags.</p>
+<p><strong>Inner setup (unpack)</strong> happens locally and <strong>without running the installer</strong>. The goal is the silent line (and the file copied into <code>Files\</code>) from the payload that actually installs the product.</p>
+<div class="table-wrap"><table><thead><tr><th>Situation</th><th>What InstallScout does</th></tr></thead><tbody><tr><td>Wrapper: 7-Zip SFX, WinRAR SFX, IExpress, WiX Burn, InstallShield, Advanced Installer, Self Extractor</td><td>Looks for ZIP, embedded MSI, CAB, and 7z (bundled <code>7za</code>)</td></tr><tr><td>Unknown engine or very low confidence</td><td>Same cheap unpack (ZIP / MSI / CAB / 7z)</td></tr><tr><td>Clean engines: Inno, NSIS, Squirrel, DDPM, Wacom, Chrome, Python, …</td><td><strong>Does not</strong> unpack — the outer EXE already has the right dialect</td></tr><tr><td>Self Extractor <strong>with</strong> outer silent flags (<code>/sAll</code>, <code>--silent</code>, <code>/silent</code>)</td><td>Keeps the outer command (typical Adobe-style <code>/sAll /rs /rps /msi /quiet</code>)</td></tr><tr><td>Self Extractor <strong>without</strong> those flags</td><td>Adopts the inner setup when it is found (often an MSI)</td></tr></tbody></table></div>
+<p>The installer is never executed to unpack. Large vendor SFX files are therefore not extracted just to confirm a <code>/sAll</code> that is already in the file.</p>
+<p><strong>What to look at</strong></p>
+<ul><li><strong>Engine + confidence</strong> — 75 %+ is typically usable. Below ~40 %, read the Evidence tab.</li><li><strong>Recommended silent install</strong> — the command PSADT and Intune use.</li><li><strong>Found switches</strong> — raw flags that actually appear in the file.</li><li><strong>Evidence and notes</strong> — why the engine was chosen, and pitfalls (e.g. <code>/S</code> does not work on Inno).</li></ul>
+<h3>Example: Git (Inno Setup)</h3>
+<figure><img src="images/en/02-lokal-analyse.png" alt="Git analyzed as Inno Setup with a VERYSILENT command"><figcaption>Git analyzed as Inno Setup with a VERYSILENT command</figcaption></figure>
+<p>Local conclusion:</p>
+<pre><code class="language-text">Engine: Inno Setup · confidence 95 %
+&quot;C:\pkg\Git-2.51.0-64-bit.exe&quot; /VERYSILENT /NORESTART /SUPPRESSMSGBOXES /SP-</code></pre>
+<p>Inno does <strong>not</strong> use <code>/S</code>. That is in the notes. The Commands tab also shows the PowerShell form.</p>
+<h3>Example: Java 8 (InstallShield + embedded MSI)</h3>
+<p>Java Platform SE 8 is detected as InstallShield. The silent line becomes:</p>
+<pre><code class="language-text">jre-8u491-windows-x64.exe /s /v&quot;/qn&quot;</code></pre>
+<p><code>/s</code> is InstallShield; <code>/v&quot;/qn&quot;</code> is passed to the embedded MSI. That is the local, file-based truth — even if WinGet names the product differently.</p>
+<p>In the PSADT package, an InstallShield line that contains quotes is started through <code>cmd /d /s /c</code>, so <code>/v&quot;/qn&quot;</code> is preserved. The package elevates itself when it is not already running as administrator. Intune as SYSTEM is already administrator and skips that.</p>
+<h3>Example: vendor Self Extractor (Adobe and others)</h3>
+<p><code>FileDescription</code> / <code>ProductName</code> <strong>Self Extractor</strong> is a vendor wrapper class, not a product. Adobe, Lenovo and others use the same label.</p>
+<ul><li>If <code>/sAll</code> or <code>/rps</code> is in the file, the recommended line is <code>&quot;file.exe&quot; /sAll /rs /rps /msi /quiet</code>.</li><li>If <code>--silent</code> or <code>/silent</code> is in the file, that dialect is used instead.</li><li>If no outer silent flag is found, the inner MSI/EXE is unpacked and those switches are used.</li><li>The UI may still show <em>Adobe Self Extractor</em> as the engine name (from VersionInfo). The <strong>product</strong> used for Intune and online search is the real name or the file stem (<code>AcroRdrDC</code>), not the wrapper label.</li></ul>
+<p><strong>Other typical local defaults</strong></p>
+<div class="table-wrap"><table><thead><tr><th>Engine</th><th>Silent</th></tr></thead><tbody><tr><td>MSI / WiX</td><td><code>msiexec /i file.msi /qn</code></td></tr><tr><td>NSIS</td><td><code>/S</code> (capital S)</td></tr><tr><td>Advanced Installer</td><td><code>/exenoui /qn</code></td></tr><tr><td>WiX Burn</td><td><code>/quiet</code></td></tr><tr><td>7-Zip SFX / Wacom</td><td><code>/s</code></td></tr><tr><td>Self Extractor</td><td><code>/sAll …</code> (uninstall <code>/uninst</code>) or harvested <code>--silent</code> / <code>/silent</code></td></tr><tr><td>DDPM</td><td><code>/Silent</code> (not InstallShield <code>/s /v&quot;/qn&quot;</code>)</td></tr></tbody></table></div>
+<p><code>/install</code> is not added. It is already the default action for WiX Burn. <code>/norestart</code> is not added either. Inno Setup still uses its own <code>/NORESTART</code>. Type <code>/norestart</code> under <strong>Extra switches</strong> when a quiet install must not reboot the PC.</p>
+<h3>Manual switches</h3>
+<p>The green line is <strong>editable</strong>. Under it are <strong>Extra switches</strong>, <strong>Add</strong> and <strong>Save command</strong>.</p>
+<figure><img src="images/en/08-manuelle-switche.png" alt="Extra switches field, Add and Save command under the silent line"><figcaption>Extra switches field, Add and Save command under the silent line</figcaption></figure>
+<ul><li>Edit the whole command and click <strong>Save command</strong> (or press Enter in the line).</li><li>Put only the extra flags in <strong>Extra switches</strong>, e.g. <code>/LOG=C:\logs\app.log</code> or <code>ALLUSERS=1</code>, then click <strong>Add</strong>. The installer path is left alone.</li><li><strong>Suggested switches</strong> appear under that, when the file or its engine has optional flags. Each line has a short description. Tick it to add the switch to the command, and untick to remove it. Logi Options+ <code>/analytics no</code> and <code>/sso no</code> are examples of flags read from the installer; Inno <code>/LOG</code> and MSI <code>ALLUSERS=1</code> are examples that follow the engine.</li></ul>
+<figure><img src="images/en/11-foreslaaede-switche.png" alt="Suggested switches. Tick a box to add that switch to the command. Here /analytics no is selected"><figcaption>Suggested switches. Tick a box to add that switch to the command. Here /analytics no is selected</figcaption></figure>
+<ul><li>Changes are also saved when you package, copy or check online.</li><li>If the command changes, <strong>build the Intune package again</strong> before upload (Upload to Intune otherwise stays grey, because the old <code>.intunewin</code> is invalid).</li></ul>
+<hr>
+<h2>4. Online switch check</h2>
+<p><strong>Analyze</strong> looks the product up in WinGet and Chocolatey after the local result is shown:</p>
+<ul><li>WinGet (winget.run + <code>winget.exe</code> on the machine)</li><li>Chocolatey Community</li></ul>
+<p><strong>Silent Install HQ</strong> opens a browser search for the product name on <a href="https://silentinstallhq.com/">silentinstallhq.com</a>. The installer file is <strong>not</strong> uploaded, and the silent command is <strong>not</strong> overwritten. Use it when WinGet/Chocolatey conflict or return nothing — vendor-specific CLIs often live there.</p>
+<p>Only the <strong>product name and vendor</strong> are sent — not the installer file.</p>
+<p>Search uses both the long product name and catalog names. Wrapper labels are stripped so WinGet is not queried for <em>Adobe Self Extractor</em>. Compact file names are expanded to names the catalogs actually index:</p>
+<div class="table-wrap"><table><thead><tr><th>In the file</th><th>Online search</th></tr></thead><tbody><tr><td><em>Java Platform SE 8 U491</em></td><td><strong>Java 8</strong> (<code>Oracle.JavaRuntimeEnvironment</code>)</td></tr><tr><td><em>Adobe Self Extractor</em> + <code>AcroRdrDC….exe</code></td><td><strong>Acrobat Reader</strong></td></tr><tr><td><code>GoogleChromeStandaloneEnterprise64.exe</code></td><td><strong>Google Chrome</strong></td></tr><tr><td><code>npp.8.6.Installer.x64.exe</code></td><td><strong>Notepad++</strong></td></tr></tbody></table></div>
+<p>The <strong>Online</strong> tab shows a result:</p>
+<div class="table-wrap"><table><thead><tr><th>Result</th><th>Meaning</th></tr></thead><tbody><tr><td><strong>match</strong></td><td>Same installer family (Inno, MSI, NSIS, …)</td></tr><tr><td><strong>partial</strong></td><td>Some flags overlap</td></tr><tr><td><strong>conflict</strong></td><td>Different family — read the sources, test in a VM</td></tr><tr><td><strong>none</strong></td><td>No hits (e.g. an internal/unnamed package)</td></tr><tr><td><strong>error</strong></td><td>Network or source failure</td></tr></tbody></table></div>
+<h3>Example: Git — local and online agree</h3>
+<figure><img src="images/en/03-online-kontrol.png" alt="Online tab: match for Git from winget.exe and Chocolatey"><figcaption>Online tab: match for Git from winget.exe and Chocolatey</figcaption></figure>
+<pre><code class="language-text">Search: Git
+Result: match
+Online silent switches match (inno): /VERYSILENT /NORESTART /SUPPRESSMSGBOXES /SP-
+
+Local switches: /VERYSILENT /NORESTART /SUPPRESSMSGBOXES /SP-
+
+winget.exe: Git.Git
+Chocolatey: git</code></pre>
+<p>Here you can keep the local command.</p>
+<h3>Example: Java — the catalog is coarser than the file</h3>
+<p>Online finds <strong>Java 8</strong> with <code>/S</code>. Locally it is InstallShield <code>/s /v&quot;/qn&quot;</code>. Both may be “quiet enough”, but the local line is more precise for <em>this</em> Oracle wrapper.</p>
+<ul><li>Keep local switches when they match the engine in the file.</li><li>Use <strong>Use online switches</strong> if the local engine is uncertain and the catalog is clear (as with Git/Inno).</li><li>Build the Intune package <strong>again</strong> if you overwrite the command.</li></ul>
+<p>Catalogs can be wrong (wrong edition, OpenJDK instead of Oracle). Always test in a VM.</p>
+<hr>
+<h2>5. User vs system context</h2>
+<p>Intune Win32 must run as <strong>system</strong> or <strong>user</strong>. The wrong choice shows “installed” for the wrong account, missing Program Files files, or detection that never matches.</p>
+<p>InstallScout infers context automatically and shows it on the <strong>Intune</strong> tab, in <code>Intune.txt</code> and in the Upload to Intune dialog. You can override it at upload.</p>
+<ul class="flow"><li>Analysis → Squirrel?</li><li>Squirrel? — yes → User</li><li>Analysis → Note: per-user?</li><li>Note: per-user? — yes → User</li><li>Analysis → ALLUSERS=0 or AppData in args?</li><li>ALLUSERS=0 or AppData in args? — yes → User</li><li>Analysis → ALLUSERS=1?</li><li>ALLUSERS=1? — yes → System</li><li>Analysis → MSI / InstallShield / Advanced Installer / WiX / Wacom / MSIX?</li><li>MSI / InstallShield / Advanced Installer / WiX / Wacom / MSIX? — yes → System</li><li>Analysis → Inno, NSIS, 7-Zip SFX with no per-user marker</li><li>Inno, NSIS, 7-Zip SFX with no per-user marker → System</li></ul>
+<p>An installer path under <code>%LOCALAPPDATA%\Temp</code> does <strong>not</strong> count as user context — only the arguments after the file path.</p>
+<h3>Default: System (machine install)</h3>
+<p>Most business Win32 packages should run as system: MSI with <code>ALLUSERS=1</code>, InstallShield, Advanced Installer, Inno/NSIS without a per-user flag.</p>
+<figure><img src="images/en/04-intune-system-context.png" alt="Java/InstallShield on the Intune tab with Install context System"><figcaption>Java/InstallShield on the Intune tab with Install context System</figcaption></figure>
+<pre><code class="language-text">Install context
+System
+InstallShield is typically a machine install and requires system context.
+
+Minimum operating system     Windows 10 22H2
+Installation time required   60
+Device restart behavior      No specific action</code></pre>
+<p>The same default fields are used when uploading to Intune.</p>
+<h3>Exception: User (per-user)</h3>
+<p>Squirrel (Slack, many Electron apps), <code>InstallAllUsers=0</code> / <code>ALLUSERS=0</code>, or an install that explicitly targets AppData.</p>
+<figure><img src="images/en/05-intune-user-context.png" alt="Slack/Squirrel on the Intune tab with Install context User"><figcaption>Slack/Squirrel on the Intune tab with Install context User</figcaption></figure>
+<pre><code class="language-text">Install context
+User
+Squirrel/per-user installers place files in AppData and must run in user context.</code></pre>
+<p>In <strong>Upload to Intune</strong>, System/User is preselected, but you can change it if you know the package better than the guess.</p>
+<p><strong>Why it matters</strong></p>
+<div class="table-wrap"><table><thead><tr><th>Context</th><th>Typical target</th><th>Detection</th></tr></thead><tbody><tr><td>System</td><td><code>C:\Program Files</code>, HKLM Uninstall</td><td>Machine ARP / MSI ProductCode</td></tr><tr><td>User</td><td><code>%LOCALAPPDATA%</code>, HKCU Uninstall</td><td>The user’s Uninstall key — fails if the app runs as system</td></tr></tbody></table></div>
+<hr>
+<h2>6. Upload to Intune</h2>
+<p>Upload is a <strong>two-step run</strong>: first a local <code>.intunewin</code>, then <strong>Upload to Intune</strong>. The program uploads the package you already saved — it does not repackage on upload.</p>
+<pre><code class="language-text">Analyze  →  Intune package… (local .intunewin)  →  Upload to Intune… (Graph upload)</code></pre>
+<p>What lands in Intune is a Win32 app with:</p>
+<ul><li>install and uninstall command (<code>Invoke-AppDeployToolkit.exe … Silent</code>)</li><li>custom detection script (<code>Detection.ps1</code>, 64-bit PowerShell). See <strong>Detection</strong> below.</li><li><strong>Install context</strong> (System or User — prefilled, can be overridden)</li><li><strong>App logo</strong> (<code>largeIcon</code> in Company Portal — from the EXE, a file, or the clipboard)</li><li>Minimum OS <strong>Windows 10 22H2</strong>, <strong>60</strong> minutes, restart <strong>No specific action</strong></li></ul>
+<h3>Step 1 — local Intune package</h3>
+<p><strong>Intune package…</strong> saves:</p>
+<div class="table-wrap"><table><thead><tr><th>File</th><th>Contents</th></tr></thead><tbody><tr><td><code>*.intunewin</code></td><td>Encrypted Win32 payload (same format as Microsoft Win32 Content Prep)</td></tr><tr><td>PSADT source</td><td><code>Invoke-AppDeployToolkit.exe</code> + script + <code>Files\</code></td></tr><tr><td><code>Intune.txt</code></td><td>Fields for the portal</td></tr><tr><td><code>Detection.ps1</code></td><td>Custom detection</td></tr></tbody></table></div>
+<h3>Detection</h3>
+<p>Intune treats the app as installed when <code>Detection.ps1</code> exits 0 and writes a line to STDOUT. Empty output means not installed. The script does not throw. The same rules apply to every vendor.</p>
+<div class="table-wrap"><table><thead><tr><th>What the installer has</th><th>What is matched</th></tr></thead><tbody><tr><td>Product code (MSI, or a GUID in the uninstall command)</td><td>That code in the uninstall registry, and the version</td></tr><tr><td>EXE without a product code</td><td>Display name, publisher and version</td></tr><tr><td>MSIX</td><td>Package name, and the version when it is known</td></tr></tbody></table></div>
+<ul><li><strong>Name.</strong> The uninstall name may be the product without a trailing Installer, Setup, Bootstrapper, or Driver word. <code>Logi Options+ Installer</code> matches <code>Logi Options+</code>. <code>Wacom Tablet Driver</code> matches <code>Wacom Tablet</code>. The registry key name counts as well. A leftover generic word such as Advanced is not used as the name.</li><li><strong>Publisher.</strong> Legal suffixes are ignored, so <code>Logitech, Inc.</code> matches <code>Logitech</code>, and <code>Microsoft Corporation</code> matches <code>Microsoft</code>.</li><li><strong>Version.</strong> When the installer has a version, <code>DisplayVersion</code> must be the same or newer. The comparison is numeric. For an installer at <code>2.7.961922</code>, that version and <code>2.8.1</code> count; <code>2.6</code> does not. <code>2.8.1</code> is only an example of the comparison. A hyphen revision such as <code>6.4.14-1</code> is also satisfied by <code>6.4.14</code>. If no version was read, version is not required. A key named as the product still counts when those values were never written.</li><li>Product code is tried first. When it is missing, name, publisher and version are used. Both the machine and the user uninstall keys are read.</li></ul>
+<p>Until a package exists for the selected file, <strong>Upload to Intune</strong> is grey. After the package is saved, the button becomes active:</p>
+<figure><img src="images/en/06-intune-pakke-klar.png" alt="Upload to Intune is active when a local .intunewin exists"><figcaption>Upload to Intune is active when a local .intunewin exists</figcaption></figure>
+<p>Test the source before upload:</p>
+<pre><code class="language-powershell">.\Invoke-AppDeployToolkit.exe -DeploymentType Install -DeployMode Silent</code></pre>
+<h3>Step 2 — Upload to Intune</h3>
+<p>Click <strong>Upload to Intune…</strong>. The dialog sizes itself so the content is visible without scrolling. One Edge profile is shown at the bottom. Open the field to pick another. <strong>Sign in to Intune</strong>, <strong>Cancel</strong> and <strong>Upload</strong> share that row.</p>
+<figure><img src="images/en/09-send-logo.png" alt="Upload to Intune with app logo, Choose file, Paste and Remove"><figcaption>Upload to Intune with app logo, Choose file, Paste and Remove</figcaption></figure>
+<p><strong>Logo</strong></p>
+<ul><li>InstallScout first tries to extract the icon from the EXE (and looks for <code>logo.png</code> / <code>icon.ico</code> next to the file).</li><li><strong>Choose file…</strong> — PNG, JPEG, ICO, GIF or BMP.</li><li><strong>Paste</strong> (Ctrl+V) — image or file from the clipboard.</li><li><strong>Remove</strong> — upload without a logo.</li><li>MSI often only has the Windows default icon; use a file or paste.</li></ul>
+<p><strong>In the dialog</strong></p>
+<ol><li>Edit <strong>Name in Intune</strong> if the detected name should not be the name in Company Portal. Version stays in Display version.</li><li>Check the install, uninstall and detection summary.</li><li>Confirm <strong>Install context</strong> (System/User). Change it only if you know the package better.</li><li>Check the <strong>app logo</strong> (preview). Override with a file or paste if the automatic icon is wrong.</li><li>Tenant and Client ID can stay empty: then <em>organizations</em> and Microsoft Graph PowerShell are used. InstallScout does <strong>not</strong> create an Entra app.</li><li><strong>Edge profile for sign-in</strong> shows the selected profile. The work profile is selected when it can be recognized. Open the list to pick another.</li><li><strong>Sign in to Intune</strong> — browser login (PKCE, localhost) in the selected Edge profile. Device code is not used, because Conditional Access often blocks it.</li><li>After sign-in: optionally choose <strong>supersedence</strong> (see below). Nothing is selected automatically.</li><li><strong>Upload</strong> — creates the app, uploads <code>.intunewin</code>, sets detection, logo and optional supersedence. The status line shows progress.</li></ol>
+<h3>Supersedence</h3>
+<p>In <strong>Upload to Intune</strong> the new Win32 app can replace older versions in the tenant — the same feature as <em>Supersedence</em> in the Intune portal.</p>
+<p>Wait until the status is <strong>Signed in as …</strong>, not only that the Edge profile opened. Only then does InstallScout look up Win32 apps. The search uses the <strong>product name</strong> (<code>startswith</code> on <code>displayName</code>), not the entire Win32 catalogue. The list shows apps whose names look like the product — e.g. <em>Git 2.50.0</em> when you send <em>Git 2.51.0</em>. The same vendor with a different product is typically omitted.</p>
+<figure><img src="images/en/10-supersedence.png" alt="Upload to Intune: supersedence list with Git 2.50.0 selected and Update"><figcaption>Upload to Intune: supersedence list with Git 2.50.0 selected and Update</figcaption></figure>
+<ul><li>Nothing is selected automatically. Ctrl+click to select (at most <strong>10</strong> — Intune’s limit).</li><li><strong>Update</strong> (default) — install the new app without uninstalling the old one first.</li><li><strong>Replace</strong> — uninstall the old app, then install the new one.</li><li>Relationships are written only after the new app is created (Graph <code>updateRelationships</code>).</li><li>If supersedence fails, the new app still remains. The dialog shows which apps were superseded, or the error. You can set the relationship in the portal afterwards.</li></ul>
+<pre><code class="language-powershell">.\InstallScoutPortable.exe --cli .\setup.exe --intune C:\out\intune --publish-intune --supersede update
+.\InstallScoutPortable.exe --cli .\setup.exe --intune C:\out\intune --publish-intune --supersede replace --supersede-id &lt;app-guid&gt;</code></pre>
+<p><code>--supersede update|replace</code> matches on product name as in the GUI. Repeat <code>--supersede-id</code> if you already know the Intune app ID.</p>
+<p>After success, a link to the app in the Intune portal opens.</p>
+<p><strong>What Graph writes on the app</strong></p>
+<div class="table-wrap"><table><thead><tr><th>Field</th><th>Value</th></tr></thead><tbody><tr><td>App type</td><td>Win32 (<code>win32LobApp</code>)</td></tr><tr><td>Install command</td><td><code>.\Invoke-AppDeployToolkit.exe -DeploymentType Install -DeployMode Silent</code></td></tr><tr><td>Uninstall command</td><td><code>.\Invoke-AppDeployToolkit.exe -DeploymentType Uninstall -DeployMode Silent</code></td></tr><tr><td>Detection</td><td>PowerShell script, not 32-bit, no signature requirement</td></tr><tr><td>runAsAccount</td><td><code>system</code> or <code>user</code></td></tr><tr><td>Minimum OS</td><td>Windows 10 22H2</td></tr><tr><td>Max runtime</td><td>60 minutes</td></tr><tr><td>Restart</td><td>No specific action (<code>suppress</code>)</td></tr><tr><td>Logo</td><td><code>largeIcon</code> (PNG/JPEG from EXE, file or clipboard)</td></tr><tr><td>Supersedence</td><td>Optional: <strong>Update</strong> or <strong>Replace</strong> against up to 10 older Win32 apps</td></tr></tbody></table></div>
+<h3>PSADT package without Intune</h3>
+<p><strong>PSADT package…</strong> is the same source without <code>.intunewin</code> — useful for VM testing before you package for Intune.</p>
+<h3>Command-line upload</h3>
+<pre><code class="language-powershell">.\InstallScoutPortable.exe --cli .\setup.exe --intune C:\out\intune --publish-intune --icon .\logo.png</code></pre>
+<p><code>--publish-intune</code> requires <code>--intune</code> (local package first), same as in the GUI. Without <code>--icon</code>, the logo is taken from the EXE if one is found.</p>
+<h3>Sign-in and permissions</h3>
+<p>Sign-in opens in the browser with PKCE. Device code is not used.</p>
+<p>Windows DPAPI encrypts the access token and the refresh token for the current Windows user, in <code>%LOCALAPPDATA%\InstallScout\graph.json</code>. The saved session is bound to the selected tenant and Client ID. A different pair does not reuse it. A plaintext token file from an older version is deleted and cannot be used. Sign-out deletes the file.</p>
+<ul><li>Windows 10 or 11. Switch lookup and a local package do not need Azure.</li><li>Microsoft Edge. Sign-in opens in an Edge profile.</li><li>An account that can create Win32 apps: the Entra role <strong>Intune Administrator</strong>, or the Intune role <strong>Application Manager</strong>. A custom role with the same app permissions works too.</li><li>Admin consent in the tenant for <code>DeviceManagementApps.ReadWrite.All</code>.</li><li>Default Client ID: Microsoft Graph PowerShell (<code>14d82eec-204b-4c2f-b7e8-296a70dab67e</code>). InstallScout does not create an app registration.</li><li>Conditional Access can still block. IT can create a public client with redirect <code>http://localhost</code> and set the Client ID in the dialog.</li></ul>
+<hr>
+<h2>7. Command line</h2>
+<p><code>InstallScoutPortable.exe</code> with no arguments opens the GUI. For scripts:</p>
+<pre><code class="language-powershell"># Local analysis
+.\InstallScoutPortable.exe --cli &quot;C:\installers\Git-64-bit.exe&quot;
+
+# Local + online
+.\InstallScoutPortable.exe --cli &quot;C:\installers\jre-8u491-windows-x64.exe&quot; --online
+
+# Silent Install HQ (name search in the browser; does not upload the file)
+.\InstallScoutPortable.exe --cli &quot;C:\installers\DDPM-Setup.exe&quot; --sihq
+
+# JSON
+.\InstallScoutPortable.exe --cli .\setup.exe --json --out .\analyse.json
+
+# Extra switches
+.\InstallScoutPortable.exe --cli .\setup.exe --switches &quot;/LOG=C:\logs\app.log&quot;
+
+# Local Intune package
+.\InstallScoutPortable.exe --cli .\setup.exe --intune C:\out\intune
+
+# Package + upload + logo (requires --intune)
+.\InstallScoutPortable.exe --cli .\setup.exe --intune C:\out\intune --publish-intune --icon .\logo.png
+
+# Upload and supersede matching Win32 apps
+.\InstallScoutPortable.exe --cli .\setup.exe --intune C:\out\intune --publish-intune --supersede update</code></pre>
+<p>From source: <code>python -m installscout</code> with the same flags. Use <code>--lang da</code> for Danish CLI text.</p>
+<hr>
+<h2>8. Supported engines</h2>
+<p>MSI, Inno Setup, NSIS, InstallShield, WiX Burn, Advanced Installer, InstallAware, BitRock, Squirrel, Wise, install4j, Qt Installer, 7-Zip SFX, Wacom, WinRAR SFX, IExpress, Self Extractor, DDPM, MSIX/AppX, ClickOnce.</p>
+<p>Unknown engine: look at <strong>Found switches</strong> and <strong>Evidence</strong>. Analyze also asks WinGet and Chocolatey and uses that hit when the local guess is weak. Wrappers and unknown EXEs are unpacked locally first so an inner MSI can replace <em>Unknown 15 %</em>.</p>
+<hr>
+<h2>9. Limits</h2>
+<ul><li><strong>About…</strong> checks GitHub for a newer release. The button shows <strong>About · Update</strong> when one is available.</li><li>The download is <strong>not code-signed</strong>. Windows or company security may warn or block it. Choose Keep / Run anyway, ask IT to allow the file, or try it in a VM or Windows Sandbox without those policies.</li><li>The program <strong>does not install</strong> anything. Unpack never runs the installer. Test the silent line in a VM.</li><li>A bundled 7-Zip Extra <code>7za</code> is used for inner 7z payloads, so system 7-Zip is not required.</li><li>Online catalogs often know a different name or a newer build than your file. Wrapper VersionInfo (<em>Self Extractor</em>) is not a catalog product.</li><li>Context is a qualified guess. Override it in Upload to Intune if you know better.</li><li>Intune upload needs Graph permission and can hit Conditional Access.</li><li>Installer binaries are not sent over the network during the online check.</li><li>Upload to Intune is inactive until a local <code>.intunewin</code> exists for the selected file.</li><li>MSI often has no usable icon. Use <strong>Choose file…</strong> or <strong>Paste</strong>.</li><li>Manual switches overwrite the recommended line in PSADT; test in a VM.</li><li>The supersedence list appears only after sign-in has finished (<em>Signed in as …</em>).</li><li>If supersedence fails, the new Win32 app still remains in Intune.</li></ul>
+    </article>
+    <footer>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.54/InstallScout-1.8.54.zip">Download 1.8.54 (.zip)</a> · <a href="../">InstallScout</a></p>
+    </footer>
+  </div>
+</body>
+</html>
