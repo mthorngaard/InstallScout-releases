@@ -37,7 +37,7 @@ Upload to Intune also needs:
 **Guide:** [English](https://mthorngaard.github.io/InstallScout-releases/docs/guide.html) · [Dansk](https://mthorngaard.github.io/InstallScout-releases/docs/vejledning.html)  
 **Technical reference:** [English](https://mthorngaard.github.io/InstallScout-releases/docs/reference-en.html) · [Dansk](https://mthorngaard.github.io/InstallScout-releases/docs/reference.html)
 
-Word copies sit next to the Markdown files: [quick start](docs/InstallScout-quickstart-en.docx), [guide](docs/InstallScout-guide.docx), and [reference](docs/InstallScout-reference-en.docx). Danish Word files use the same names without `-en`.
+PDF copies sit next to the Markdown files: [quick start](docs/InstallScout-quickstart-en.pdf), [guide](docs/InstallScout-guide.pdf), and [reference](docs/InstallScout-reference-en.pdf). Danish PDF files use the same names without `-en`.
 
 ## Credits
 

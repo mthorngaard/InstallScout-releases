@@ -2,7 +2,7 @@
 
 Version **1.8.56**. Fra en installer til en Win32-app i Intune. Programmet kører ikke installeren.
 
-Den fulde vejledning er [vejledning.md](vejledning.md). Motorer, CLI og Graph står i [reference.md](reference.md). Word: [InstallScout-quickstart.docx](InstallScout-quickstart.docx).
+Den fulde vejledning er [vejledning.md](vejledning.md). Motorer, CLI og Graph står i [reference.md](reference.md). PDF: [InstallScout-quickstart.pdf](InstallScout-quickstart.pdf).
 
 ## 1. Start
 

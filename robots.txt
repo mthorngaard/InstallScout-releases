@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /*.md$
-Disallow: /*.docx$
+Disallow: /*.pdf$
 
 Sitemap: https://mthorngaard.github.io/InstallScout-releases/sitemap.xml
