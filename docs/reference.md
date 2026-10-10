@@ -1,6 +1,6 @@
 # InstallScout – teknisk reference
 
-Version **1.8.56**. Kort forløb: [quickstart.md](quickstart.md). Brugerforløbet står i [vejledning.md](vejledning.md). Denne fil beskriver motorer, kommandolinje og Microsoft Graph. PDF: [InstallScout-reference.pdf](InstallScout-reference.pdf).
+Version **1.8.57**. Kort forløb: [quickstart.md](quickstart.md). Brugerforløbet står i [vejledning.md](vejledning.md). Denne fil beskriver motorer, kommandolinje og Microsoft Graph. PDF: [InstallScout-reference.pdf](InstallScout-reference.pdf).
 
 InstallScout kører ikke installeren. Den læser filen, bygger en silent-kommando, pakker PSADT 4.1.8 til `.intunewin` og opretter en Win32-app.
 
