@@ -4,7 +4,7 @@ InstallScout tager en Windows-installer **hele vejen til Intune**. Du giver det 
 
 Silent-switche er ét trin. Målet er pakken i Intune.
 
-Version **1.8.57**. Quick start: [quickstart.md](quickstart.md). Teknisk reference: [reference.md](reference.md). PDF: [InstallScout-vejledning.pdf](InstallScout-vejledning.pdf). English: [guide.md](guide.md) · [InstallScout-guide.pdf](InstallScout-guide.pdf).
+Version **1.8.58**. Quick start: [quickstart.md](quickstart.md). Teknisk reference: [reference.md](reference.md). PDF: [InstallScout-vejledning.pdf](InstallScout-vejledning.pdf). English: [guide.md](guide.md) · [InstallScout-guide.pdf](InstallScout-guide.pdf).
 
 | Fil | Motor | Typisk resultat |
 |---|---|---|
@@ -25,10 +25,10 @@ Downloadet er **ikke codesigned**. Windows eller virksomhedens sikkerhed kan adv
 
 Træk en installer ind på vinduet, eller brug **Tilføj filer** / **Tilføj mappe**. Den tomme start viser **Træk en installer hertil** i fillisten og en kort introduktion under fanen Kommandoer. EXE, MSI, COM og en hel mappe kan slippes.
 
-Knapperne ligger på to rækker. Øverst: tilføj og **Analysér**. Nedenunder: kopiér, pakke og **Upload til Intune**. Sproget skiftes øverst til højre. Standard er English.
+Knapperne ligger på to rækker. Kun næste skridt er fremhævet: **Tilføj filer**, når listen er tom, **Analysér**, når en fil ikke er analyseret, **Intune-pakke**, når den valgte fil ikke har en aktuel pakke, og **Upload til Intune**, når pakken findes. Sproget skiftes øverst til højre. Standard er English.
 
-**Venstre:** filer, motor og sikkerhed (hvor sikker analysen er).  
-**Højre:** anbefalet silent-kommando (redigerbar), feltet **Ekstra switche**, plus fanerne Kommandoer, Online, Intune, Detection, PSADT, Fundne switche, Bevis og MSI/Version.
+**Venstre:** fil, motor, sikkerhed og status. Sikkerhed er grøn fra 75 %, gul fra 40 % og rød under det. Den valgte række beholder farven på en mørkere blå baggrund. Status er **Analyseret**, **Pakket** eller **Byg igen**.  
+**Højre:** silent-kommandoen ombrydes over tre linjer. Enter gemmer den. Over fanerne: motor, sikkerhed, System eller Bruger, og online-resultatet. Derefter **Ekstra switche** og fanerne Kommandoer, Online, Intune, Detection, PSADT, Fundne switche, Bevis og MSI/Version.
 
 Under knapperne ligger **status og progress** på en egen linje, så de er synlige også når vinduet ikke er maksimeret.
 
@@ -40,10 +40,11 @@ Under knapperne ligger **status og progress** på en egen linje, så de er synli
 | **Silent Install HQ** | Åbner en navnesøgning i browseren – filen uploades ikke, kommandoen overskrives ikke |
 | Kopiér kommando | Silent-linjen til udklipsholder |
 | PSADT-pakke… | Mappe med PSADT 4.1.8 |
-| Intune-pakke… | Lokal `.intunewin` + detection – **skal** laves før upload |
+| Intune-pakke… | Lokal `.intunewin` + detection – **skal** laves før upload. Dialogen åbner i den mappe, der blev brugt sidst |
+| **Pak alle…** | Én `.intunewin` pr. analyseret fil. Upload er stadig én app ad gangen |
 | **Upload til Intune…** | Log på og opret Win32-appen (logo, context, detection, **supersedence**) |
 | **Tilføj / Gem kommando** | Manuelle extra switche eller gem den redigerede linje |
-| Brug online-switche | Overskriv den lokale kommando med katalogets |
+| Brug online-switche | Viser den lokale og den online kommando. Den lokale linje ændres først, når du bekræfter |
 
 ---
 
@@ -150,14 +151,15 @@ Den grønne linje er **redigerbar**. Under den ligger **Ekstra switche**, **Tilf
 
 ![Ekstra switche-felt, Tilføj og Gem kommando under silent-linjen](images/08-manuelle-switche.png)
 
-- Ret hele kommandoen og klik **Gem kommando** (eller Enter i linjen).
+- Ret hele kommandoen og klik **Gem kommando** (eller Enter). Linjen ombrydes, så en lang kommando bliver synlig.
 - Skriv kun de extra flag i **Ekstra switche**, fx `/LOG=C:\logs\app.log` eller `ALLUSERS=1`, og klik **Tilføj**. Stien til installeren røres ikke.
 - **Foreslåede switche** vises under feltet, når filen eller motoren har valgfrie flag. Hver linje har en kort beskrivelse. Sæt flueben for at tage switchen med i kommandoen, og fjern det for at tage den ud. Logi Options+ `/analytics no` og `/sso no` er eksempler på flag læst i installeren; Inno `/LOG` og MSI `ALLUSERS=1` er eksempler, der følger motoren.
 
 ![Foreslåede switche. Sæt flueben for at tage switchen med i kommandoen. Her er /analytics no valgt](images/11-foreslaaede-switche.png)
 
 - Ændringer gemmes også, når du pakker, kopierer eller tjekker online.
-- Hvis kommandoen ændres, skal **Intune-pakken laves igen** før upload (Upload til Intune bliver ellers grå, fordi den gamle `.intunewin` er ugyldig).
+- Hvis kommandoen ændres, står der **Byg igen** på filen, og **Upload til Intune** bliver grå, indtil pakken er lavet igen.
+- ClickOnce viser, at der ikke er en pålidelig stille kommando. InstallShield viser, at ældre InstallScript kan kræve en optaget `setup.iss`. InstallScout kører ikke installeren og optager ikke filen.
 
 ---
 
@@ -213,7 +215,7 @@ Her kan du trygt beholde den lokale kommando.
 Online finder **Java 8** med `/S`. Lokalt er InstallShield `/s /v"/qn"`. Begge kan være “stille nok”, men den lokale linje er mere præcis til *denne* Oracle-wrapper.
 
 - Behold lokale switche, når de matcher motoren i filen.
-- Brug **Brug online-switche**, hvis den lokale motor er usikker, og kataloget er tydeligt (som Git/Inno).
+- Brug **Brug online-switche**, hvis den lokale motor er usikker, og kataloget er tydeligt (som Git/Inno). Dialogen viser begge linjer. Ingenting erstattes, før du bekræfter.
 - Lav Intune-pakken **igen**, hvis du overskriver kommandoen.
 
 Kataloger kan tage fejl (forkert udgave, OpenJDK i stedet for Oracle). Test altid i en VM.
@@ -303,7 +305,7 @@ Det, der lander i Intune, er en Win32-app med:
 
 ### Trin 1 – lokal Intune-pakke
 
-**Intune-pakke…** gemmer:
+**Intune-pakke…** åbner i den mappe, der blev brugt sidst. Den gemmer:
 
 | Fil | Indhold |
 |---|---|
@@ -311,6 +313,8 @@ Det, der lander i Intune, er en Win32-app med:
 | PSADT-kilde | `Invoke-AppDeployToolkit.exe` + script + `Files\` |
 | `Intune.txt` | Felter til portalen |
 | `Detection.ps1` | Custom detection |
+
+**Pak alle…** skriver én `.intunewin` pr. analyseret fil i samme mappe. En fil, der ikke er analyseret, springes over. Upload er stadig én app ad gangen. Bagefter står der **Pakket** på den valgte række.
 
 ### Detection
 

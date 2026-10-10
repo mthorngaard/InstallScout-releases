@@ -4,7 +4,7 @@ InstallScout takes a Windows installer **all the way to Intune**. You give it an
 
 Silent switches are one step. The destination is the package in Intune.
 
-Version **1.8.57**. Quick start: [quickstart-en.md](quickstart-en.md). Technical reference: [reference-en.md](reference-en.md). PDF: [InstallScout-guide.pdf](InstallScout-guide.pdf). Danish: [vejledning.md](vejledning.md).
+Version **1.8.58**. Quick start: [quickstart-en.md](quickstart-en.md). Technical reference: [reference-en.md](reference-en.md). PDF: [InstallScout-guide.pdf](InstallScout-guide.pdf). Danish: [vejledning.md](vejledning.md).
 
 | File | Engine | Typical result |
 |---|---|---|
@@ -25,10 +25,10 @@ The download is **not code-signed**. Windows or company security may warn or blo
 
 Drop an installer on the window, or use **Add files** / **Add folder**. The empty start shows **Drop an installer here** in the file list and a short introduction on the Commands tab. EXE, MSI, COM and a whole folder can be dropped.
 
-The buttons sit on two rows. Top: add and **Analyze**. Below: copy, package and **Upload to Intune**. The language is changed at the top right. The default is English.
+The buttons sit on two rows. Only the next step is highlighted: **Add files** when the list is empty, **Analyze** when a file is not analyzed, **Intune package** when the selected file has no current package, and **Upload to Intune** when that package exists. The language is changed at the top right. The default is English.
 
-**Left:** files, engine and confidence (how sure the analysis is).  
-**Right:** recommended silent command (editable), the **Extra switches** field, plus the tabs Commands, Online, Intune, Detection, PSADT, Found switches, Evidence and notes, and MSI / Version.
+**Left:** file, engine, confidence and status. Confidence is green from 75 %, amber from 40 %, and red below that. The selected row keeps that color on a darker blue background. Status is **Analyzed**, **Packaged**, or **Rebuild**.  
+**Right:** the silent command wraps over three lines. Press Enter to save it. Above the tabs: engine, confidence, System or User, and the online result. Then **Extra switches**, and the tabs Commands, Online, Intune, Detection, PSADT, Found switches, Evidence and notes, and MSI / Version.
 
 **Status and progress** sit on their own row under the buttons, so they stay visible when the window is not maximized.
 
@@ -40,10 +40,11 @@ The buttons sit on two rows. Top: add and **Analyze**. Below: copy, package and 
 | **Silent Install HQ** | Opens a name search in the browser — file is not uploaded, command is not overwritten |
 | Copy command | Silent line to the clipboard |
 | PSADT package… | Folder with PSADT 4.1.8 |
-| Intune package… | Local `.intunewin` + detection — **required** before upload |
+| Intune package… | Local `.intunewin` + detection — **required** before upload. The dialog opens in the last folder you used |
+| **Package all…** | One `.intunewin` per analyzed file. Upload stays one app at a time |
 | **Upload to Intune…** | Sign in and create the Win32 app (logo, context, detection, **supersedence**) |
 | **Add / Save command** | Extra switches, or save the edited line |
-| Use online switches | Overwrite the local command with the catalog |
+| Use online switches | Shows the local and online command. The local line changes only after you confirm |
 
 ---
 
@@ -150,14 +151,15 @@ The green line is **editable**. Under it are **Extra switches**, **Add** and **S
 
 ![Extra switches field, Add and Save command under the silent line](images/en/08-manuelle-switche.png)
 
-- Edit the whole command and click **Save command** (or press Enter in the line).
+- Edit the whole command and click **Save command** (or press Enter). The line wraps, so a long command stays visible.
 - Put only the extra flags in **Extra switches**, e.g. `/LOG=C:\logs\app.log` or `ALLUSERS=1`, then click **Add**. The installer path is left alone.
 - **Suggested switches** appear under that, when the file or its engine has optional flags. Each line has a short description. Tick it to add the switch to the command, and untick to remove it. Logi Options+ `/analytics no` and `/sso no` are examples of flags read from the installer; Inno `/LOG` and MSI `ALLUSERS=1` are examples that follow the engine.
 
 ![Suggested switches. Tick a box to add that switch to the command. Here /analytics no is selected](images/en/11-foreslaaede-switche.png)
 
 - Changes are also saved when you package, copy or check online.
-- If the command changes, **build the Intune package again** before upload (Upload to Intune otherwise stays grey, because the old `.intunewin` is invalid).
+- If the command changes, the file row says **Rebuild**, and **Upload to Intune** stays grey until you build the package again.
+- ClickOnce shows that it has no reliable silent command. InstallShield shows that older InstallScript may need a recorded `setup.iss`. InstallScout does not run the installer and does not record that file.
 
 ---
 
@@ -213,7 +215,7 @@ Here you can keep the local command.
 Online finds **Java 8** with `/S`. Locally it is InstallShield `/s /v"/qn"`. Both may be “quiet enough”, but the local line is more precise for *this* Oracle wrapper.
 
 - Keep local switches when they match the engine in the file.
-- Use **Use online switches** if the local engine is uncertain and the catalog is clear (as with Git/Inno).
+- Use **Use online switches** if the local engine is uncertain and the catalog is clear (as with Git/Inno). The dialog shows both lines. Nothing is replaced until you confirm.
 - Build the Intune package **again** if you overwrite the command.
 
 Catalogs can be wrong (wrong edition, OpenJDK instead of Oracle). Always test in a VM.
@@ -303,7 +305,7 @@ What lands in Intune is a Win32 app with:
 
 ### Step 1 — local Intune package
 
-**Intune package…** saves:
+**Intune package…** opens in the folder you used last. It saves:
 
 | File | Contents |
 |---|---|
@@ -311,6 +313,8 @@ What lands in Intune is a Win32 app with:
 | PSADT source | `Invoke-AppDeployToolkit.exe` + script + `Files\` |
 | `Intune.txt` | Fields for the portal |
 | `Detection.ps1` | Custom detection |
+
+**Package all…** writes one `.intunewin` for each analyzed file in the same folder. A file that has not been analyzed is left out. Upload is still one app at a time. After either save, the selected row says **Packaged**.
 
 ### Detection
 

@@ -43,7 +43,7 @@
     </header>
     <article>
 <h1>InstallScout – quick start</h1>
-<p>Version <strong>1.8.57</strong>. From an installer to a Win32 app in Intune. The program does not run the installer.</p>
+<p>Version <strong>1.8.58</strong>. From an installer to a Win32 app in Intune. The program does not run the installer.</p>
 <p>The full guide is <a href="guide.html">guide.html</a>. Engines, the CLI, and Graph are in <a href="reference-en.html">reference-en.html</a>. PDF: <a href="InstallScout-quickstart-en.pdf">InstallScout-quickstart-en.pdf</a>.</p>
 <h2>1. Start</h2>
 <p>Double-click <code>InstallScoutPortable.exe</code>. Nothing has to be installed. The language is English. Switch to Dansk in the top-right corner. Drop an installer on the window, or use <strong>Add files…</strong>.</p>
@@ -51,10 +51,10 @@
 <p>To put it on the Start menu, run <code>portable\Install.bat</code>. The portable exe stays where it is and can still be copied on its own.</p>
 <h2>2. Analyze</h2>
 <ol><li><strong>Add files…</strong> and choose an EXE, MSI, COM, or MSIX.</li><li>Click <strong>Analyze</strong>.</li></ol>
-<p>The green line is the silent command. <strong>Suggested switches</strong> may appear under it. Tick a switch to add it, and untick to remove it. <code>/install</code> and <code>/norestart</code> are not added automatically. Inno keeps <code>/NORESTART</code>.</p>
+<p>The green command wraps over three lines. The file list colors confidence and shows <strong>Analyzed</strong>, <strong>Packaged</strong>, or <strong>Rebuild</strong>. <strong>Suggested switches</strong> may appear under the command. Tick a switch to add it, and untick to remove it. <code>/install</code> and <code>/norestart</code> are not added automatically. Inno keeps <code>/NORESTART</code>.</p>
 <p>Edit the line, or type an extra flag under <strong>Extra switches</strong> and click <strong>Add</strong>. Test the command in a VM before you roll it out.</p>
 <h2>3. Package</h2>
-<p>Click <strong>Intune package…</strong> and choose a folder. That saves an <code>.intunewin</code>, the PSADT source, and <code>Detection.ps1</code>.</p>
+<p>Click <strong>Intune package…</strong> and choose a folder. The dialog opens in the folder you used last. That saves an <code>.intunewin</code>, the PSADT source, and <code>Detection.ps1</code>. <strong>Package all…</strong> writes one package for each analyzed file. Upload is still one app at a time.</p>
 <p><strong>Upload to Intune</strong> stays grey until the package exists. If you change the command afterwards, build the package again.</p>
 <h2>4. Upload</h2>
 <p>Click <strong>Upload to Intune…</strong>.</p>
@@ -68,7 +68,7 @@
 <ul><li>An MSI is matched on its product code.</li><li>An EXE is matched on name, publisher, and version. The version must be the same or newer.</li><li><code>Logi Options+ Installer</code> matches <code>Logi Options+</code>. <code>Logitech, Inc.</code> matches <code>Logitech</code>.</li></ul>
     </article>
     <footer>
-      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.57/InstallScout-1.8.57.zip">Download 1.8.57 (.zip)</a> · <a href="../">InstallScout</a></p>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.58/InstallScout-1.8.58.zip">Download 1.8.58 (.zip)</a> · <a href="../">InstallScout</a></p>
     </footer>
   </div>
 </body>

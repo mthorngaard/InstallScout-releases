@@ -1,6 +1,6 @@
 # InstallScout – quick start
 
-Version **1.8.57**. Fra en installer til en Win32-app i Intune. Programmet kører ikke installeren.
+Version **1.8.58**. Fra en installer til en Win32-app i Intune. Programmet kører ikke installeren.
 
 Den fulde vejledning er [vejledning.md](vejledning.md). Motorer, CLI og Graph står i [reference.md](reference.md). PDF: [InstallScout-quickstart.pdf](InstallScout-quickstart.pdf).
 
@@ -17,13 +17,13 @@ Vil du have den i Start-menuen, så kør `portable\Install.bat`. Den portable ex
 1. **Tilføj filer…** og vælg en EXE, MSI, COM eller MSIX.
 2. Klik **Analysér**.
 
-Den grønne linje er silent-kommandoen. Under den kan der ligge **Foreslåede switche**. Sæt flueben for at tage en switch med, og fjern det for at tage den ud. `/install` og `/norestart` sættes ikke på automatisk. Inno beholder `/NORESTART`.
+Den grønne kommando ombrydes over tre linjer. Fillisten farver sikkerheden og viser **Analyseret**, **Pakket** eller **Byg igen**. Under kommandoen kan der ligge **Foreslåede switche**. Sæt flueben for at tage en switch med, og fjern det for at tage den ud. `/install` og `/norestart` sættes ikke på automatisk. Inno beholder `/NORESTART`.
 
 Ret linjen, eller skriv et ekstra flag under **Ekstra switche** og klik **Tilføj**. Test kommandoen i en VM, før du ruller den ud.
 
 ## 3. Pak
 
-Klik **Intune-pakke…** og vælg en mappe. Der gemmes en `.intunewin`, PSADT-kilden og `Detection.ps1`.
+Klik **Intune-pakke…** og vælg en mappe. Dialogen åbner i den mappe, der blev brugt sidst. Der gemmes en `.intunewin`, PSADT-kilden og `Detection.ps1`. **Pak alle…** skriver én pakke pr. analyseret fil. Upload er stadig én app ad gangen.
 
 **Upload til Intune** er grå, indtil pakken findes. Ændrer du kommandoen bagefter, skal pakken laves igen.
 

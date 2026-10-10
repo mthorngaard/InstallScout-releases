@@ -43,7 +43,7 @@
     </header>
     <article>
 <h1>InstallScout – quick start</h1>
-<p>Version <strong>1.8.57</strong>. Fra en installer til en Win32-app i Intune. Programmet kører ikke installeren.</p>
+<p>Version <strong>1.8.58</strong>. Fra en installer til en Win32-app i Intune. Programmet kører ikke installeren.</p>
 <p>Den fulde vejledning er <a href="vejledning.html">vejledning.html</a>. Motorer, CLI og Graph står i <a href="reference.html">reference.html</a>. PDF: <a href="InstallScout-quickstart.pdf">InstallScout-quickstart.pdf</a>.</p>
 <h2>1. Start</h2>
 <p>Dobbeltklik <code>InstallScoutPortable.exe</code>. Der skal ikke installeres noget. Sproget er English. Skift til Dansk øverst til højre. Træk en installer ind på vinduet, eller brug <strong>Tilføj filer…</strong>.</p>
@@ -51,10 +51,10 @@
 <p>Vil du have den i Start-menuen, så kør <code>portable\Install.bat</code>. Den portable exe bliver liggende og kan stadig kopieres for sig selv.</p>
 <h2>2. Analysér</h2>
 <ol><li><strong>Tilføj filer…</strong> og vælg en EXE, MSI, COM eller MSIX.</li><li>Klik <strong>Analysér</strong>.</li></ol>
-<p>Den grønne linje er silent-kommandoen. Under den kan der ligge <strong>Foreslåede switche</strong>. Sæt flueben for at tage en switch med, og fjern det for at tage den ud. <code>/install</code> og <code>/norestart</code> sættes ikke på automatisk. Inno beholder <code>/NORESTART</code>.</p>
+<p>Den grønne kommando ombrydes over tre linjer. Fillisten farver sikkerheden og viser <strong>Analyseret</strong>, <strong>Pakket</strong> eller <strong>Byg igen</strong>. Under kommandoen kan der ligge <strong>Foreslåede switche</strong>. Sæt flueben for at tage en switch med, og fjern det for at tage den ud. <code>/install</code> og <code>/norestart</code> sættes ikke på automatisk. Inno beholder <code>/NORESTART</code>.</p>
 <p>Ret linjen, eller skriv et ekstra flag under <strong>Ekstra switche</strong> og klik <strong>Tilføj</strong>. Test kommandoen i en VM, før du ruller den ud.</p>
 <h2>3. Pak</h2>
-<p>Klik <strong>Intune-pakke…</strong> og vælg en mappe. Der gemmes en <code>.intunewin</code>, PSADT-kilden og <code>Detection.ps1</code>.</p>
+<p>Klik <strong>Intune-pakke…</strong> og vælg en mappe. Dialogen åbner i den mappe, der blev brugt sidst. Der gemmes en <code>.intunewin</code>, PSADT-kilden og <code>Detection.ps1</code>. <strong>Pak alle…</strong> skriver én pakke pr. analyseret fil. Upload er stadig én app ad gangen.</p>
 <p><strong>Upload til Intune</strong> er grå, indtil pakken findes. Ændrer du kommandoen bagefter, skal pakken laves igen.</p>
 <h2>4. Upload</h2>
 <p>Klik <strong>Upload til Intune…</strong>.</p>
@@ -68,7 +68,7 @@
 <ul><li>En MSI matches på product code.</li><li>En EXE matches på navn, udgiver og version. Versionen skal være den samme eller nyere.</li><li><code>Logi Options+ Installer</code> matcher <code>Logi Options+</code>. <code>Logitech, Inc.</code> matcher <code>Logitech</code>.</li></ul>
     </article>
     <footer>
-      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.57/InstallScout-1.8.57.zip">Hent 1.8.57 (.zip)</a> · <a href="../">InstallScout</a></p>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.58/InstallScout-1.8.58.zip">Hent 1.8.58 (.zip)</a> · <a href="../">InstallScout</a></p>
     </footer>
   </div>
 </body>

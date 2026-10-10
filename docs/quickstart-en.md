@@ -1,6 +1,6 @@
 # InstallScout – quick start
 
-Version **1.8.57**. From an installer to a Win32 app in Intune. The program does not run the installer.
+Version **1.8.58**. From an installer to a Win32 app in Intune. The program does not run the installer.
 
 The full guide is [guide.md](guide.md). Engines, the CLI, and Graph are in [reference-en.md](reference-en.md). PDF: [InstallScout-quickstart-en.pdf](InstallScout-quickstart-en.pdf).
 
@@ -17,13 +17,13 @@ To put it on the Start menu, run `portable\Install.bat`. The portable exe stays 
 1. **Add files…** and choose an EXE, MSI, COM, or MSIX.
 2. Click **Analyze**.
 
-The green line is the silent command. **Suggested switches** may appear under it. Tick a switch to add it, and untick to remove it. `/install` and `/norestart` are not added automatically. Inno keeps `/NORESTART`.
+The green command wraps over three lines. The file list colors confidence and shows **Analyzed**, **Packaged**, or **Rebuild**. **Suggested switches** may appear under the command. Tick a switch to add it, and untick to remove it. `/install` and `/norestart` are not added automatically. Inno keeps `/NORESTART`.
 
 Edit the line, or type an extra flag under **Extra switches** and click **Add**. Test the command in a VM before you roll it out.
 
 ## 3. Package
 
-Click **Intune package…** and choose a folder. That saves an `.intunewin`, the PSADT source, and `Detection.ps1`.
+Click **Intune package…** and choose a folder. The dialog opens in the folder you used last. That saves an `.intunewin`, the PSADT source, and `Detection.ps1`. **Package all…** writes one package for each analyzed file. Upload is still one app at a time.
 
 **Upload to Intune** stays grey until the package exists. If you change the command afterwards, build the package again.
 
