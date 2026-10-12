@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Find silent install switches for a Windows app — InstallScout</title>
+  <meta name="description" content="Find silent switches for an app without running the installer. InstallScout reads the EXE or MSI and writes the command for Inno, NSIS, MSI, InstallShield, and WiX Burn.">
+  <link rel="canonical" href="https://mthorngaard.github.io/InstallScout-releases/docs/find-silent-switches.html">
+  <link rel="alternate" hreflang="en" href="https://mthorngaard.github.io/InstallScout-releases/docs/find-silent-switches.html">
+  <link rel="alternate" hreflang="da" href="https://mthorngaard.github.io/InstallScout-releases/docs/find-silent-switche.html">
+  <link rel="alternate" hreflang="x-default" href="https://mthorngaard.github.io/InstallScout-releases/docs/find-silent-switches.html">
+  <meta property="og:title" content="Find silent install switches for a Windows app — InstallScout">
+  <meta property="og:description" content="Find silent switches for an app without running the installer. InstallScout reads the EXE or MSI and writes the command for Inno, NSIS, MSI, InstallShield, and WiX Burn.">
+  <meta property="og:url" content="https://mthorngaard.github.io/InstallScout-releases/docs/find-silent-switches.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://mthorngaard.github.io/InstallScout-releases/assets/installscout.png">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="da_DK">
+  <link rel="icon" href="../assets/installscout.png">
+  <link rel="stylesheet" href="../assets/docs.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Find silent install switches for a Windows app — InstallScout",
+  "description": "Find silent switches for an app without running the installer. InstallScout reads the EXE or MSI and writes the command for Inno, NSIS, MSI, InstallShield, and WiX Burn.",
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://mthorngaard.github.io/InstallScout-releases/docs/find-silent-switches.html",
+  "isPartOf": {
+    "@type": "SoftwareApplication",
+    "@id": "https://mthorngaard.github.io/InstallScout-releases/#app",
+    "name": "InstallScout",
+    "url": "https://mthorngaard.github.io/InstallScout-releases/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I find silent switches for an app?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Drop the installer on InstallScout and click Analyze. The program reads the file, names the engine, and writes the silent command. You do not have to run the setup, and you do not have to search for the app name."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are the silent switches for MSI, Inno, NSIS, and InstallShield?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "MSI uses msiexec /i \"{file}\" /qn. Inno Setup uses /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-. NSIS uses /S, capital S. InstallShield uses /s /v\"/qn\"."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does finding the switches run the installer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. InstallScout reads the file. The installer is not started."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if setup.exe /? shows nothing?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Many setup programs print no help. The engine still has a known silent form. InstallScout matches markers in the file and applies that form. When the outer file is only a wrapper, the inner setup is unpacked and those switches are used."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can the same command go to Intune?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. After Analyze, Intune package builds a local .intunewin. Upload to Intune sends the Win32 app with install, uninstall, detection, and a logo. Finding the switches does not need an Azure sign-in."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="../"><img src="../assets/installscout.png" width="40" height="40" alt="">InstallScout</a>
+      <nav aria-label="Documentation"><a href="find-silent-switches.html" aria-current="page">Find switches</a><a href="quickstart-en.html">Quick start</a><a href="guide.html">Guide</a><a href="reference-en.html">Reference</a><a href="find-silent-switche.html" hreflang="da">Dansk</a></nav>
+    </header>
+    <article>
+<h1>Find silent install switches for a Windows app</h1>
+<p>To find the silent switches for an app, give InstallScout the installer. It reads the EXE, MSI, COM, or MSIX, names the engine, and writes the silent command. The installer is not run.</p>
+<p>A silent switch is an argument that finishes setup with no dialogs. MSI installers share <code>msiexec</code> parameters. EXE installers do not. The arguments depend on the engine that built the file: Inno Setup, NSIS, InstallShield, WiX Burn, and the others below.</p>
+<p>Version <strong>1.8.58</strong>. Every engine, uninstall command, and optional flag is in <a href="reference-en.html">reference-en.html</a>. The path from that command to an Intune Win32 app is in <a href="guide.html">guide.html</a>.</p>
+<h2>How to find the switches</h2>
+<ol><li>Start <code>InstallScoutPortable.exe</code>. Nothing has to be installed.</li><li>Drop the app&#x27;s installer on the window.</li><li>Click <strong>Analyze</strong>. The silent command is on the Commands tab. Confidence is shown next to the engine.</li></ol>
+<p>The same lookup from a prompt:</p>
+<pre><code class="language-powershell">.\InstallScoutPortable.exe --cli &quot;C:\installers\setup.exe&quot;</code></pre>
+<p>The file stays on the machine. After the local result, WinGet and Chocolatey are asked for the product name and vendor only. The installer is not uploaded. A confident local command is kept when those catalogs disagree.</p>
+<p><code>setup.exe /?</code> is the usual first try, and many installers print nothing. InstallScout does not need that help text. It matches markers in the file and applies the silent form for that engine.</p>
+<h2>Silent switches by engine</h2>
+<p><code>{file}</code> is the quoted path of the installer.</p>
+<div class="table-wrap"><table><thead><tr><th>Engine</th><th>Silent install</th></tr></thead><tbody><tr><td>Windows Installer (MSI)</td><td><code>msiexec /i &quot;{file}&quot; /qn</code></td></tr><tr><td>Inno Setup</td><td><code>&quot;{file}&quot; /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-</code></td></tr><tr><td>NSIS</td><td><code>&quot;{file}&quot; /S</code></td></tr><tr><td>InstallShield</td><td><code>&quot;{file}&quot; /s /v&quot;/qn&quot;</code></td></tr><tr><td>WiX Burn</td><td><code>&quot;{file}&quot; /quiet</code></td></tr><tr><td>Advanced Installer</td><td><code>&quot;{file}&quot; /exenoui /qn</code></td></tr></tbody></table></div>
+<ul><li><strong>NSIS.</strong> <code>/S</code> must be capital. <code>/D=</code> must be last and unquoted.</li><li><strong>Inno Setup.</strong> <code>/S</code> is not the silent switch. Use <code>/VERYSILENT</code>. <code>/NORESTART</code> belongs to Inno and stays.</li><li><strong>InstallShield.</strong> <code>/qn</code> is passed through <code>/v&quot;/qn&quot;</code>. An older InstallScript setup may need a recorded <code>setup.iss</code> (<code>/r</code>, then <code>/s /f1</code>).</li><li><strong>WiX Burn.</strong> <code>/quiet</code> is the silent switch. <code>/install</code> is already the default, so it is not added.</li><li><strong>Advanced Installer.</strong> <code>/S</code> and <code>/VERYSILENT</code> typically produce <em>Invalid command line</em>.</li></ul>
+<p>Suggested switches under the command are optional flags from the file or the engine, such as an Inno log or MSI <code>ALLUSERS=1</code>. Tick one to add it. <code>/install</code> and <code>/norestart</code> are not offered. The full list is in the <a href="reference-en.html">reference</a>.</p>
+<h2>When the file is only a wrapper</h2>
+<p>A 7-Zip SFX, WinRAR SFX, IExpress package, or some self-extractors have no reliable silent line of their own. InstallScout unpacks the inner setup locally and uses that command. Inno Setup, NSIS, Wacom, and Dell Display and Peripheral Manager are not unpacked.</p>
+<p>An outer <code>/sAll</code>, <code>--silent</code>, or <code>/silent</code> is kept. An Adobe-style self-extractor becomes <code>&quot;{file}&quot; /sAll /rs /rps /msi /quiet</code> when <code>/sAll</code> or <code>/rps</code> is in the file.</p>
+<h2>What the command does not prove</h2>
+<p>The line is the engine&#x27;s silent form, plus flags read from the file. It is not a test install. Review it, and try the package in a VM before you roll it out.</p>
+<p>Vendor settings such as a license server or a language are not looked up from a catalog of every app. ClickOnce usually has no reliable silent switch for a machine install.</p>
+<h2>Frequently asked questions</h2>
+<h3>How do I find silent switches for an app?</h3>
+<p>Drop the installer on InstallScout and click Analyze. The program reads the file, names the engine, and writes the silent command. You do not have to run the setup, and you do not have to search for the app name.</p>
+<h3>What are the silent switches for MSI, Inno, NSIS, and InstallShield?</h3>
+<p>MSI uses <code>msiexec /i &quot;{file}&quot; /qn</code>. Inno Setup uses <code>/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-</code>. NSIS uses <code>/S</code>, capital S. InstallShield uses <code>/s /v&quot;/qn&quot;</code>.</p>
+<h3>Does finding the switches run the installer?</h3>
+<p>No. InstallScout reads the file. The installer is not started.</p>
+<h3>What if setup.exe /? shows nothing?</h3>
+<p>Many setup programs print no help. The engine still has a known silent form. InstallScout matches markers in the file and applies that form. When the outer file is only a wrapper, the inner setup is unpacked and those switches are used.</p>
+<h3>Can the same command go to Intune?</h3>
+<p>Yes. After Analyze, <strong>Intune package</strong> builds a local <code>.intunewin</code>. <strong>Upload to Intune</strong> sends the Win32 app with install, uninstall, detection, and a logo. Finding the switches does not need an Azure sign-in.</p>
+    </article>
+    <footer>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.58/InstallScout-1.8.58.zip">Download 1.8.58 (.zip)</a> · <a href="../">InstallScout</a></p>
+    </footer>
+  </div>
+</body>
+</html>

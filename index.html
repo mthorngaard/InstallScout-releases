@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="google-site-verification" content="CK3dhKgiZX1zH0GhYSEjZyaRWyk6yXtYKBSuz411eSE">
-  <title>InstallScout — from silent switch finder to Intune upload</title>
-  <meta name="description" content="InstallScout finds silent install switches for Windows EXE, MSI, COM, and MSIX files, builds a PSADT .intunewin package, and uploads the Win32 app to Microsoft Intune. It does not run the installer.">
+  <title>Find silent install switches for Windows apps — InstallScout</title>
+  <meta name="description" content="Find silent install switches for an EXE or MSI without running the installer. InstallScout names the engine, writes the command, and can upload the Win32 app to Intune.">
   <link rel="canonical" href="https://mthorngaard.github.io/InstallScout-releases/">
-  <meta property="og:title" content="InstallScout — from silent switch finder to Intune upload">
-  <meta property="og:description" content="From silent switch finder to Intune upload: analyze the installer, build a PSADT Win32 package, and upload the app with detection and logo.">
+  <meta property="og:title" content="Find silent install switches for Windows apps — InstallScout">
+  <meta property="og:description" content="Find silent install switches without running the installer, then build a PSADT Win32 package and upload the app to Intune.">
   <meta property="og:url" content="https://mthorngaard.github.io/InstallScout-releases/">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://mthorngaard.github.io/InstallScout-releases/assets/installscout.png">
@@ -71,7 +71,7 @@
   "url": "https://mthorngaard.github.io/InstallScout-releases/",
   "image": "https://mthorngaard.github.io/InstallScout-releases/assets/installscout.png",
   "downloadUrl": "https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.58/InstallScout-1.8.58.zip",
-  "description": "InstallScout finds silent install switches for Windows EXE, MSI, COM, and MSIX files, builds a PSADT .intunewin package, and uploads the Win32 app to Microsoft Intune. It does not run the installer.",
+  "description": "Finds silent install switches for a Windows app by reading the EXE, MSI, COM, or MSIX. It does not run the installer. It can then build a PSADT .intunewin package and upload the Win32 app to Microsoft Intune.",
   "featureList": [
     "Silent install switch finder for Inno, NSIS, MSI, InstallShield, and WiX Burn",
     "PSADT .intunewin package",
@@ -97,7 +97,7 @@
     <img class="mark" src="assets/installscout.png" width="88" height="88" alt="InstallScout">
     <h1>InstallScout</h1>
     <p><a rel="me" href="https://github.com/mthorngaard">mthorngaard on GitHub</a></p>
-    <p>From silent switch finder to Intune upload. InstallScout reads a Windows installer without running it, finds the silent switches, builds a PSADT <code>.intunewin</code> package, and uploads the Win32 app to Microsoft Intune with detection, a logo, and optional supersedence.</p>
+    <p>Find silent install switches for a Windows app without running the installer. InstallScout reads the EXE, MSI, COM, or MSIX, names the engine, and writes the silent command. It can then build a PSADT <code>.intunewin</code> package and upload the Win32 app to Microsoft Intune.</p>
     <div class="actions">
       <a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.58/InstallScout-1.8.58.zip">Download 1.8.58 (.zip)</a>
       <a class="secondary" href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.58/InstallScoutPortable.exe">Portable exe</a>
@@ -121,8 +121,8 @@
       <li>Conditional Access can still block that sign-in.</li>
     </ul>
     <h2>Documentation</h2>
-    <p><a href="docs/quickstart-en.html">Quick start</a> · <a href="docs/guide.html">Guide</a> · <a href="docs/reference-en.html">Technical reference</a></p>
-    <p>Dansk: <a href="docs/quickstart.html">hurtig start</a>, <a href="docs/vejledning.html">vejledning</a>, <a href="docs/reference.html">reference</a>.</p>
+    <p><a href="docs/find-silent-switches.html">Find silent install switches</a> · <a href="docs/quickstart-en.html">Quick start</a> · <a href="docs/guide.html">Guide</a> · <a href="docs/reference-en.html">Technical reference</a></p>
+    <p>Dansk: <a href="docs/find-silent-switche.html">find silent-switche</a>, <a href="docs/quickstart.html">hurtig start</a>, <a href="docs/vejledning.html">vejledning</a>, <a href="docs/reference.html">reference</a>.</p>
     <h2>Credits</h2>
     <p>Intune packages are built with <a href="https://github.com/PSAppDeployToolkit/PSAppDeployToolkit">PSAppDeployToolkit</a> 4.1.8 by the PSAppDeployToolkit Team. That toolkit is licensed under the <a href="https://github.com/PSAppDeployToolkit/PSAppDeployToolkit/blob/main/COPYING.Lesser">GNU Lesser General Public License v3.0</a>.</p>
     <p>Inner setup unpacking uses <a href="https://www.7-zip.org/">7-Zip</a> Extra (<code>7za</code>) by Igor Pavlov, licensed under the GNU LGPL.</p>
