@@ -6,6 +6,12 @@ Find silent install switches for a Windows app without running the installer. In
 
 Use it for the full path: find the switches, package the command, then upload to Intune as a system or user install. It runs on Windows 10 and Windows 11. The interface is in English. Switch to Dansk in the top-right corner.
 
+## Features
+* **Automated Silent Switch Finder:** Instantly discover the correct silent install and uninstall arguments for any Windows installer.
+* **PSADT Integration:** Automatically wraps your applications using the industry-standard **PowerShell App Deployment Toolkit**.
+* **Direct Intune Upload:** Package your software into the `.intunewin` format and upload it directly to **Microsoft Intune** via Graph API.
+* **Win32 App Packager:** Built-in support for both complex executable setups and standard MSI packages.
+
 ## Download
 
 The current version is **1.8.58**: [releases](https://github.com/mthorngaard/InstallScout-releases/releases/latest)
