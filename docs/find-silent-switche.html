@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Find silent-switche til en Windows-app — InstallScout</title>
-  <meta name="description" content="Find silent-switche til en app uden at køre installeren. InstallScout læser EXE- eller MSI-filen og skriver kommandoen til Inno, NSIS, MSI, InstallShield og WiX Burn.">
+  <title>Find silent-switche og upload til Intune — InstallScout</title>
+  <meta name="description" content="Find silent install-kommandoen til en EXE eller MSI, byg en .intunewin-pakke, og upload Win32-appen til Microsoft Intune. Installeren bliver ikke kørt.">
   <link rel="canonical" href="https://mthorngaard.github.io/InstallScout-releases/docs/find-silent-switche.html">
   <link rel="alternate" hreflang="en" href="https://mthorngaard.github.io/InstallScout-releases/docs/find-silent-switches.html">
   <link rel="alternate" hreflang="da" href="https://mthorngaard.github.io/InstallScout-releases/docs/find-silent-switche.html">
   <link rel="alternate" hreflang="x-default" href="https://mthorngaard.github.io/InstallScout-releases/docs/find-silent-switches.html">
-  <meta property="og:title" content="Find silent-switche til en Windows-app — InstallScout">
-  <meta property="og:description" content="Find silent-switche til en app uden at køre installeren. InstallScout læser EXE- eller MSI-filen og skriver kommandoen til Inno, NSIS, MSI, InstallShield og WiX Burn.">
+  <meta property="og:title" content="Find silent-switche og upload til Intune — InstallScout">
+  <meta property="og:description" content="Find silent install-kommandoen til en EXE eller MSI, byg en .intunewin-pakke, og upload Win32-appen til Microsoft Intune. Installeren bliver ikke kørt.">
   <meta property="og:url" content="https://mthorngaard.github.io/InstallScout-releases/docs/find-silent-switche.html">
   <meta property="og:type" content="article">
   <meta property="og:image" content="https://mthorngaard.github.io/InstallScout-releases/assets/installscout.png">
@@ -22,8 +22,8 @@
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "Find silent-switche til en Windows-app — InstallScout",
-  "description": "Find silent-switche til en app uden at køre installeren. InstallScout læser EXE- eller MSI-filen og skriver kommandoen til Inno, NSIS, MSI, InstallShield og WiX Burn.",
+  "headline": "Find silent-switche og upload til Intune — InstallScout",
+  "description": "Find silent install-kommandoen til en EXE eller MSI, byg en .intunewin-pakke, og upload Win32-appen til Microsoft Intune. Installeren bliver ikke kørt.",
   "inLanguage": "da",
   "mainEntityOfPage": "https://mthorngaard.github.io/InstallScout-releases/docs/find-silent-switche.html",
   "isPartOf": {
@@ -41,10 +41,26 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Hvordan finder jeg silent-switche til en app?",
+      "name": "Hvordan finder jeg silent install-kommandoen?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Træk installeren ind på InstallScout, og klik Analysér. Programmet læser filen, navngiver motoren og skriver silent-kommandoen. Du behøver ikke køre setup, og du behøver ikke søge på appens navn."
+        "text": "Træk installeren ind på InstallScout, og klik Analysér. Programmet læser filen, navngiver motoren og skriver silent-kommandoen. Du kører ikke setup, og du slår ikke appen op på navn."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hvordan installerer jeg en EXE silently?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Kommandoen afhænger af motoren. Inno Setup bruger /VERYSILENT. NSIS bruger /S. InstallShield bruger /s /v\"/qn\". En MSI bruger msiexec /i \"{file}\" /qn. WiX Burn bruger /quiet. InstallScout skriver linjen til den fil, du giver den."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hvordan uploader jeg en EXE til Intune?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Klik Analysér, derefter Intune-pakke, og derefter Upload til Intune. Det gemmer en lokal .intunewin og sender Win32-appen med install, uninstall, detection og et logo. Du kører ikke selv Win32 Content Prep Tool."
       }
     },
     {
@@ -70,14 +86,6 @@
         "@type": "Answer",
         "text": "Mange setup-programmer skriver ingen hjælp. Motoren har stadig en kendt silent-form. InstallScout matcher mærker i filen og bruger den form. Når den ydre fil kun er en wrapper, pakkes det indre setup ud, og de switche bruges."
       }
-    },
-    {
-      "@type": "Question",
-      "name": "Kan den samme kommando bruges i Intune?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Ja. Efter Analysér bygger Intune-pakke en lokal .intunewin. Upload til Intune sender Win32-appen med install, uninstall, detection og et logo. Det kræver ikke et Azure-login at finde switchene."
-      }
     }
   ]
 }
@@ -90,8 +98,8 @@
       <nav aria-label="Dokumentation"><a href="find-silent-switche.html" aria-current="page">Find switche</a><a href="quickstart.html">Hurtig start</a><a href="vejledning.html">Vejledning</a><a href="reference.html">Reference</a><a href="find-silent-switches.html" hreflang="en">English</a></nav>
     </header>
     <article>
-<h1>Find silent-switche til en Windows-app</h1>
-<p>For at finde silent-switchene til en app giver du InstallScout installeren. Programmet læser EXE-, MSI-, COM- eller MSIX-filen, navngiver motoren og skriver silent-kommandoen. Installeren bliver ikke kørt.</p>
+<h1>Find silent-switche og upload til Intune</h1>
+<p>For at finde silent-switchene til en app giver du InstallScout installeren. Programmet læser EXE-, MSI-, COM- eller MSIX-filen, navngiver motoren og skriver silent-kommandoen. Installeren bliver ikke kørt. Ud fra den kommando bygger <strong>Intune-pakke</strong> en lokal <code>.intunewin</code>, og <strong>Upload til Intune</strong> sender Win32-appen.</p>
 <p>En silent-switch er et argument, der får setup til at køre færdigt uden dialoger. MSI-filer deler parametre til <code>msiexec</code>. EXE-filer gør ikke. Argumenterne afhænger af motoren, der har bygget filen: Inno Setup, NSIS, InstallShield, WiX Burn og de øvrige nedenfor.</p>
 <p>Version <strong>1.8.58</strong>. Alle motorer, afinstallation og valgfri flag står i <a href="reference.html">reference.html</a>. Vejen fra kommandoen til en Win32-app i Intune står i <a href="vejledning.html">vejledning.html</a>.</p>
 <h2>Sådan finder du switchene</h2>
@@ -103,6 +111,9 @@
 <h2>Silent-switche efter motor</h2>
 <p><code>{file}</code> er installerens sti i anførselstegn.</p>
 <div class="table-wrap"><table><thead><tr><th>Motor</th><th>Silent install</th></tr></thead><tbody><tr><td>Windows Installer (MSI)</td><td><code>msiexec /i &quot;{file}&quot; /qn</code></td></tr><tr><td>Inno Setup</td><td><code>&quot;{file}&quot; /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-</code></td></tr><tr><td>NSIS</td><td><code>&quot;{file}&quot; /S</code></td></tr><tr><td>InstallShield</td><td><code>&quot;{file}&quot; /s /v&quot;/qn&quot;</code></td></tr><tr><td>WiX Burn</td><td><code>&quot;{file}&quot; /quiet</code></td></tr><tr><td>Advanced Installer</td><td><code>&quot;{file}&quot; /exenoui /qn</code></td></tr></tbody></table></div>
+<h2>Upload til Intune</h2>
+<ol><li><strong>Analysér</strong> — InstallScout skriver silent-kommandoen. Installeren bliver ikke kørt.</li><li><strong>Intune-pakke</strong> — en lokal <code>.intunewin</code> med install, uninstall og detection.</li><li><strong>Upload til Intune</strong> — Win32-appen, med System eller User, et logo og valgfri supersedence.</li></ol>
+<p>Det kræver ikke et Azure-login at finde switchene. Upload gør. Trinene i vinduet står i <a href="vejledning.html">vejledningen</a>.</p>
 <ul><li><strong>NSIS.</strong> <code>/S</code> skal være stort. <code>/D=</code> skal stå sidst og uden anførselstegn.</li><li><strong>Inno Setup.</strong> <code>/S</code> er ikke silent-switchen. Brug <code>/VERYSILENT</code>. <code>/NORESTART</code> hører til Inno og bliver stående.</li><li><strong>InstallShield.</strong> <code>/qn</code> sendes videre med <code>/v&quot;/qn&quot;</code>. Et ældre InstallScript-setup kan kræve en optaget <code>setup.iss</code> (<code>/r</code>, derefter <code>/s /f1</code>).</li><li><strong>WiX Burn.</strong> <code>/quiet</code> er silent-switchen. <code>/install</code> er allerede standard og bliver ikke tilføjet.</li><li><strong>Advanced Installer.</strong> <code>/S</code> og <code>/VERYSILENT</code> giver typisk <em>Invalid command line</em>.</li></ul>
 <p>Foreslåede switche under kommandoen er valgfri flag fra filen eller motoren, for eksempel en Inno-log eller MSI <code>ALLUSERS=1</code>. Sæt flueben for at tage et flag med. <code>/install</code> og <code>/norestart</code> tilbydes ikke. Hele listen står i <a href="reference.html">referencen</a>.</p>
 <h2>Når filen kun er en wrapper</h2>
@@ -112,16 +123,18 @@
 <p>Linjen er motorens silent-form plus flag læst i filen. Det er ikke en prøveinstallation. Gennemgå den, og prøv pakken i en VM, før du ruller den ud.</p>
 <p>Leverandørindstillinger som licensserver eller sprog slås ikke op i et katalog over alle apps. ClickOnce har typisk ingen pålidelig silent-switch til en maskininstallation.</p>
 <h2>Ofte stillede spørgsmål</h2>
-<h3>Hvordan finder jeg silent-switche til en app?</h3>
-<p>Træk installeren ind på InstallScout, og klik Analysér. Programmet læser filen, navngiver motoren og skriver silent-kommandoen. Du behøver ikke køre setup, og du behøver ikke søge på appens navn.</p>
+<h3>Hvordan finder jeg silent install-kommandoen?</h3>
+<p>Træk installeren ind på InstallScout, og klik Analysér. Programmet læser filen, navngiver motoren og skriver silent-kommandoen. Du kører ikke setup, og du slår ikke appen op på navn.</p>
+<h3>Hvordan installerer jeg en EXE silently?</h3>
+<p>Kommandoen afhænger af motoren. Inno Setup bruger <code>/VERYSILENT</code>. NSIS bruger <code>/S</code>. InstallShield bruger <code>/s /v&quot;/qn&quot;</code>. En MSI bruger <code>msiexec /i &quot;{file}&quot; /qn</code>. WiX Burn bruger <code>/quiet</code>. InstallScout skriver linjen til den fil, du giver den.</p>
+<h3>Hvordan uploader jeg en EXE til Intune?</h3>
+<p>Klik Analysér, derefter Intune-pakke, og derefter Upload til Intune. Det gemmer en lokal <code>.intunewin</code> og sender Win32-appen med install, uninstall, detection og et logo. Du kører ikke selv Win32 Content Prep Tool.</p>
 <h3>Hvad er silent-switchen til MSI, Inno, NSIS og InstallShield?</h3>
 <p>MSI bruger <code>msiexec /i &quot;{file}&quot; /qn</code>. Inno Setup bruger <code>/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-</code>. NSIS bruger <code>/S</code> med stort S. InstallShield bruger <code>/s /v&quot;/qn&quot;</code>.</p>
 <h3>Bliver installeren kørt, når switchene findes?</h3>
 <p>Nej. InstallScout læser filen. Installeren startes ikke.</p>
 <h3>Hvad hvis setup.exe /? ikke viser noget?</h3>
 <p>Mange setup-programmer skriver ingen hjælp. Motoren har stadig en kendt silent-form. InstallScout matcher mærker i filen og bruger den form. Når den ydre fil kun er en wrapper, pakkes det indre setup ud, og de switche bruges.</p>
-<h3>Kan den samme kommando bruges i Intune?</h3>
-<p>Ja. Efter Analysér bygger <strong>Intune-pakke</strong> en lokal <code>.intunewin</code>. <strong>Upload til Intune</strong> sender Win32-appen med install, uninstall, detection og et logo. Det kræver ikke et Azure-login at finde switchene.</p>
     </article>
     <footer>
       <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.58/InstallScout-1.8.58.zip">Hent 1.8.58 (.zip)</a> · <a href="../">InstallScout</a></p>

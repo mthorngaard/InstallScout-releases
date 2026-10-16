@@ -1,6 +1,6 @@
-# Find silent-switche til en Windows-app
+# Find silent-switche og upload til Intune
 
-For at finde silent-switchene til en app giver du InstallScout installeren. Programmet læser EXE-, MSI-, COM- eller MSIX-filen, navngiver motoren og skriver silent-kommandoen. Installeren bliver ikke kørt.
+For at finde silent-switchene til en app giver du InstallScout installeren. Programmet læser EXE-, MSI-, COM- eller MSIX-filen, navngiver motoren og skriver silent-kommandoen. Installeren bliver ikke kørt. Ud fra den kommando bygger **Intune-pakke** en lokal `.intunewin`, og **Upload til Intune** sender Win32-appen.
 
 En silent-switch er et argument, der får setup til at køre færdigt uden dialoger. MSI-filer deler parametre til `msiexec`. EXE-filer gør ikke. Argumenterne afhænger af motoren, der har bygget filen: Inno Setup, NSIS, InstallShield, WiX Burn og de øvrige nedenfor.
 
@@ -35,6 +35,14 @@ Filen bliver på maskinen. Efter det lokale resultat bliver WinGet og Chocolatey
 | WiX Burn | `"{file}" /quiet` |
 | Advanced Installer | `"{file}" /exenoui /qn` |
 
+## Upload til Intune
+
+1. **Analysér** — InstallScout skriver silent-kommandoen. Installeren bliver ikke kørt.
+2. **Intune-pakke** — en lokal `.intunewin` med install, uninstall og detection.
+3. **Upload til Intune** — Win32-appen, med System eller User, et logo og valgfri supersedence.
+
+Det kræver ikke et Azure-login at finde switchene. Upload gør. Trinene i vinduet står i [vejledningen](vejledning.md).
+
 - **NSIS.** `/S` skal være stort. `/D=` skal stå sidst og uden anførselstegn.
 - **Inno Setup.** `/S` er ikke silent-switchen. Brug `/VERYSILENT`. `/NORESTART` hører til Inno og bliver stående.
 - **InstallShield.** `/qn` sendes videre med `/v"/qn"`. Et ældre InstallScript-setup kan kræve en optaget `setup.iss` (`/r`, derefter `/s /f1`).
@@ -57,9 +65,17 @@ Leverandørindstillinger som licensserver eller sprog slås ikke op i et katalog
 
 ## Ofte stillede spørgsmål
 
-### Hvordan finder jeg silent-switche til en app?
+### Hvordan finder jeg silent install-kommandoen?
 
-Træk installeren ind på InstallScout, og klik Analysér. Programmet læser filen, navngiver motoren og skriver silent-kommandoen. Du behøver ikke køre setup, og du behøver ikke søge på appens navn.
+Træk installeren ind på InstallScout, og klik Analysér. Programmet læser filen, navngiver motoren og skriver silent-kommandoen. Du kører ikke setup, og du slår ikke appen op på navn.
+
+### Hvordan installerer jeg en EXE silently?
+
+Kommandoen afhænger af motoren. Inno Setup bruger `/VERYSILENT`. NSIS bruger `/S`. InstallShield bruger `/s /v"/qn"`. En MSI bruger `msiexec /i "{file}" /qn`. WiX Burn bruger `/quiet`. InstallScout skriver linjen til den fil, du giver den.
+
+### Hvordan uploader jeg en EXE til Intune?
+
+Klik Analysér, derefter Intune-pakke, og derefter Upload til Intune. Det gemmer en lokal `.intunewin` og sender Win32-appen med install, uninstall, detection og et logo. Du kører ikke selv Win32 Content Prep Tool.
 
 ### Hvad er silent-switchen til MSI, Inno, NSIS og InstallShield?
 
@@ -72,7 +88,3 @@ Nej. InstallScout læser filen. Installeren startes ikke.
 ### Hvad hvis setup.exe /? ikke viser noget?
 
 Mange setup-programmer skriver ingen hjælp. Motoren har stadig en kendt silent-form. InstallScout matcher mærker i filen og bruger den form. Når den ydre fil kun er en wrapper, pakkes det indre setup ud, og de switche bruges.
-
-### Kan den samme kommando bruges i Intune?
-
-Ja. Efter Analysér bygger **Intune-pakke** en lokal `.intunewin`. **Upload til Intune** sender Win32-appen med install, uninstall, detection og et logo. Det kræver ikke et Azure-login at finde switchene.
