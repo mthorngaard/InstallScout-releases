@@ -19,7 +19,7 @@ Vil du have den i Start-menuen, så kør `portable\Install.bat`. Den portable ex
 
 Den grønne kommando ombrydes over tre linjer. Fillisten farver sikkerheden og viser **Analyseret**, **Pakket** eller **Byg igen**. Under kommandoen kan der ligge **Foreslåede switche**. Sæt flueben for at tage en switch med, og fjern det for at tage den ud. `/install` og `/norestart` sættes ikke på automatisk. Inno beholder `/NORESTART`.
 
-Ret linjen, eller skriv et ekstra flag under **Ekstra switche** og klik **Tilføj**. Hvis **Prøv i Sandbox** er på knaprækken, så klik den, før du ruller kommandoen ud. Windows Sandbox kører silent-kommandoen og detection-scriptet. Der installeres ingenting på denne pc. Knappen vises kun, når Windows Sandbox er installeret.
+Ret linjen, eller skriv et ekstra flag under **Ekstra switche** og klik **Tilføj**. **Prøv i Sandbox** er valgfri og vises kun, når Windows Sandbox er installeret. Den kører silent-kommandoen og detection-scriptet uden at installere på denne pc. Du kan bygge pakken og uploade, mens testen kører.
 
 ## 3. Pak
 

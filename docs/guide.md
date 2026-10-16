@@ -37,7 +37,7 @@ The buttons sit on two rows. Only the next step is highlighted: **Add files** wh
 | Add files… / Add folder… | Choose EXE, MSI, COM, MSIX |
 | **Analyze** | Read the file locally |
 | **Analyze** | Read the file locally, then look up WinGet and Chocolatey (name/vendor only) |
-| **Try in Sandbox** | Run the silent command and detection in Windows Sandbox. This PC is not changed. Shown only when Sandbox is installed |
+| **Try in Sandbox** | Optional. Run the silent command and detection in Windows Sandbox. This PC is not changed, and you can continue while it runs. Shown only when Sandbox is installed |
 | **Silent Install HQ** | Opens a name search in the browser — file is not uploaded, command is not overwritten |
 | Copy command | Silent line to the clipboard |
 | PSADT package… | Folder with PSADT 4.1.8 |
@@ -70,7 +70,7 @@ The process ends with upload. The silent command is a middle step.
 
 1. Add the file and click **Analyze**.
 2. Read the green silent command. Edit it, or add extra switches, then click **Save command** / **Add**.
-3. Click **Try in Sandbox** when that button is on the row. Windows Sandbox runs the command and the detection script. This PC is not changed.
+3. **Try in Sandbox** is optional. Click it to run the command and the detection script in Windows Sandbox. This PC is not changed. You can build the package and upload while the test runs.
 4. Read the **Online** tab when it fills in. A confident local engine is kept if the catalog disagrees. A weak local guess is replaced when WinGet or Chocolatey has a matching product. On **none**, use **Silent Install HQ** (name search only).
 5. Open **Intune** and check **Install context** (System/User).
 6. Build an **Intune package** (local `.intunewin`). Test with `Invoke-AppDeployToolkit.exe`.
@@ -78,7 +78,7 @@ The process ends with upload. The silent command is a middle step.
 
 ### Try in Windows Sandbox
 
-**Try in Sandbox** is the way to see whether the silent command actually installs, without leaving the app on this PC. The button sits after **Analyze**, before **Silent Install HQ**, and only when Windows Sandbox is installed. The start window says the same thing in the short introduction.
+**Try in Sandbox** is optional. It shows whether the silent command actually installs, without leaving the app on this PC. The button sits after **Analyze**, before **Silent Install HQ**, and only when Windows Sandbox is installed. You can build the Intune package and upload while the test runs. The result comes back in this window when the test finishes. The start window says the same thing in the short introduction.
 
 ![Git analyzed as Inno Setup. Try in Sandbox is ready beside Silent Install HQ](images/en/02-lokal-analyse.png)
 

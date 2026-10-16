@@ -217,7 +217,7 @@ https://intune.microsoft.com/#view/Microsoft_Intune_Apps/SettingsMenu/~/0/appId/
 
 ## 4. Windows Sandbox
 
-**Prøv i Sandbox** er en knap i vinduet. Der er ikke et CLI-flag. Den vises efter **Analysér**, og kun når `WindowsSandbox.exe` er installeret.
+**Prøv i Sandbox** er en valgfri knap i vinduet. Der er ikke et CLI-flag. Den vises efter **Analysér**, og kun når `WindowsSandbox.exe` er installeret. Pakning og upload kan fortsætte, mens testen kører. Resultatet kommer tilbage i dette vindue, når testen er færdig.
 
 Knappen kører den aktuelle silent-kommando i en ny Windows Sandbox og derefter det samme `Detection.ps1`, som upload sender til Intune. Tom detection-output betyder ikke installeret. Sandbox viser en besked med afslutningskoden og det detection-resultat. InstallScout læser den samme tekst tilbage i dette vindue.
 

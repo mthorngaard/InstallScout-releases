@@ -102,7 +102,7 @@
 <pre><code class="language-text">https://intune.microsoft.com/#view/Microsoft_Intune_Apps/SettingsMenu/~/0/appId/{appId}</code></pre>
 <hr>
 <h2>4. Windows Sandbox</h2>
-<p><strong>Try in Sandbox</strong> is a GUI button. There is no CLI flag. It appears after <strong>Analyze</strong>, and only when <code>WindowsSandbox.exe</code> is installed.</p>
+<p><strong>Try in Sandbox</strong> is an optional GUI button. There is no CLI flag. It appears after <strong>Analyze</strong>, and only when <code>WindowsSandbox.exe</code> is installed. Packaging and upload stay available while the test runs. The result comes back in this window when the test finishes.</p>
 <p>The button runs the current silent command inside a new Windows Sandbox, then the same <code>Detection.ps1</code> that upload sends to Intune. Empty detection output means not installed. The sandbox shows a message with the install exit code and that detection result. InstallScout reads the same text back into this window.</p>
 <p>The command must contain the installer path. A package folder (the setup plus MSI, CAB, or similar files, outside Downloads, Desktop, and the other common folders) is mapped read-only at <code>C:\InstallScout\Installer</code>. A single file is copied into the sandbox work folder, so the parent folder is not shared. The work folder is writable. Networking is enabled. Only one Windows Sandbox can run at a time. Closing the sandbox discards it. Nothing is installed on this PC.</p>
     </article>

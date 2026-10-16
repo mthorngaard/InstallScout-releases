@@ -84,7 +84,7 @@
       "name": "Hvordan tester jeg silent-kommandoen uden at installere på denne pc?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Klik Prøv i Sandbox efter Analysér, når Windows Sandbox er installeret. Kommandoen og detection-scriptet kører i en sandbox, der kasseres bagefter. Denne pc ændres ikke. Knappen er skjult, når Sandbox ikke er installeret. Du kan stadig teste pakken i en VM."
+        "text": "Klik Prøv i Sandbox efter Analysér, når Windows Sandbox er installeret. Testen er valgfri. Kommandoen og detection-scriptet kører i en sandbox, der kasseres bagefter, og du kan pakke og uploade, mens den kører. Denne pc ændres ikke. Knappen er skjult, når Sandbox ikke er installeret. Du kan stadig teste pakken i en VM."
       }
     },
     {
@@ -128,7 +128,7 @@
 <p>En 7-Zip SFX, WinRAR SFX, IExpress-pakke eller nogle self-extractors har ingen pålidelig silent-linje i sig selv. InstallScout pakker det indre setup ud lokalt og bruger den kommando. Inno Setup, NSIS, Wacom og Dell Display and Peripheral Manager bliver ikke pakket ud.</p>
 <p>En ydre <code>/sAll</code>, <code>--silent</code> eller <code>/silent</code> beholdes. En self-extractor i Adobe-stil bliver <code>&quot;{file}&quot; /sAll /rs /rps /msi /quiet</code>, når <code>/sAll</code> eller <code>/rps</code> findes i filen.</p>
 <h2>Hvad kommandoen ikke beviser</h2>
-<p>Linjen er motorens silent-form plus flag læst i filen. Det er ikke en prøveinstallation. Gennemgå den, og klik <strong>Prøv i Sandbox</strong>, når knappen vises. Kommandoen kører i Windows Sandbox, ikke på denne pc. Du kan stadig prøve pakken i en VM, før du ruller den ud.</p>
+<p>Linjen er motorens silent-form plus flag læst i filen. Det er ikke en prøveinstallation. <strong>Prøv i Sandbox</strong> er valgfri. Når knappen vises, kører kommandoen i Windows Sandbox, ikke på denne pc. Du kan pakke og uploade, mens testen kører, og du kan stadig prøve pakken i en VM, før du ruller den ud.</p>
 <p>Leverandørindstillinger som licensserver eller sprog slås ikke op i et katalog over alle apps. ClickOnce har typisk ingen pålidelig silent-switch til en maskininstallation.</p>
 <h2>Ofte stillede spørgsmål</h2>
 <h3>Hvordan finder jeg silent install-kommandoen?</h3>
@@ -142,7 +142,7 @@
 <h3>Bliver installeren kørt, når switchene findes?</h3>
 <p>Nej. InstallScout læser filen. Installeren startes ikke. <strong>Prøv i Sandbox</strong> er en særskilt knap. Den kører kommandoen kun inde i Windows Sandbox, og kun når du klikker.</p>
 <h3>Hvordan tester jeg silent-kommandoen uden at installere på denne pc?</h3>
-<p>Klik <strong>Prøv i Sandbox</strong> efter Analysér, når Windows Sandbox er installeret. Kommandoen og detection-scriptet kører i en sandbox, der kasseres bagefter. Denne pc ændres ikke. Knappen er skjult, når Sandbox ikke er installeret. Du kan stadig teste pakken i en VM.</p>
+<p>Klik <strong>Prøv i Sandbox</strong> efter Analysér, når Windows Sandbox er installeret. Testen er valgfri. Kommandoen og detection-scriptet kører i en sandbox, der kasseres bagefter, og du kan pakke og uploade, mens den kører. Denne pc ændres ikke. Knappen er skjult, når Sandbox ikke er installeret. Du kan stadig teste pakken i en VM.</p>
 <h3>Hvad hvis setup.exe /? ikke viser noget?</h3>
 <p>Mange setup-programmer skriver ingen hjælp. Motoren har stadig en kendt silent-form. InstallScout matcher mærker i filen og bruger den form. Når den ydre fil kun er en wrapper, pakkes det indre setup ud, og de switche bruges.</p>
     </article>

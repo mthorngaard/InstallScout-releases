@@ -217,7 +217,7 @@ https://intune.microsoft.com/#view/Microsoft_Intune_Apps/SettingsMenu/~/0/appId/
 
 ## 4. Windows Sandbox
 
-**Try in Sandbox** is a GUI button. There is no CLI flag. It appears after **Analyze**, and only when `WindowsSandbox.exe` is installed.
+**Try in Sandbox** is an optional GUI button. There is no CLI flag. It appears after **Analyze**, and only when `WindowsSandbox.exe` is installed. Packaging and upload stay available while the test runs. The result comes back in this window when the test finishes.
 
 The button runs the current silent command inside a new Windows Sandbox, then the same `Detection.ps1` that upload sends to Intune. Empty detection output means not installed. The sandbox shows a message with the install exit code and that detection result. InstallScout reads the same text back into this window.
 

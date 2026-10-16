@@ -84,7 +84,7 @@
       "name": "How do I test the silent command without installing on this PC?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Click Try in Sandbox after Analyze, when Windows Sandbox is installed. The command and the detection script run in a disposable sandbox. This PC is not changed. The button is hidden when Sandbox is not installed. You can still test the package in a VM."
+        "text": "Click Try in Sandbox after Analyze, when Windows Sandbox is installed. The test is optional. The command and the detection script run in a disposable sandbox, and you can package and upload while it runs. This PC is not changed. The button is hidden when Sandbox is not installed. You can still test the package in a VM."
       }
     },
     {
@@ -128,7 +128,7 @@
 <p>A 7-Zip SFX, WinRAR SFX, IExpress package, or some self-extractors have no reliable silent line of their own. InstallScout unpacks the inner setup locally and uses that command. Inno Setup, NSIS, Wacom, and Dell Display and Peripheral Manager are not unpacked.</p>
 <p>An outer <code>/sAll</code>, <code>--silent</code>, or <code>/silent</code> is kept. An Adobe-style self-extractor becomes <code>&quot;{file}&quot; /sAll /rs /rps /msi /quiet</code> when <code>/sAll</code> or <code>/rps</code> is in the file.</p>
 <h2>What the command does not prove</h2>
-<p>The line is the engine&#x27;s silent form, plus flags read from the file. It is not a test install. Review it, then click <strong>Try in Sandbox</strong> when that button is shown. The command runs in Windows Sandbox, not on this PC. You can still try the package in a VM before you roll it out.</p>
+<p>The line is the engine&#x27;s silent form, plus flags read from the file. It is not a test install. <strong>Try in Sandbox</strong> is optional. When the button is shown, it runs the command in Windows Sandbox, not on this PC. You can package and upload while that test runs, and you can still try the package in a VM before you roll it out.</p>
 <p>Vendor settings such as a license server or a language are not looked up from a catalog of every app. ClickOnce usually has no reliable silent switch for a machine install.</p>
 <h2>Frequently asked questions</h2>
 <h3>How do I find the silent install command?</h3>
@@ -142,7 +142,7 @@
 <h3>Does finding the switches run the installer?</h3>
 <p>No. InstallScout reads the file. The installer is not started. <strong>Try in Sandbox</strong> is a separate button. It runs the command only inside Windows Sandbox, and only when you click it.</p>
 <h3>How do I test the silent command without installing on this PC?</h3>
-<p>Click <strong>Try in Sandbox</strong> after Analyze, when Windows Sandbox is installed. The command and the detection script run in a disposable sandbox. This PC is not changed. The button is hidden when Sandbox is not installed. You can still test the package in a VM.</p>
+<p>Click <strong>Try in Sandbox</strong> after Analyze, when Windows Sandbox is installed. The test is optional. The command and the detection script run in a disposable sandbox, and you can package and upload while it runs. This PC is not changed. The button is hidden when Sandbox is not installed. You can still test the package in a VM.</p>
 <h3>What if setup.exe /? shows nothing?</h3>
 <p>Many setup programs print no help. The engine still has a known silent form. InstallScout matches markers in the file and applies that form. When the outer file is only a wrapper, the inner setup is unpacked and those switches are used.</p>
     </article>

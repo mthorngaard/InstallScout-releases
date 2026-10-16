@@ -37,7 +37,7 @@ Under knapperne ligger **status og progress** på en egen linje, så de er synli
 | Tilføj filer / mappe | Vælg EXE, MSI, COM, MSIX |
 | **Analysér** | Lokal læsning af filen |
 | **Analysér** | Læser filen lokalt og slår derefter op i WinGet og Chocolatey (kun navn/vendor) |
-| **Prøv i Sandbox** | Kør silent-kommandoen og detection i Windows Sandbox. Denne pc ændres ikke. Vises kun, når Sandbox er installeret |
+| **Prøv i Sandbox** | Valgfri. Kør silent-kommandoen og detection i Windows Sandbox. Denne pc ændres ikke, og du kan fortsætte, mens den kører. Vises kun, når Sandbox er installeret |
 | **Silent Install HQ** | Åbner en navnesøgning i browseren – filen uploades ikke, kommandoen overskrives ikke |
 | Kopiér kommando | Silent-linjen til udklipsholder |
 | PSADT-pakke… | Mappe med PSADT 4.1.8 |
@@ -70,7 +70,7 @@ Hele forløbet slutter med upload. Silent-kommandoen er et mellemtrin.
 
 1. Tilføj filen og klik **Analysér**.
 2. Læs den grønne silent-kommando. Ret den, eller tilføj extra switche, og klik **Gem kommando** / **Tilføj**.
-3. Klik **Prøv i Sandbox**, når knappen er på rækken. Windows Sandbox kører kommandoen og detection-scriptet. Denne pc ændres ikke.
+3. **Prøv i Sandbox** er valgfri. Klik den for at køre kommandoen og detection-scriptet i Windows Sandbox. Denne pc ændres ikke. Du kan bygge pakken og uploade, mens testen kører.
 4. Læs fanen **Online**, når den bliver udfyldt. En sikker lokal motor beholdes, hvis kataloget er uenigt. Et svagt lokalt gæt skiftes, når WinGet eller Chocolatey har et matchende produkt. Ved **none**: **Silent Install HQ** (kun navnesøgning).
 5. Åbn **Intune** og tjek **Install context** (System/User).
 6. Lav **Intune-pakke** (lokal `.intunewin`). Test med `Invoke-AppDeployToolkit.exe`.
@@ -78,7 +78,7 @@ Hele forløbet slutter med upload. Silent-kommandoen er et mellemtrin.
 
 ### Prøv i Windows Sandbox
 
-**Prøv i Sandbox** er måden at se, om silent-kommandoen faktisk installerer, uden at appen bliver liggende på denne pc. Knappen sidder efter **Analysér** og før **Silent Install HQ**, og kun når Windows Sandbox er installeret. Startsiden siger det samme i den korte introduktion.
+**Prøv i Sandbox** er valgfri. Den viser, om silent-kommandoen faktisk installerer, uden at appen bliver liggende på denne pc. Knappen sidder efter **Analysér** og før **Silent Install HQ**, og kun når Windows Sandbox er installeret. Du kan bygge Intune-pakken og uploade, mens testen kører. Resultatet kommer tilbage i dette vindue, når testen er færdig. Startsiden siger det samme i den korte introduktion.
 
 ![Git analyseret som Inno Setup. Prøv i Sandbox er klar ved siden af Silent Install HQ](images/02-lokal-analyse.png)
 

@@ -102,7 +102,7 @@
 <pre><code class="language-text">https://intune.microsoft.com/#view/Microsoft_Intune_Apps/SettingsMenu/~/0/appId/{appId}</code></pre>
 <hr>
 <h2>4. Windows Sandbox</h2>
-<p><strong>Prøv i Sandbox</strong> er en knap i vinduet. Der er ikke et CLI-flag. Den vises efter <strong>Analysér</strong>, og kun når <code>WindowsSandbox.exe</code> er installeret.</p>
+<p><strong>Prøv i Sandbox</strong> er en valgfri knap i vinduet. Der er ikke et CLI-flag. Den vises efter <strong>Analysér</strong>, og kun når <code>WindowsSandbox.exe</code> er installeret. Pakning og upload kan fortsætte, mens testen kører. Resultatet kommer tilbage i dette vindue, når testen er færdig.</p>
 <p>Knappen kører den aktuelle silent-kommando i en ny Windows Sandbox og derefter det samme <code>Detection.ps1</code>, som upload sender til Intune. Tom detection-output betyder ikke installeret. Sandbox viser en besked med afslutningskoden og det detection-resultat. InstallScout læser den samme tekst tilbage i dette vindue.</p>
 <p>Kommandoen skal indeholde stien til installeren. En pakkemappe (setup plus MSI, CAB eller tilsvarende filer, uden for Overførsler, Skrivebord og de andre almindelige mapper) mappes skrivebeskyttet til <code>C:\InstallScout\Installer</code>. En enkelt fil kopieres ind i Sandbox-arbejdsmappen, så den overliggende mappe ikke deles. Arbejdsmappen kan skrives til. Netværk er slået til. Der kan kun køre én Windows Sandbox ad gangen. Når Sandbox lukkes, kasseres den. Der installeres ingenting på denne pc.</p>
     </article>

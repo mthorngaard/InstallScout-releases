@@ -89,7 +89,7 @@
   "description": "Finds silent install switches for a Windows app by reading the EXE, MSI, COM, or MSIX. It does not run the installer. It can then build a PSADT .intunewin package and upload the Win32 app to Microsoft Intune.",
   "featureList": [
     "Silent command for EXE, MSI, COM, and MSIX without running the installer",
-    "Try in Windows Sandbox: run the silent command and detection without installing on this PC",
+    "Try in Windows Sandbox, optional: run the silent command and detection without installing on this PC, and continue while it runs",
     "Engines including Inno, NSIS, MSI, InstallShield, WiX Burn, and Squirrel",
     "Editable command, extra switches, and suggested switches",
     "WinGet and Chocolatey check by product name",
@@ -117,8 +117,8 @@
     <img class="mark" src="assets/installscout.png" width="88" height="88" alt="InstallScout">
     <h1>InstallScout</h1>
     <p><a rel="me" href="https://github.com/mthorngaard">mthorngaard on GitHub</a></p>
-    <p>Find silent install switches for a Windows app without running the installer. InstallScout reads the EXE, MSI, COM, or MSIX, names the engine, and writes the silent command. <strong>Try in Sandbox</strong> runs that command and the detection script in Windows Sandbox, so nothing is installed on this PC. It can then build a PSADT <code>.intunewin</code> package and upload the Win32 app to Microsoft Intune.</p>
-    <p class="feature"><strong>New in 1.8.59 — Try in Sandbox.</strong> After Analyze, run the silent command and the detection script in Windows Sandbox. Nothing is installed on this PC. The button is shown when Windows Sandbox is installed.</p>
+    <p>Find silent install switches for a Windows app without running the installer. InstallScout reads the EXE, MSI, COM, or MSIX, names the engine, and writes the silent command. <strong>Try in Sandbox</strong> is optional. It runs that command and the detection script in Windows Sandbox, so nothing is installed on this PC, and you can package and upload while it runs. It can then build a PSADT <code>.intunewin</code> package and upload the Win32 app to Microsoft Intune.</p>
+    <p class="feature"><strong>New in 1.8.59 — Try in Sandbox.</strong> After Analyze, you can run the silent command and the detection script in Windows Sandbox. Nothing is installed on this PC. The test is optional, and you can package and upload while it runs. The button is shown when Windows Sandbox is installed.</p>
     <img class="demo" src="assets/installscout.gif?v=1.8.59" width="960" height="606" alt="Twenty-second InstallScout walkthrough: drop an installer, try the silent command in Windows Sandbox, check WinGet, build the intunewin package, and upload the Win32 app">
     <div class="actions">
       <a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.59/InstallScout-1.8.59.zip">Download 1.8.59 (.zip)</a>
@@ -130,7 +130,7 @@
     <h2>What it does</h2>
     <ul>
       <li><strong>Silent command.</strong> Names the engine (Inno, NSIS, MSI, InstallShield, WiX Burn, Squirrel, and others) and writes the install line. The installer is not run.</li>
-      <li><strong>Try in Sandbox.</strong> Runs that command and the detection script in Windows Sandbox, so this PC is not changed. Shown when Windows Sandbox is installed.</li>
+      <li><strong>Try in Sandbox.</strong> Optional. Runs that command and the detection script in Windows Sandbox, so this PC is not changed. You can package and upload while it runs. Shown when Windows Sandbox is installed.</li>
       <li><strong>Your edit.</strong> Change the line, add a switch, or tick a suggested one before anything is packaged.</li>
       <li><strong>Online check.</strong> Looks up the product name in WinGet and Chocolatey. The file is not uploaded.</li>
       <li><strong>System or User.</strong> Chosen from the engine and the command.</li>

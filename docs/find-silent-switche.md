@@ -59,7 +59,7 @@ En ydre `/sAll`, `--silent` eller `/silent` beholdes. En self-extractor i Adobe-
 
 ## Hvad kommandoen ikke beviser
 
-Linjen er motorens silent-form plus flag læst i filen. Det er ikke en prøveinstallation. Gennemgå den, og klik **Prøv i Sandbox**, når knappen vises. Kommandoen kører i Windows Sandbox, ikke på denne pc. Du kan stadig prøve pakken i en VM, før du ruller den ud.
+Linjen er motorens silent-form plus flag læst i filen. Det er ikke en prøveinstallation. **Prøv i Sandbox** er valgfri. Når knappen vises, kører kommandoen i Windows Sandbox, ikke på denne pc. Du kan pakke og uploade, mens testen kører, og du kan stadig prøve pakken i en VM, før du ruller den ud.
 
 Leverandørindstillinger som licensserver eller sprog slås ikke op i et katalog over alle apps. ClickOnce har typisk ingen pålidelig silent-switch til en maskininstallation.
 
@@ -87,7 +87,7 @@ Nej. InstallScout læser filen. Installeren startes ikke. **Prøv i Sandbox** er
 
 ### Hvordan tester jeg silent-kommandoen uden at installere på denne pc?
 
-Klik **Prøv i Sandbox** efter Analysér, når Windows Sandbox er installeret. Kommandoen og detection-scriptet kører i en sandbox, der kasseres bagefter. Denne pc ændres ikke. Knappen er skjult, når Sandbox ikke er installeret. Du kan stadig teste pakken i en VM.
+Klik **Prøv i Sandbox** efter Analysér, når Windows Sandbox er installeret. Testen er valgfri. Kommandoen og detection-scriptet kører i en sandbox, der kasseres bagefter, og du kan pakke og uploade, mens den kører. Denne pc ændres ikke. Knappen er skjult, når Sandbox ikke er installeret. Du kan stadig teste pakken i en VM.
 
 ### Hvad hvis setup.exe /? ikke viser noget?
 

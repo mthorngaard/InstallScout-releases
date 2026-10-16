@@ -59,7 +59,7 @@ An outer `/sAll`, `--silent`, or `/silent` is kept. An Adobe-style self-extracto
 
 ## What the command does not prove
 
-The line is the engine's silent form, plus flags read from the file. It is not a test install. Review it, then click **Try in Sandbox** when that button is shown. The command runs in Windows Sandbox, not on this PC. You can still try the package in a VM before you roll it out.
+The line is the engine's silent form, plus flags read from the file. It is not a test install. **Try in Sandbox** is optional. When the button is shown, it runs the command in Windows Sandbox, not on this PC. You can package and upload while that test runs, and you can still try the package in a VM before you roll it out.
 
 Vendor settings such as a license server or a language are not looked up from a catalog of every app. ClickOnce usually has no reliable silent switch for a machine install.
 
@@ -87,7 +87,7 @@ No. InstallScout reads the file. The installer is not started. **Try in Sandbox*
 
 ### How do I test the silent command without installing on this PC?
 
-Click **Try in Sandbox** after Analyze, when Windows Sandbox is installed. The command and the detection script run in a disposable sandbox. This PC is not changed. The button is hidden when Sandbox is not installed. You can still test the package in a VM.
+Click **Try in Sandbox** after Analyze, when Windows Sandbox is installed. The test is optional. The command and the detection script run in a disposable sandbox, and you can package and upload while it runs. This PC is not changed. The button is hidden when Sandbox is not installed. You can still test the package in a VM.
 
 ### What if setup.exe /? shows nothing?
 

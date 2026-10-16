@@ -19,7 +19,7 @@ To put it on the Start menu, run `portable\Install.bat`. The portable exe stays 
 
 The green command wraps over three lines. The file list colors confidence and shows **Analyzed**, **Packaged**, or **Rebuild**. **Suggested switches** may appear under the command. Tick a switch to add it, and untick to remove it. `/install` and `/norestart` are not added automatically. Inno keeps `/NORESTART`.
 
-Edit the line, or type an extra flag under **Extra switches** and click **Add**. If **Try in Sandbox** is on the button row, click it before you roll the command out. Windows Sandbox runs the silent command and the detection script. Nothing is installed on this PC. The button is shown only when Windows Sandbox is installed.
+Edit the line, or type an extra flag under **Extra switches** and click **Add**. **Try in Sandbox** is optional, and only shown when Windows Sandbox is installed. It runs the silent command and the detection script without installing on this PC. You can build the package and upload while that test runs.
 
 ## 3. Package
 

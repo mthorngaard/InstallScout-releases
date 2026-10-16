@@ -52,7 +52,7 @@
 <h2>2. Analysér</h2>
 <ol><li><strong>Tilføj filer…</strong> og vælg en EXE, MSI, COM eller MSIX.</li><li>Klik <strong>Analysér</strong>.</li></ol>
 <p>Den grønne kommando ombrydes over tre linjer. Fillisten farver sikkerheden og viser <strong>Analyseret</strong>, <strong>Pakket</strong> eller <strong>Byg igen</strong>. Under kommandoen kan der ligge <strong>Foreslåede switche</strong>. Sæt flueben for at tage en switch med, og fjern det for at tage den ud. <code>/install</code> og <code>/norestart</code> sættes ikke på automatisk. Inno beholder <code>/NORESTART</code>.</p>
-<p>Ret linjen, eller skriv et ekstra flag under <strong>Ekstra switche</strong> og klik <strong>Tilføj</strong>. Hvis <strong>Prøv i Sandbox</strong> er på knaprækken, så klik den, før du ruller kommandoen ud. Windows Sandbox kører silent-kommandoen og detection-scriptet. Der installeres ingenting på denne pc. Knappen vises kun, når Windows Sandbox er installeret.</p>
+<p>Ret linjen, eller skriv et ekstra flag under <strong>Ekstra switche</strong> og klik <strong>Tilføj</strong>. <strong>Prøv i Sandbox</strong> er valgfri og vises kun, når Windows Sandbox er installeret. Den kører silent-kommandoen og detection-scriptet uden at installere på denne pc. Du kan bygge pakken og uploade, mens testen kører.</p>
 <h2>3. Pak</h2>
 <p>Klik <strong>Intune-pakke…</strong> og vælg en mappe. Dialogen åbner i den mappe, der blev brugt sidst. Der gemmes en <code>.intunewin</code>, PSADT-kilden og <code>Detection.ps1</code>. <strong>Pak alle…</strong> skriver én pakke pr. analyseret fil. Upload er stadig én app ad gangen.</p>
 <p><strong>Upload til Intune</strong> er grå, indtil pakken findes. Ændrer du kommandoen bagefter, skal pakken laves igen.</p>
