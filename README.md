@@ -6,7 +6,7 @@ Find silent install switches for a Windows app without running the installer. In
 
 **New in 1.8.59 — Try in Sandbox.** After Analyze, the button runs the silent command and the detection script in Windows Sandbox. Nothing is installed on this PC. It appears when Windows Sandbox is installed.
 
-![Twenty-second InstallScout walkthrough: drop an installer, try the silent command in Windows Sandbox, check WinGet, build the intunewin package, and upload the Win32 app](assets/installscout.gif)
+![Twenty-second InstallScout walkthrough: drop an installer, try the silent command in Windows Sandbox, check WinGet, build the intunewin package, and upload the Win32 app](assets/installscout.gif?v=1.8.59)
 
 ## What it does
 
@@ -52,7 +52,7 @@ Upload to Intune also needs:
 **Guide:** [English](https://mthorngaard.github.io/InstallScout-releases/docs/guide.html) · [Dansk](https://mthorngaard.github.io/InstallScout-releases/docs/vejledning.html)  
 **Technical reference:** [English](https://mthorngaard.github.io/InstallScout-releases/docs/reference-en.html) · [Dansk](https://mthorngaard.github.io/InstallScout-releases/docs/reference.html)
 
-PDF copies sit next to the Markdown files: [quick start](docs/InstallScout-quickstart-en.pdf), [guide](docs/InstallScout-guide.pdf), and [reference](docs/InstallScout-reference-en.pdf). Danish PDF files use the same names without `-en`.
+PDF copies sit next to the Markdown files: [quick start](docs/InstallScout-quickstart-en.pdf?v=1.8.59), [guide](docs/InstallScout-guide.pdf?v=1.8.59), and [reference](docs/InstallScout-reference-en.pdf?v=1.8.59). Danish PDF files use the same names without `-en`.
 
 ## Credits
 
