@@ -119,7 +119,7 @@
     <p><a rel="me" href="https://github.com/mthorngaard">mthorngaard on GitHub</a></p>
     <p>Find silent install switches for a Windows app without running the installer. InstallScout reads the EXE, MSI, COM, or MSIX, names the engine, and writes the silent command. <strong>Try in Sandbox</strong> is optional. It runs that command and the detection script in Windows Sandbox, so nothing is installed on this PC, and you can package and upload while it runs. It can then build a PSADT <code>.intunewin</code> package and upload the Win32 app to Microsoft Intune.</p>
     <p class="feature"><strong>New in 1.8.60 — Try in Sandbox.</strong> After Analyze, you can run the silent command and the detection script in Windows Sandbox. Nothing is installed on this PC. The test is optional, and you can package and upload while it runs. The button is shown when Windows Sandbox is installed.</p>
-    <img class="demo" src="assets/installscout.gif?v=1.8.59" width="960" height="606" alt="Twenty-second InstallScout walkthrough: drop an installer, try the silent command in Windows Sandbox, check WinGet, build the intunewin package, and upload the Win32 app">
+    <img class="demo" src="assets/installscout.gif?v=1.8.60" width="960" height="606" alt="Twenty-second InstallScout walkthrough: drop an installer, try the silent command in Windows Sandbox, check WinGet, build the intunewin package, and upload the Win32 app">
     <div class="actions">
       <a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.60/InstallScout-1.8.60.zip">Download 1.8.60 (.zip)</a>
       <a class="secondary" href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.60/InstallScoutPortable.exe">Portable exe</a>
@@ -139,6 +139,7 @@
     </ul>
     <h2>Prerequisites</h2>
     <p>Windows 10 or Windows 11. Finding silent switches and building a local package does not need an Azure sign-in.</p>
+    <p><strong>Try in Sandbox</strong> needs Windows Sandbox installed. The button is not shown without it.</p>
     <p>Upload to Intune also needs:</p>
     <ul>
       <li>Microsoft Edge. Sign-in opens in an Edge profile.</li>

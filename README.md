@@ -6,7 +6,7 @@ Find silent install switches for a Windows app without running the installer. In
 
 **New in 1.8.60 — Try in Sandbox.** After Analyze, the button can run the silent command and the detection script in Windows Sandbox. Nothing is installed on this PC. The test is optional, and you can package and upload while it runs. It appears when Windows Sandbox is installed.
 
-![Twenty-second InstallScout walkthrough: drop an installer, try the silent command in Windows Sandbox, check WinGet, build the intunewin package, and upload the Win32 app](assets/installscout.gif?v=1.8.59)
+![Twenty-second InstallScout walkthrough: drop an installer, try the silent command in Windows Sandbox, check WinGet, build the intunewin package, and upload the Win32 app](assets/installscout.gif?v=1.8.60)
 
 ## What it does
 
@@ -38,6 +38,8 @@ Drop an installer on the window, or use **Add files**. **Try in Sandbox** is opt
 
 Windows 10 or Windows 11. Finding silent switches and building a local package does not need an Azure sign-in.
 
+**Try in Sandbox** needs Windows Sandbox installed. The button is not shown without it.
+
 Upload to Intune also needs:
 
 - Microsoft Edge. Sign-in opens in an Edge profile.
@@ -52,7 +54,7 @@ Upload to Intune also needs:
 **Guide:** [English](https://mthorngaard.github.io/InstallScout-releases/docs/guide.html) · [Dansk](https://mthorngaard.github.io/InstallScout-releases/docs/vejledning.html)  
 **Technical reference:** [English](https://mthorngaard.github.io/InstallScout-releases/docs/reference-en.html) · [Dansk](https://mthorngaard.github.io/InstallScout-releases/docs/reference.html)
 
-PDF copies sit next to the Markdown files: [quick start](docs/InstallScout-quickstart-en.pdf?v=1.8.59), [guide](docs/InstallScout-guide.pdf?v=1.8.59), and [reference](docs/InstallScout-reference-en.pdf?v=1.8.59). Danish PDF files use the same names without `-en`.
+PDF copies sit next to the Markdown files: [quick start](docs/InstallScout-quickstart-en.pdf?v=1.8.60), [guide](docs/InstallScout-guide.pdf?v=1.8.60), and [reference](docs/InstallScout-reference-en.pdf?v=1.8.60). Danish PDF files use the same names without `-en`.
 
 ## Credits
 
