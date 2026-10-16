@@ -1,8 +1,8 @@
 # InstallScout – quick start
 
-Version **1.8.59**. From an installer to a Win32 app in Intune. The program does not run the installer.
+Version **1.8.60**. From an installer to a Win32 app in Intune. The program does not run the installer.
 
-The full guide is [guide.md](guide.md). [Find the silent switches](find-silent-switches.md). Engines, the CLI, and Graph are in [reference-en.md](reference-en.md). PDF: [InstallScout-quickstart-en.pdf](InstallScout-quickstart-en.pdf?v=1.8.59).
+The full guide is [guide.md](guide.md). [Find the silent switches](find-silent-switches.md). Engines, the CLI, and Graph are in [reference-en.md](reference-en.md). PDF: [InstallScout-quickstart-en.pdf](InstallScout-quickstart-en.pdf?v=1.8.60).
 
 ## 1. Start
 

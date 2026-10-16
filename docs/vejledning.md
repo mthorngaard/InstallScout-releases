@@ -4,7 +4,7 @@ InstallScout tager en Windows-installer **hele vejen til Intune**. Du giver det 
 
 Silent-switche er ét trin. Målet er pakken i Intune.
 
-Version **1.8.59**. Quick start: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Teknisk reference: [reference.md](reference.md). PDF: [InstallScout-vejledning.pdf](InstallScout-vejledning.pdf?v=1.8.59). English: [guide.md](guide.md) · [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.8.59).
+Version **1.8.60**. Quick start: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Teknisk reference: [reference.md](reference.md). PDF: [InstallScout-vejledning.pdf](InstallScout-vejledning.pdf?v=1.8.60). English: [guide.md](guide.md) · [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.8.60).
 
 | Fil | Motor | Typisk resultat |
 |---|---|---|

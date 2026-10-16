@@ -1,6 +1,6 @@
 # InstallScout – teknisk reference
 
-Version **1.8.59**. Kort forløb: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Brugerforløbet står i [vejledning.md](vejledning.md). Denne fil beskriver motorer, kommandolinje og Microsoft Graph. PDF: [InstallScout-reference.pdf](InstallScout-reference.pdf?v=1.8.59).
+Version **1.8.60**. Kort forløb: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Brugerforløbet står i [vejledning.md](vejledning.md). Denne fil beskriver motorer, kommandolinje og Microsoft Graph. PDF: [InstallScout-reference.pdf](InstallScout-reference.pdf?v=1.8.60).
 
 InstallScout kører ikke installeren. Den læser filen, bygger en silent-kommando, pakker PSADT 4.1.8 til `.intunewin` og opretter en Win32-app.
 

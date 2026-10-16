@@ -4,7 +4,7 @@ Public page: [mthorngaard.github.io/InstallScout-releases](https://mthorngaard.g
 
 Find silent install switches for a Windows app without running the installer. InstallScout reads an EXE, MSI, COM, or MSIX, names the engine, and writes the silent command. It can then build a PSAppDeployToolkit (PSADT) `.intunewin` package and upload the Win32 app to Microsoft Intune.
 
-**New in 1.8.59 — Try in Sandbox.** After Analyze, the button can run the silent command and the detection script in Windows Sandbox. Nothing is installed on this PC. The test is optional, and you can package and upload while it runs. It appears when Windows Sandbox is installed.
+**New in 1.8.60 — Try in Sandbox.** After Analyze, the button can run the silent command and the detection script in Windows Sandbox. Nothing is installed on this PC. The test is optional, and you can package and upload while it runs. It appears when Windows Sandbox is installed.
 
 ![Twenty-second InstallScout walkthrough: drop an installer, try the silent command in Windows Sandbox, check WinGet, build the intunewin package, and upload the Win32 app](assets/installscout.gif?v=1.8.59)
 
@@ -22,11 +22,11 @@ Windows 10 and 11. The interface is in English. Switch to Dansk in the top-right
 
 ## Download
 
-The current version is **1.8.59**: [releases](https://github.com/mthorngaard/InstallScout-releases/releases/latest)
+The current version is **1.8.60**: [releases](https://github.com/mthorngaard/InstallScout-releases/releases/latest)
 
 | File | Use |
 |---|---|
-| [`InstallScout-1.8.59.zip`](https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.59/InstallScout-1.8.59.zip) | Both files in one download. |
+| [`InstallScout-1.8.60.zip`](https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.60/InstallScout-1.8.60.zip) | Both files in one download. |
 | `InstallScoutPortable.exe` | Copy it anywhere and run it. Nothing is installed. |
 | `InstallScout.msi` | Installs to Program Files and adds a Start menu shortcut. |
 
