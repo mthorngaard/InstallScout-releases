@@ -4,7 +4,7 @@ InstallScout takes a Windows installer **all the way to Intune**. You give it an
 
 Silent switches are one step. The destination is the package in Intune.
 
-Version **1.8.60**. Quick start: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). Technical reference: [reference-en.md](reference-en.md). PDF: [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.8.60). Danish: [vejledning.md](vejledning.md).
+Version **1.8.61**. Quick start: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). Technical reference: [reference-en.md](reference-en.md). PDF: [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.8.61). Danish: [vejledning.md](vejledning.md).
 
 | File | Engine | Typical result |
 |---|---|---|
@@ -84,7 +84,7 @@ The process ends with upload. The silent command is a middle step.
 
 The sandbox runs the silent command, then the same `Detection.ps1` that Intune will use. A message in the sandbox shows the install exit code and whether detection matched. InstallScout reports that result in this window. Close the sandbox when you are done. Its disk is discarded.
 
-Only one Windows Sandbox can run. Close an open one before you try again. The command must still name this installer. A package folder — the setup plus MSI or CAB files, outside folders such as Downloads and Desktop — is shared read-only, so the sandbox can read those files and cannot write back to this PC. A single installer file is copied in on its own. The sandbox has a network connection, because some installers download their payload.
+Only one Windows Sandbox can run. Close an open one before you try again. The command must still name this installer. A package folder — the setup plus MSI, CAB, or a subfolder the installer needs — is shared read-only, so the sandbox can read those files and cannot write back to this PC. A file directly in Downloads, Desktop, Documents, the OneDrive root, Temp, or the user profile is copied in on its own, even when that folder has been redirected. A subfolder there, for example `Downloads\PSADT - CutePDF`, still counts as a package folder. The sandbox has a network connection, because some installers download their payload.
 
 Analysis still does not run the installer. Sandbox is a separate test, and you start it yourself.
 

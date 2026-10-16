@@ -4,9 +4,9 @@ Public page: [mthorngaard.github.io/InstallScout-releases](https://mthorngaard.g
 
 Find silent install switches for a Windows app without running the installer. InstallScout reads an EXE, MSI, COM, or MSIX, names the engine, and writes the silent command. It can then build a PSAppDeployToolkit (PSADT) `.intunewin` package and upload the Win32 app to Microsoft Intune.
 
-**New in 1.8.60 — Try in Sandbox.** After Analyze, the button can run the silent command and the detection script in Windows Sandbox. Nothing is installed on this PC. The test is optional, and you can package and upload while it runs. It appears when Windows Sandbox is installed.
+**New in 1.8.61 — Package the installer folder.** Choosing one file in its own folder also packs the files and subfolders beside it, such as GPLGS next to converter.exe. A file directly in Downloads, Desktop, Documents, the OneDrive root, Temp, or your user profile is still packed alone.
 
-![Twenty-second InstallScout walkthrough: drop an installer, try the silent command in Windows Sandbox, check WinGet, build the intunewin package, and upload the Win32 app](assets/installscout.gif?v=1.8.60)
+![Twenty-second InstallScout walkthrough: drop an installer, try the silent command in Windows Sandbox, check WinGet, build the intunewin package, and upload the Win32 app](assets/installscout.gif?v=1.8.61)
 
 ## What it does
 
@@ -22,11 +22,11 @@ Windows 10 and 11. The interface is in English. Switch to Dansk in the top-right
 
 ## Download
 
-The current version is **1.8.60**: [releases](https://github.com/mthorngaard/InstallScout-releases/releases/latest)
+The current version is **1.8.61**: [releases](https://github.com/mthorngaard/InstallScout-releases/releases/latest)
 
 | File | Use |
 |---|---|
-| [`InstallScout-1.8.60.zip`](https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.60/InstallScout-1.8.60.zip) | Both files in one download. |
+| [`InstallScout-1.8.61.zip`](https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.61/InstallScout-1.8.61.zip) | Both files in one download. |
 | `InstallScoutPortable.exe` | Copy it anywhere and run it. Nothing is installed. |
 | `InstallScout.msi` | Installs to Program Files and adds a Start menu shortcut. |
 
@@ -54,7 +54,7 @@ Upload to Intune also needs:
 **Guide:** [English](https://mthorngaard.github.io/InstallScout-releases/docs/guide.html) · [Dansk](https://mthorngaard.github.io/InstallScout-releases/docs/vejledning.html)  
 **Technical reference:** [English](https://mthorngaard.github.io/InstallScout-releases/docs/reference-en.html) · [Dansk](https://mthorngaard.github.io/InstallScout-releases/docs/reference.html)
 
-PDF copies sit next to the Markdown files: [quick start](docs/InstallScout-quickstart-en.pdf?v=1.8.60), [guide](docs/InstallScout-guide.pdf?v=1.8.60), and [reference](docs/InstallScout-reference-en.pdf?v=1.8.60). Danish PDF files use the same names without `-en`.
+PDF copies sit next to the Markdown files: [quick start](docs/InstallScout-quickstart-en.pdf?v=1.8.61), [guide](docs/InstallScout-guide.pdf?v=1.8.61), and [reference](docs/InstallScout-reference-en.pdf?v=1.8.61). Danish PDF files use the same names without `-en`.
 
 ## Credits
 

@@ -4,7 +4,7 @@ InstallScout tager en Windows-installer **hele vejen til Intune**. Du giver det 
 
 Silent-switche er ét trin. Målet er pakken i Intune.
 
-Version **1.8.60**. Quick start: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Teknisk reference: [reference.md](reference.md). PDF: [InstallScout-vejledning.pdf](InstallScout-vejledning.pdf?v=1.8.60). English: [guide.md](guide.md) · [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.8.60).
+Version **1.8.61**. Quick start: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Teknisk reference: [reference.md](reference.md). PDF: [InstallScout-vejledning.pdf](InstallScout-vejledning.pdf?v=1.8.61). English: [guide.md](guide.md) · [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.8.61).
 
 | Fil | Motor | Typisk resultat |
 |---|---|---|
@@ -84,7 +84,7 @@ Hele forløbet slutter med upload. Silent-kommandoen er et mellemtrin.
 
 Sandbox kører silent-kommandoen og derefter det samme `Detection.ps1`, som Intune skal bruge. En besked i Sandbox viser afslutningskoden og om detection matchede. InstallScout viser det samme resultat i dette vindue. Luk Sandbox, når du er færdig. Dens disk kasseres.
 
-Der kan kun køre én Windows Sandbox. Luk en åben Sandbox, før du prøver igen. Kommandoen skal stadig nævne denne installer. En pakkemappe — setup plus MSI- eller CAB-filer, uden for mapper som Overførsler og Skrivebord — deles skrivebeskyttet, så Sandbox kan læse filerne og ikke kan skrive tilbage til denne pc. En enkelt installerfil kopieres ind for sig selv. Sandbox har netværk, fordi nogle installere henter deres payload.
+Der kan kun køre én Windows Sandbox. Luk en åben Sandbox, før du prøver igen. Kommandoen skal stadig nævne denne installer. En pakkemappe — setup plus MSI, CAB eller en undermappe som installeren bruger — deles skrivebeskyttet, så Sandbox kan læse filerne og ikke kan skrive tilbage til denne pc. En fil direkte i Overførsler, Skrivebord, Dokumenter, OneDrive-roden, Temp eller brugerprofilen kopieres ind alene, også når mappen er flyttet. En undermappe der, for eksempel `Overførsler\PSADT - CutePDF`, tæller stadig som pakkemappe. Sandbox har netværk, fordi nogle installere henter deres payload.
 
 Analysen kører stadig ikke installeren. Sandbox er en særskilt test, og du starter den selv.
 
