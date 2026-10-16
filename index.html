@@ -22,7 +22,15 @@
       color: #e8eef5;
       line-height: 1.5;
     }
-    main { max-width: 42rem; margin: 0 auto; padding: 3rem 1.25rem 4rem; }
+    main { max-width: 52rem; margin: 0 auto; padding: 3rem 1.25rem 4rem; }
+    .demo {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 1.25rem 0 0.4rem;
+      border-radius: 8px;
+      border: 1px solid #1e3a56;
+    }
     h1 { font-size: 1.8rem; line-height: 1.25; margin: 0.75rem 0 1rem; }
     h2 { font-size: 1.1rem; margin: 2rem 0 0.5rem; }
     p { margin: 0.6rem 0; }
@@ -72,10 +80,14 @@
   "image": "https://mthorngaard.github.io/InstallScout-releases/assets/installscout.png",
   "downloadUrl": "https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.58/InstallScout-1.8.58.zip",
   "description": "Finds silent install switches for a Windows app by reading the EXE, MSI, COM, or MSIX. It does not run the installer. It can then build a PSADT .intunewin package and upload the Win32 app to Microsoft Intune.",
-  "featureList": [
-    "Silent install switch finder for Inno, NSIS, MSI, InstallShield, and WiX Burn",
-    "PSADT .intunewin package",
-    "Win32 app upload to Microsoft Intune with detection and logo"
+    "featureList": [
+    "Silent command for EXE, MSI, COM, and MSIX without running the installer",
+    "Engines including Inno, NSIS, MSI, InstallShield, WiX Burn, and Squirrel",
+    "Editable command, extra switches, and suggested switches",
+    "WinGet and Chocolatey check by product name",
+    "System or User install context",
+    "PSADT .intunewin package with install, uninstall, and detection",
+    "Win32 app upload to Microsoft Intune with logo and optional supersedence"
   ],
   "offers": {
     "@type": "Offer",
@@ -98,6 +110,7 @@
     <h1>InstallScout</h1>
     <p><a rel="me" href="https://github.com/mthorngaard">mthorngaard on GitHub</a></p>
     <p>Find silent install switches for a Windows app without running the installer. InstallScout reads the EXE, MSI, COM, or MSIX, names the engine, and writes the silent command. It can then build a PSADT <code>.intunewin</code> package and upload the Win32 app to Microsoft Intune.</p>
+    <img class="demo" src="assets/installscout.gif" width="960" height="606" alt="Twenty-second InstallScout walkthrough: drop an installer, read the silent command, check WinGet, build the intunewin package, and upload the Win32 app">
     <div class="actions">
       <a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.58/InstallScout-1.8.58.zip">Download 1.8.58 (.zip)</a>
       <a class="secondary" href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.58/InstallScoutPortable.exe">Portable exe</a>
@@ -105,11 +118,14 @@
     </div>
     <p>Version 1.8.58 for Windows 10 and 11. The zip contains the portable exe and the MSI. The portable exe runs without installation. The MSI installs to Program Files. The program does not run the installer. The interface is in English, and Dansk is in the top-right corner.</p>
     <p class="notice"><strong>Not code-signed.</strong> Windows or company security may warn or block it. Choose Keep / Run anyway, ask IT to allow the file, or try it in a VM or Windows Sandbox without those policies.</p>
-    <h2>What you get</h2>
+    <h2>What it does</h2>
     <ul>
-      <li>A silent switch finder for the installer engine, including Inno, NSIS, MSI, InstallShield, WiX Burn, and others.</li>
-      <li>A check against WinGet and Chocolatey. The installer file is not uploaded.</li>
-      <li>One path to Intune: local <code>.intunewin</code> package, then upload with install, uninstall, detection, and logo.</li>
+      <li><strong>Silent command.</strong> Names the engine (Inno, NSIS, MSI, InstallShield, WiX Burn, Squirrel, and others) and writes the install line. The installer is not run.</li>
+      <li><strong>Your edit.</strong> Change the line, add a switch, or tick a suggested one before anything is packaged.</li>
+      <li><strong>Online check.</strong> Looks up the product name in WinGet and Chocolatey. The file is not uploaded.</li>
+      <li><strong>System or User.</strong> Chosen from the engine and the command.</li>
+      <li><strong>Intune package.</strong> A local <code>.intunewin</code> with PSADT, install, uninstall, and detection.</li>
+      <li><strong>Upload.</strong> The Win32 app in Intune, with a logo and optional supersedence.</li>
     </ul>
     <h2>Prerequisites</h2>
     <p>Windows 10 or Windows 11. Finding silent switches and building a local package does not need an Azure sign-in.</p>

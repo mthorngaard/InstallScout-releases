@@ -4,13 +4,18 @@ Public page: [mthorngaard.github.io/InstallScout-releases](https://mthorngaard.g
 
 Find silent install switches for a Windows app without running the installer. InstallScout reads an EXE, MSI, COM, or MSIX, names the engine, and writes the silent command. It can then build a PSAppDeployToolkit (PSADT) `.intunewin` package and upload the Win32 app to Microsoft Intune.
 
-Use it for the full path: find the switches, package the command, then upload to Intune as a system or user install. It runs on Windows 10 and Windows 11. The interface is in English. Switch to Dansk in the top-right corner.
+![Twenty-second InstallScout walkthrough: drop an installer, read the silent command, check WinGet, build the intunewin package, and upload the Win32 app](assets/installscout.gif)
 
-## Features
-* **Automated Silent Switch Finder:** Instantly discover the correct silent install and uninstall arguments for any Windows installer.
-* **PSADT Integration:** Automatically wraps your applications using the industry-standard **PowerShell App Deployment Toolkit**.
-* **Direct Intune Upload:** Package your software into the `.intunewin` format and upload it directly to **Microsoft Intune** via Graph API.
-* **Win32 App Packager:** Built-in support for both complex executable setups and standard MSI packages.
+## What it does
+
+- **Silent command** — names the engine (Inno, NSIS, MSI, InstallShield, WiX Burn, Squirrel, and others) and writes the install line. The installer is not run.
+- **Your edit** — change the line, add a switch, or tick a suggested one before anything is packaged.
+- **Online check** — looks up the product name in WinGet and Chocolatey. The file is not uploaded.
+- **System or User** — chosen from the engine and the command.
+- **Intune package** — a local `.intunewin` with PSADT, install, uninstall, and detection.
+- **Upload** — the Win32 app in Intune, with a logo and optional supersedence.
+
+Windows 10 and 11. The interface is in English. Switch to Dansk in the top-right corner.
 
 ## Download
 
@@ -24,7 +29,7 @@ The current version is **1.8.58**: [releases](https://github.com/mthorngaard/Ins
 
 The download is not code-signed. Windows or company security may warn or block it. Choose Keep / Run anyway, ask IT to allow the file, or try it in a VM or Windows Sandbox without those policies.
 
-Drop an installer on the window, or use **Add files**. InstallScout does not run the installer. The file list colors confidence and shows Analyzed, Packaged, or Rebuild. The silent command wraps over three lines. **Package all…** writes one local package per analyzed file. Upload stays one app at a time. Review the silent command and test the package in a VM before you roll it out.
+Drop an installer on the window, or use **Add files**. Review the command and test the package in a VM before you roll it out.
 
 ## Prerequisites
 
