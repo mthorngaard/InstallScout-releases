@@ -43,7 +43,7 @@
     </header>
     <article>
 <h1>InstallScout – teknisk reference</h1>
-<p>Version <strong>1.8.58</strong>. Kort forløb: <a href="quickstart.html">quickstart.html</a>. <a href="find-silent-switche.html">Find silent-switchene</a>. Brugerforløbet står i <a href="vejledning.html">vejledning.html</a>. Denne fil beskriver motorer, kommandolinje og Microsoft Graph. PDF: <a href="InstallScout-reference.pdf">InstallScout-reference.pdf</a>.</p>
+<p>Version <strong>1.8.59</strong>. Kort forløb: <a href="quickstart.html">quickstart.html</a>. <a href="find-silent-switche.html">Find silent-switchene</a>. Brugerforløbet står i <a href="vejledning.html">vejledning.html</a>. Denne fil beskriver motorer, kommandolinje og Microsoft Graph. PDF: <a href="InstallScout-reference.pdf">InstallScout-reference.pdf</a>.</p>
 <p>InstallScout kører ikke installeren. Den læser filen, bygger en silent-kommando, pakker PSADT 4.1.8 til <code>.intunewin</code> og opretter en Win32-app.</p>
 <hr>
 <h2>1. Engines</h2>
@@ -100,9 +100,14 @@
 <p>Højst 10 mål. Ingenting vælges automatisk i GUI. CLI med <code>--supersede</code> vælger de apps, hvis navn ligner produktet.</p>
 <p>Portal-link efter succes:</p>
 <pre><code class="language-text">https://intune.microsoft.com/#view/Microsoft_Intune_Apps/SettingsMenu/~/0/appId/{appId}</code></pre>
+<hr>
+<h2>4. Windows Sandbox</h2>
+<p><strong>Prøv i Sandbox</strong> er en knap i vinduet. Der er ikke et CLI-flag. Den vises efter <strong>Analysér</strong>, og kun når <code>WindowsSandbox.exe</code> er installeret.</p>
+<p>Knappen kører den aktuelle silent-kommando i en ny Windows Sandbox og derefter det samme <code>Detection.ps1</code>, som upload sender til Intune. Tom detection-output betyder ikke installeret. Sandbox viser en besked med afslutningskoden og det detection-resultat. InstallScout læser den samme tekst tilbage i dette vindue.</p>
+<p>Kommandoen skal indeholde stien til installeren. En pakkemappe (setup plus MSI, CAB eller tilsvarende filer, uden for Overførsler, Skrivebord og de andre almindelige mapper) mappes skrivebeskyttet til <code>C:\InstallScout\Installer</code>. En enkelt fil kopieres ind i Sandbox-arbejdsmappen, så den overliggende mappe ikke deles. Arbejdsmappen kan skrives til. Netværk er slået til. Der kan kun køre én Windows Sandbox ad gangen. Når Sandbox lukkes, kasseres den. Der installeres ingenting på denne pc.</p>
     </article>
     <footer>
-      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.58/InstallScout-1.8.58.zip">Hent 1.8.58 (.zip)</a> · <a href="../">InstallScout</a></p>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.59/InstallScout-1.8.59.zip">Hent 1.8.59 (.zip)</a> · <a href="../">InstallScout</a></p>
     </footer>
   </div>
 </body>

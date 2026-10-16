@@ -1,6 +1,6 @@
 # InstallScout – quick start
 
-Version **1.8.58**. Fra en installer til en Win32-app i Intune. Programmet kører ikke installeren.
+Version **1.8.59**. Fra en installer til en Win32-app i Intune. Programmet kører ikke installeren.
 
 Den fulde vejledning er [vejledning.md](vejledning.md). [Find silent-switchene](find-silent-switche.md). Motorer, CLI og Graph står i [reference.md](reference.md). PDF: [InstallScout-quickstart.pdf](InstallScout-quickstart.pdf).
 
@@ -19,7 +19,7 @@ Vil du have den i Start-menuen, så kør `portable\Install.bat`. Den portable ex
 
 Den grønne kommando ombrydes over tre linjer. Fillisten farver sikkerheden og viser **Analyseret**, **Pakket** eller **Byg igen**. Under kommandoen kan der ligge **Foreslåede switche**. Sæt flueben for at tage en switch med, og fjern det for at tage den ud. `/install` og `/norestart` sættes ikke på automatisk. Inno beholder `/NORESTART`.
 
-Ret linjen, eller skriv et ekstra flag under **Ekstra switche** og klik **Tilføj**. Test kommandoen i en VM, før du ruller den ud.
+Ret linjen, eller skriv et ekstra flag under **Ekstra switche** og klik **Tilføj**. Hvis **Prøv i Sandbox** er på knaprækken, så klik den, før du ruller kommandoen ud. Windows Sandbox kører silent-kommandoen og detection-scriptet. Der installeres ingenting på denne pc. Knappen vises kun, når Windows Sandbox er installeret.
 
 ## 3. Pak
 

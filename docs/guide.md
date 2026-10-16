@@ -4,7 +4,7 @@ InstallScout takes a Windows installer **all the way to Intune**. You give it an
 
 Silent switches are one step. The destination is the package in Intune.
 
-Version **1.8.58**. Quick start: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). Technical reference: [reference-en.md](reference-en.md). PDF: [InstallScout-guide.pdf](InstallScout-guide.pdf). Danish: [vejledning.md](vejledning.md).
+Version **1.8.59**. Quick start: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). Technical reference: [reference-en.md](reference-en.md). PDF: [InstallScout-guide.pdf](InstallScout-guide.pdf). Danish: [vejledning.md](vejledning.md).
 
 | File | Engine | Typical result |
 |---|---|---|
@@ -21,9 +21,9 @@ Double-click `InstallScoutPortable.exe` or run `Start.bat`. No installation is r
 
 The download is **not code-signed**. Windows or company security may warn or block it. Choose Keep / Run anyway, ask IT to allow the file, or try it in a VM or Windows Sandbox without those policies.
 
-![Empty InstallScout window with Drop an installer here and a short introduction](images/en/01-start.png)
+![Empty InstallScout window. Try in Sandbox sits after Analyze, and the introduction says it does not install on this PC](images/en/01-start.png)
 
-Drop an installer on the window, or use **Add files** / **Add folder**. The empty start shows **Drop an installer here** in the file list and a short introduction on the Commands tab. EXE, MSI, COM and a whole folder can be dropped.
+Drop an installer on the window, or use **Add files** / **Add folder**. The empty start shows **Drop an installer here** in the file list and a short introduction on the Commands tab. **Try in Sandbox** is on that button row when Windows Sandbox is installed. EXE, MSI, COM and a whole folder can be dropped.
 
 The buttons sit on two rows. Only the next step is highlighted: **Add files** when the list is empty, **Analyze** when a file is not analyzed, **Intune package** when the selected file has no current package, and **Upload to Intune** when that package exists. The language is changed at the top right. The default is English.
 
@@ -37,6 +37,7 @@ The buttons sit on two rows. Only the next step is highlighted: **Add files** wh
 | Add files… / Add folder… | Choose EXE, MSI, COM, MSIX |
 | **Analyze** | Read the file locally |
 | **Analyze** | Read the file locally, then look up WinGet and Chocolatey (name/vendor only) |
+| **Try in Sandbox** | Run the silent command and detection in Windows Sandbox. This PC is not changed. Shown only when Sandbox is installed |
 | **Silent Install HQ** | Opens a name search in the browser — file is not uploaded, command is not overwritten |
 | Copy command | Silent line to the clipboard |
 | PSADT package… | Folder with PSADT 4.1.8 |
@@ -54,6 +55,8 @@ The buttons sit on two rows. Only the next step is highlighted: **Add files** wh
 flowchart LR
   A[Add installer] --> B[Analyze]
   B --> C[Silent command]
+  C --> S[Try in Sandbox]
+  S --> E[Intune package]
   C --> E[Intune package]
   B --> D[WinGet and Chocolatey]
   D --> E[Intune package]
@@ -67,10 +70,23 @@ The process ends with upload. The silent command is a middle step.
 
 1. Add the file and click **Analyze**.
 2. Read the green silent command. Edit it, or add extra switches, then click **Save command** / **Add**.
-3. Read the **Online** tab when it fills in. A confident local engine is kept if the catalog disagrees. A weak local guess is replaced when WinGet or Chocolatey has a matching product. On **none**, use **Silent Install HQ** (name search only).
-4. Open **Intune** and check **Install context** (System/User).
-5. Build an **Intune package** (local `.intunewin`). Test with `Invoke-AppDeployToolkit.exe`.
-6. **Upload to Intune** — the dialog opens tall enough to show the name, command, logo, supersedence and sign-in. One Edge profile is shown; open the field to pick another. **Sign in to Intune**, **Cancel** and **Upload** share that row.
+3. Click **Try in Sandbox** when that button is on the row. Windows Sandbox runs the command and the detection script. This PC is not changed.
+4. Read the **Online** tab when it fills in. A confident local engine is kept if the catalog disagrees. A weak local guess is replaced when WinGet or Chocolatey has a matching product. On **none**, use **Silent Install HQ** (name search only).
+5. Open **Intune** and check **Install context** (System/User).
+6. Build an **Intune package** (local `.intunewin`). Test with `Invoke-AppDeployToolkit.exe`.
+7. **Upload to Intune** — the dialog opens tall enough to show the name, command, logo, supersedence and sign-in. One Edge profile is shown; open the field to pick another. **Sign in to Intune**, **Cancel** and **Upload** share that row.
+
+### Try in Windows Sandbox
+
+**Try in Sandbox** is the way to see whether the silent command actually installs, without leaving the app on this PC. The button sits after **Analyze**, before **Silent Install HQ**, and only when Windows Sandbox is installed. The start window says the same thing in the short introduction.
+
+![Git analyzed as Inno Setup. Try in Sandbox is ready beside Silent Install HQ](images/en/02-lokal-analyse.png)
+
+The sandbox runs the silent command, then the same `Detection.ps1` that Intune will use. A message in the sandbox shows the install exit code and whether detection matched. InstallScout reports that result in this window. Close the sandbox when you are done. Its disk is discarded.
+
+Only one Windows Sandbox can run. Close an open one before you try again. The command must still name this installer. A package folder — the setup plus MSI or CAB files, outside folders such as Downloads and Desktop — is shared read-only, so the sandbox can read those files and cannot write back to this PC. A single installer file is copied in on its own. The sandbox has a network connection, because some installers download their payload.
+
+Analysis still does not run the installer. Sandbox is a separate test, and you start it yourself.
 
 ---
 
@@ -99,7 +115,7 @@ The installer is never executed to unpack. Large vendor SFX files are therefore 
 
 ### Example: Git (Inno Setup)
 
-![Git analyzed as Inno Setup with a VERYSILENT command](images/en/02-lokal-analyse.png)
+![Git analyzed as Inno Setup. Try in Sandbox is ready beside Silent Install HQ](images/en/02-lokal-analyse.png)
 
 Local conclusion:
 
@@ -478,7 +494,7 @@ Unknown engine: look at **Found switches** and **Evidence**. Analyze also asks W
 
 - **About…** checks GitHub for a newer release. The button shows **About · Update** in amber when one is available. **Download update** opens the latest release.
 - The download is **not code-signed**. Windows or company security may warn or block it. Choose Keep / Run anyway, ask IT to allow the file, or try it in a VM or Windows Sandbox without those policies.
-- The program **does not install** anything. Unpack never runs the installer. Test the silent line in a VM.
+- Analysis **does not install** anything. Unpack never runs the installer. **Try in Sandbox** is the test that does run it, and only inside Windows Sandbox.
 - A bundled 7-Zip Extra `7za` is used for inner 7z payloads, so system 7-Zip is not required.
 - Online catalogs often know a different name or a newer build than your file. Wrapper VersionInfo (*Self Extractor*) is not a catalog product.
 - Context is a qualified guess. Override it in Upload to Intune if you know better.
@@ -486,6 +502,6 @@ Unknown engine: look at **Found switches** and **Evidence**. Analyze also asks W
 - Installer binaries are not sent over the network during the online check.
 - Upload to Intune is inactive until a local `.intunewin` exists for the selected file.
 - MSI often has no usable icon. Use **Choose file…** or **Paste**.
-- Manual switches overwrite the recommended line in PSADT; test in a VM.
+- Manual switches overwrite the recommended line in PSADT. Try it in Sandbox, or test the package in a VM.
 - The supersedence list appears only after sign-in has finished (*Signed in as …*).
 - If supersedence fails, the new Win32 app still remains in Intune.

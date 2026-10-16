@@ -1,6 +1,6 @@
 # InstallScout – quick start
 
-Version **1.8.58**. From an installer to a Win32 app in Intune. The program does not run the installer.
+Version **1.8.59**. From an installer to a Win32 app in Intune. The program does not run the installer.
 
 The full guide is [guide.md](guide.md). [Find the silent switches](find-silent-switches.md). Engines, the CLI, and Graph are in [reference-en.md](reference-en.md). PDF: [InstallScout-quickstart-en.pdf](InstallScout-quickstart-en.pdf).
 
@@ -19,7 +19,7 @@ To put it on the Start menu, run `portable\Install.bat`. The portable exe stays 
 
 The green command wraps over three lines. The file list colors confidence and shows **Analyzed**, **Packaged**, or **Rebuild**. **Suggested switches** may appear under the command. Tick a switch to add it, and untick to remove it. `/install` and `/norestart` are not added automatically. Inno keeps `/NORESTART`.
 
-Edit the line, or type an extra flag under **Extra switches** and click **Add**. Test the command in a VM before you roll it out.
+Edit the line, or type an extra flag under **Extra switches** and click **Add**. If **Try in Sandbox** is on the button row, click it before you roll the command out. Windows Sandbox runs the silent command and the detection script. Nothing is installed on this PC. The button is shown only when Windows Sandbox is installed.
 
 ## 3. Package
 

@@ -4,11 +4,14 @@ Public page: [mthorngaard.github.io/InstallScout-releases](https://mthorngaard.g
 
 Find silent install switches for a Windows app without running the installer. InstallScout reads an EXE, MSI, COM, or MSIX, names the engine, and writes the silent command. It can then build a PSAppDeployToolkit (PSADT) `.intunewin` package and upload the Win32 app to Microsoft Intune.
 
-![Twenty-second InstallScout walkthrough: drop an installer, read the silent command, check WinGet, build the intunewin package, and upload the Win32 app](assets/installscout.gif)
+**New in 1.8.59 — Try in Sandbox.** After Analyze, the button runs the silent command and the detection script in Windows Sandbox. Nothing is installed on this PC. It appears when Windows Sandbox is installed.
+
+![Twenty-second InstallScout walkthrough: drop an installer, try the silent command in Windows Sandbox, check WinGet, build the intunewin package, and upload the Win32 app](assets/installscout.gif)
 
 ## What it does
 
 - **Silent command** — names the engine (Inno, NSIS, MSI, InstallShield, WiX Burn, Squirrel, and others) and writes the install line. The installer is not run.
+- **Try in Sandbox** — runs that command and the detection script in Windows Sandbox, so this PC is not changed. Shown when Windows Sandbox is installed.
 - **Your edit** — change the line, add a switch, or tick a suggested one before anything is packaged.
 - **Online check** — looks up the product name in WinGet and Chocolatey. The file is not uploaded.
 - **System or User** — chosen from the engine and the command.
@@ -19,17 +22,17 @@ Windows 10 and 11. The interface is in English. Switch to Dansk in the top-right
 
 ## Download
 
-The current version is **1.8.58**: [releases](https://github.com/mthorngaard/InstallScout-releases/releases/latest)
+The current version is **1.8.59**: [releases](https://github.com/mthorngaard/InstallScout-releases/releases/latest)
 
 | File | Use |
 |---|---|
-| [`InstallScout-1.8.58.zip`](https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.58/InstallScout-1.8.58.zip) | Both files in one download. |
+| [`InstallScout-1.8.59.zip`](https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.59/InstallScout-1.8.59.zip) | Both files in one download. |
 | `InstallScoutPortable.exe` | Copy it anywhere and run it. Nothing is installed. |
 | `InstallScout.msi` | Installs to Program Files and adds a Start menu shortcut. |
 
 The download is not code-signed. Windows or company security may warn or block it. Choose Keep / Run anyway, ask IT to allow the file, or try it in a VM or Windows Sandbox without those policies.
 
-Drop an installer on the window, or use **Add files**. Review the command and test the package in a VM before you roll it out.
+Drop an installer on the window, or use **Add files**. **Try in Sandbox** runs the command without installing on this PC. You can still test the package in a VM before you roll it out.
 
 ## Prerequisites
 

@@ -76,7 +76,15 @@
       "name": "Does finding the switches run the installer?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. InstallScout reads the file. The installer is not started."
+        "text": "No. InstallScout reads the file. The installer is not started. Try in Sandbox is a separate button. It runs the command only inside Windows Sandbox, and only when you click it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I test the silent command without installing on this PC?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Click Try in Sandbox after Analyze, when Windows Sandbox is installed. The command and the detection script run in a disposable sandbox. This PC is not changed. The button is hidden when Sandbox is not installed. You can still test the package in a VM."
       }
     },
     {
@@ -101,7 +109,7 @@
 <h1>Find silent install switches and upload to Intune</h1>
 <p>To find the silent switches for an app, give InstallScout the installer. It reads the EXE, MSI, COM, or MSIX, names the engine, and writes the silent command. The installer is not run. From that command, <strong>Intune package</strong> builds a local <code>.intunewin</code>, and <strong>Upload to Intune</strong> sends the Win32 app.</p>
 <p>A silent switch is an argument that finishes setup with no dialogs. MSI installers share <code>msiexec</code> parameters. EXE installers do not. The arguments depend on the engine that built the file: Inno Setup, NSIS, InstallShield, WiX Burn, and the others below.</p>
-<p>Version <strong>1.8.58</strong>. Every engine, uninstall command, and optional flag is in <a href="reference-en.html">reference-en.html</a>. The path from that command to an Intune Win32 app is in <a href="guide.html">guide.html</a>.</p>
+<p>Version <strong>1.8.59</strong>. Every engine, uninstall command, and optional flag is in <a href="reference-en.html">reference-en.html</a>. The path from that command to an Intune Win32 app is in <a href="guide.html">guide.html</a>.</p>
 <h2>How to find the switches</h2>
 <ol><li>Start <code>InstallScoutPortable.exe</code>. Nothing has to be installed.</li><li>Drop the app&#x27;s installer on the window.</li><li>Click <strong>Analyze</strong>. The silent command is on the Commands tab. Confidence is shown next to the engine.</li></ol>
 <p>The same lookup from a prompt:</p>
@@ -120,7 +128,7 @@
 <p>A 7-Zip SFX, WinRAR SFX, IExpress package, or some self-extractors have no reliable silent line of their own. InstallScout unpacks the inner setup locally and uses that command. Inno Setup, NSIS, Wacom, and Dell Display and Peripheral Manager are not unpacked.</p>
 <p>An outer <code>/sAll</code>, <code>--silent</code>, or <code>/silent</code> is kept. An Adobe-style self-extractor becomes <code>&quot;{file}&quot; /sAll /rs /rps /msi /quiet</code> when <code>/sAll</code> or <code>/rps</code> is in the file.</p>
 <h2>What the command does not prove</h2>
-<p>The line is the engine&#x27;s silent form, plus flags read from the file. It is not a test install. Review it, and try the package in a VM before you roll it out.</p>
+<p>The line is the engine&#x27;s silent form, plus flags read from the file. It is not a test install. Review it, then click <strong>Try in Sandbox</strong> when that button is shown. The command runs in Windows Sandbox, not on this PC. You can still try the package in a VM before you roll it out.</p>
 <p>Vendor settings such as a license server or a language are not looked up from a catalog of every app. ClickOnce usually has no reliable silent switch for a machine install.</p>
 <h2>Frequently asked questions</h2>
 <h3>How do I find the silent install command?</h3>
@@ -132,12 +140,14 @@
 <h3>What are the silent switches for MSI, Inno, NSIS, and InstallShield?</h3>
 <p>MSI uses <code>msiexec /i &quot;{file}&quot; /qn</code>. Inno Setup uses <code>/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-</code>. NSIS uses <code>/S</code>, capital S. InstallShield uses <code>/s /v&quot;/qn&quot;</code>.</p>
 <h3>Does finding the switches run the installer?</h3>
-<p>No. InstallScout reads the file. The installer is not started.</p>
+<p>No. InstallScout reads the file. The installer is not started. <strong>Try in Sandbox</strong> is a separate button. It runs the command only inside Windows Sandbox, and only when you click it.</p>
+<h3>How do I test the silent command without installing on this PC?</h3>
+<p>Click <strong>Try in Sandbox</strong> after Analyze, when Windows Sandbox is installed. The command and the detection script run in a disposable sandbox. This PC is not changed. The button is hidden when Sandbox is not installed. You can still test the package in a VM.</p>
 <h3>What if setup.exe /? shows nothing?</h3>
 <p>Many setup programs print no help. The engine still has a known silent form. InstallScout matches markers in the file and applies that form. When the outer file is only a wrapper, the inner setup is unpacked and those switches are used.</p>
     </article>
     <footer>
-      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.58/InstallScout-1.8.58.zip">Download 1.8.58 (.zip)</a> · <a href="../">InstallScout</a></p>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.59/InstallScout-1.8.59.zip">Download 1.8.59 (.zip)</a> · <a href="../">InstallScout</a></p>
     </footer>
   </div>
 </body>

@@ -4,7 +4,7 @@ For at finde silent-switchene til en app giver du InstallScout installeren. Prog
 
 En silent-switch er et argument, der får setup til at køre færdigt uden dialoger. MSI-filer deler parametre til `msiexec`. EXE-filer gør ikke. Argumenterne afhænger af motoren, der har bygget filen: Inno Setup, NSIS, InstallShield, WiX Burn og de øvrige nedenfor.
 
-Version **1.8.58**. Alle motorer, afinstallation og valgfri flag står i [reference.md](reference.md). Vejen fra kommandoen til en Win32-app i Intune står i [vejledning.md](vejledning.md).
+Version **1.8.59**. Alle motorer, afinstallation og valgfri flag står i [reference.md](reference.md). Vejen fra kommandoen til en Win32-app i Intune står i [vejledning.md](vejledning.md).
 
 ## Sådan finder du switchene
 
@@ -59,7 +59,7 @@ En ydre `/sAll`, `--silent` eller `/silent` beholdes. En self-extractor i Adobe-
 
 ## Hvad kommandoen ikke beviser
 
-Linjen er motorens silent-form plus flag læst i filen. Det er ikke en prøveinstallation. Gennemgå den, og prøv pakken i en VM, før du ruller den ud.
+Linjen er motorens silent-form plus flag læst i filen. Det er ikke en prøveinstallation. Gennemgå den, og klik **Prøv i Sandbox**, når knappen vises. Kommandoen kører i Windows Sandbox, ikke på denne pc. Du kan stadig prøve pakken i en VM, før du ruller den ud.
 
 Leverandørindstillinger som licensserver eller sprog slås ikke op i et katalog over alle apps. ClickOnce har typisk ingen pålidelig silent-switch til en maskininstallation.
 
@@ -83,7 +83,11 @@ MSI bruger `msiexec /i "{file}" /qn`. Inno Setup bruger `/VERYSILENT /SUPPRESSMS
 
 ### Bliver installeren kørt, når switchene findes?
 
-Nej. InstallScout læser filen. Installeren startes ikke.
+Nej. InstallScout læser filen. Installeren startes ikke. **Prøv i Sandbox** er en særskilt knap. Den kører kommandoen kun inde i Windows Sandbox, og kun når du klikker.
+
+### Hvordan tester jeg silent-kommandoen uden at installere på denne pc?
+
+Klik **Prøv i Sandbox** efter Analysér, når Windows Sandbox er installeret. Kommandoen og detection-scriptet kører i en sandbox, der kasseres bagefter. Denne pc ændres ikke. Knappen er skjult, når Sandbox ikke er installeret. Du kan stadig teste pakken i en VM.
 
 ### Hvad hvis setup.exe /? ikke viser noget?
 

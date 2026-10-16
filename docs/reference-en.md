@@ -1,6 +1,6 @@
 # InstallScout – technical reference
 
-Version **1.8.58**. Short path: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). The user workflow is in [guide.md](guide.md). This file covers engines, the command line, and Microsoft Graph. PDF: [InstallScout-reference-en.pdf](InstallScout-reference-en.pdf).
+Version **1.8.59**. Short path: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). The user workflow is in [guide.md](guide.md). This file covers engines, the command line, and Microsoft Graph. PDF: [InstallScout-reference-en.pdf](InstallScout-reference-en.pdf).
 
 InstallScout does not run the installer. It reads the file, builds a silent command, wraps PSADT 4.1.8 as `.intunewin`, and creates a Win32 app.
 
@@ -212,3 +212,13 @@ Portal link after success:
 ```text
 https://intune.microsoft.com/#view/Microsoft_Intune_Apps/SettingsMenu/~/0/appId/{appId}
 ```
+
+---
+
+## 4. Windows Sandbox
+
+**Try in Sandbox** is a GUI button. There is no CLI flag. It appears after **Analyze**, and only when `WindowsSandbox.exe` is installed.
+
+The button runs the current silent command inside a new Windows Sandbox, then the same `Detection.ps1` that upload sends to Intune. Empty detection output means not installed. The sandbox shows a message with the install exit code and that detection result. InstallScout reads the same text back into this window.
+
+The command must contain the installer path. A package folder (the setup plus MSI, CAB, or similar files, outside Downloads, Desktop, and the other common folders) is mapped read-only at `C:\InstallScout\Installer`. A single file is copied into the sandbox work folder, so the parent folder is not shared. The work folder is writable. Networking is enabled. Only one Windows Sandbox can run at a time. Closing the sandbox discards it. Nothing is installed on this PC.

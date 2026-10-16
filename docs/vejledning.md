@@ -4,7 +4,7 @@ InstallScout tager en Windows-installer **hele vejen til Intune**. Du giver det 
 
 Silent-switche er ét trin. Målet er pakken i Intune.
 
-Version **1.8.58**. Quick start: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Teknisk reference: [reference.md](reference.md). PDF: [InstallScout-vejledning.pdf](InstallScout-vejledning.pdf). English: [guide.md](guide.md) · [InstallScout-guide.pdf](InstallScout-guide.pdf).
+Version **1.8.59**. Quick start: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Teknisk reference: [reference.md](reference.md). PDF: [InstallScout-vejledning.pdf](InstallScout-vejledning.pdf). English: [guide.md](guide.md) · [InstallScout-guide.pdf](InstallScout-guide.pdf).
 
 | Fil | Motor | Typisk resultat |
 |---|---|---|
@@ -21,9 +21,9 @@ Dobbeltklik `InstallScoutPortable.exe` eller kør `Start.bat`. Programmet kræve
 
 Downloadet er **ikke codesigned**. Windows eller virksomhedens sikkerhed kan advare eller blokere det. Vælg Behold / Kør alligevel, bed IT om at tillade filen, eller prøv den i en VM eller Windows Sandbox uden de politikker.
 
-![Tomt InstallScout-vindue med træk-en-installer-hertil og en kort introduktion](images/01-start.png)
+![Tomt InstallScout-vindue. Prøv i Sandbox sidder efter Analysér, og introduktionen siger at der ikke installeres på denne pc](images/01-start.png)
 
-Træk en installer ind på vinduet, eller brug **Tilføj filer** / **Tilføj mappe**. Den tomme start viser **Træk en installer hertil** i fillisten og en kort introduktion under fanen Kommandoer. EXE, MSI, COM og en hel mappe kan slippes.
+Træk en installer ind på vinduet, eller brug **Tilføj filer** / **Tilføj mappe**. Den tomme start viser **Træk en installer hertil** i fillisten og en kort introduktion under fanen Kommandoer. **Prøv i Sandbox** er på den knaprække, når Windows Sandbox er installeret. EXE, MSI, COM og en hel mappe kan slippes.
 
 Knapperne ligger på to rækker. Kun næste skridt er fremhævet: **Tilføj filer**, når listen er tom, **Analysér**, når en fil ikke er analyseret, **Intune-pakke**, når den valgte fil ikke har en aktuel pakke, og **Upload til Intune**, når pakken findes. Sproget skiftes øverst til højre. Standard er English.
 
@@ -37,6 +37,7 @@ Under knapperne ligger **status og progress** på en egen linje, så de er synli
 | Tilføj filer / mappe | Vælg EXE, MSI, COM, MSIX |
 | **Analysér** | Lokal læsning af filen |
 | **Analysér** | Læser filen lokalt og slår derefter op i WinGet og Chocolatey (kun navn/vendor) |
+| **Prøv i Sandbox** | Kør silent-kommandoen og detection i Windows Sandbox. Denne pc ændres ikke. Vises kun, når Sandbox er installeret |
 | **Silent Install HQ** | Åbner en navnesøgning i browseren – filen uploades ikke, kommandoen overskrives ikke |
 | Kopiér kommando | Silent-linjen til udklipsholder |
 | PSADT-pakke… | Mappe med PSADT 4.1.8 |
@@ -54,6 +55,8 @@ Under knapperne ligger **status og progress** på en egen linje, så de er synli
 flowchart LR
   A[Tilføj installer] --> B[Analysér]
   B --> C[Silent-kommando]
+  C --> S[Prøv i Sandbox]
+  S --> E[Intune-pakke]
   C --> E[Intune-pakke]
   B --> D[WinGet og Chocolatey]
   D --> E[Intune-pakke]
@@ -67,10 +70,23 @@ Hele forløbet slutter med upload. Silent-kommandoen er et mellemtrin.
 
 1. Tilføj filen og klik **Analysér**.
 2. Læs den grønne silent-kommando. Ret den, eller tilføj extra switche, og klik **Gem kommando** / **Tilføj**.
-3. Læs fanen **Online**, når den bliver udfyldt. En sikker lokal motor beholdes, hvis kataloget er uenigt. Et svagt lokalt gæt skiftes, når WinGet eller Chocolatey har et matchende produkt. Ved **none**: **Silent Install HQ** (kun navnesøgning).
-4. Åbn **Intune** og tjek **Install context** (System/User).
-5. Lav **Intune-pakke** (lokal `.intunewin`). Test med `Invoke-AppDeployToolkit.exe`.
-6. **Upload til Intune** – dialogen åbner, så navn, kommando, logo, afløsning og login er med fra start. Én Edge-profil vises; fold feltet ud for at vælge en anden. **Log på Intune**, **Annuller** og **Upload** står på samme række.
+3. Klik **Prøv i Sandbox**, når knappen er på rækken. Windows Sandbox kører kommandoen og detection-scriptet. Denne pc ændres ikke.
+4. Læs fanen **Online**, når den bliver udfyldt. En sikker lokal motor beholdes, hvis kataloget er uenigt. Et svagt lokalt gæt skiftes, når WinGet eller Chocolatey har et matchende produkt. Ved **none**: **Silent Install HQ** (kun navnesøgning).
+5. Åbn **Intune** og tjek **Install context** (System/User).
+6. Lav **Intune-pakke** (lokal `.intunewin`). Test med `Invoke-AppDeployToolkit.exe`.
+7. **Upload til Intune** – dialogen åbner, så navn, kommando, logo, afløsning og login er med fra start. Én Edge-profil vises; fold feltet ud for at vælge en anden. **Log på Intune**, **Annuller** og **Upload** står på samme række.
+
+### Prøv i Windows Sandbox
+
+**Prøv i Sandbox** er måden at se, om silent-kommandoen faktisk installerer, uden at appen bliver liggende på denne pc. Knappen sidder efter **Analysér** og før **Silent Install HQ**, og kun når Windows Sandbox er installeret. Startsiden siger det samme i den korte introduktion.
+
+![Git analyseret som Inno Setup. Prøv i Sandbox er klar ved siden af Silent Install HQ](images/02-lokal-analyse.png)
+
+Sandbox kører silent-kommandoen og derefter det samme `Detection.ps1`, som Intune skal bruge. En besked i Sandbox viser afslutningskoden og om detection matchede. InstallScout viser det samme resultat i dette vindue. Luk Sandbox, når du er færdig. Dens disk kasseres.
+
+Der kan kun køre én Windows Sandbox. Luk en åben Sandbox, før du prøver igen. Kommandoen skal stadig nævne denne installer. En pakkemappe — setup plus MSI- eller CAB-filer, uden for mapper som Overførsler og Skrivebord — deles skrivebeskyttet, så Sandbox kan læse filerne og ikke kan skrive tilbage til denne pc. En enkelt installerfil kopieres ind for sig selv. Sandbox har netværk, fordi nogle installere henter deres payload.
+
+Analysen kører stadig ikke installeren. Sandbox er en særskilt test, og du starter den selv.
 
 ---
 
@@ -99,7 +115,7 @@ Installeren køres aldrig for at pakke ud. Store vendor-SFX’er udtrækkes derf
 
 ### Eksempel: Git (Inno Setup)
 
-![Git analyseret som Inno Setup med VERYSILENT-kommando](images/02-lokal-analyse.png)
+![Git analyseret som Inno Setup. Prøv i Sandbox er klar ved siden af Silent Install HQ](images/02-lokal-analyse.png)
 
 Her er den lokale konklusion:
 
@@ -478,7 +494,7 @@ Ukendt motor: kig i **Fundne switche** og **Bevis**. Analysér spørger også Wi
 
 - **Om…** tjekker GitHub for en nyere udgivelse. Knappen viser **Om · Opdatering** i rav, når der findes én. **Download opdatering** åbner den nyeste udgivelse.
 - Downloadet er **ikke codesigned**. Windows eller virksomhedens sikkerhed kan advare eller blokere det. Vælg Behold / Kør alligevel, bed IT om at tillade filen, eller prøv den i en VM eller Windows Sandbox uden de politikker.
-- Programmet **installerer ikke** noget. Udpakning kører aldrig installeren. Test silent-linjen i en VM.
+- Analysen **installerer ikke** noget. Udpakning kører aldrig installeren. **Prøv i Sandbox** er den test, der kører den, og kun inde i Windows Sandbox.
 - En medfølgende 7-Zip Extra `7za` bruges til indre 7z-payloads, så system-7-Zip ikke er påkrævet.
 - Online-kataloger kender ofte et andet navn eller en nyere build end din fil. Wrapper-VersionInfo (*Self Extractor*) er ikke et katalogprodukt.
 - Context er et kvalificeret gæt. Overstyr i Upload til Intune, hvis du ved bedre.
@@ -486,6 +502,6 @@ Ukendt motor: kig i **Fundne switche** og **Bevis**. Analysér spørger også Wi
 - Binære installere sendes ikke på nettet ved online-tjek.
 - Upload til Intune er inaktiv, indtil der findes en lokal `.intunewin` for den valgte fil.
 - MSI har ofte intet brugbart ikon. Brug **Vælg fil…** eller **Indsæt**.
-- Manuelle switche overskriver den anbefalede linje i PSADT; test i en VM.
+- Manuelle switche overskriver den anbefalede linje i PSADT. Prøv den i Sandbox, eller test pakken i en VM.
 - Supersedence-listen vises først, når login er færdig (*Logget på som …*).
 - Hvis supersedence fejler, ligger den nye Win32-app stadig i Intune.

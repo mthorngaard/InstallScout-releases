@@ -4,7 +4,7 @@ To find the silent switches for an app, give InstallScout the installer. It read
 
 A silent switch is an argument that finishes setup with no dialogs. MSI installers share `msiexec` parameters. EXE installers do not. The arguments depend on the engine that built the file: Inno Setup, NSIS, InstallShield, WiX Burn, and the others below.
 
-Version **1.8.58**. Every engine, uninstall command, and optional flag is in [reference-en.md](reference-en.md). The path from that command to an Intune Win32 app is in [guide.md](guide.md).
+Version **1.8.59**. Every engine, uninstall command, and optional flag is in [reference-en.md](reference-en.md). The path from that command to an Intune Win32 app is in [guide.md](guide.md).
 
 ## How to find the switches
 
@@ -59,7 +59,7 @@ An outer `/sAll`, `--silent`, or `/silent` is kept. An Adobe-style self-extracto
 
 ## What the command does not prove
 
-The line is the engine's silent form, plus flags read from the file. It is not a test install. Review it, and try the package in a VM before you roll it out.
+The line is the engine's silent form, plus flags read from the file. It is not a test install. Review it, then click **Try in Sandbox** when that button is shown. The command runs in Windows Sandbox, not on this PC. You can still try the package in a VM before you roll it out.
 
 Vendor settings such as a license server or a language are not looked up from a catalog of every app. ClickOnce usually has no reliable silent switch for a machine install.
 
@@ -83,7 +83,11 @@ MSI uses `msiexec /i "{file}" /qn`. Inno Setup uses `/VERYSILENT /SUPPRESSMSGBOX
 
 ### Does finding the switches run the installer?
 
-No. InstallScout reads the file. The installer is not started.
+No. InstallScout reads the file. The installer is not started. **Try in Sandbox** is a separate button. It runs the command only inside Windows Sandbox, and only when you click it.
+
+### How do I test the silent command without installing on this PC?
+
+Click **Try in Sandbox** after Analyze, when Windows Sandbox is installed. The command and the detection script run in a disposable sandbox. This PC is not changed. The button is hidden when Sandbox is not installed. You can still test the package in a VM.
 
 ### What if setup.exe /? shows nothing?
 
