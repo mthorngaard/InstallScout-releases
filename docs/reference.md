@@ -1,6 +1,6 @@
 # InstallScout – teknisk reference
 
-Version **1.8.61**. Kort forløb: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Brugerforløbet står i [vejledning.md](vejledning.md). Denne fil beskriver motorer, kommandolinje og Microsoft Graph. PDF: [InstallScout-reference.pdf](InstallScout-reference.pdf?v=1.8.61).
+Version **1.8.62**. Kort forløb: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Brugerforløbet står i [vejledning.md](vejledning.md). Denne fil beskriver motorer, kommandolinje og Microsoft Graph. PDF: [InstallScout-reference.pdf](InstallScout-reference.pdf?v=1.8.62).
 
 InstallScout kører ikke installeren. Den læser filen, bygger en silent-kommando, pakker PSADT 4.1.8 til `.intunewin` og opretter en Win32-app.
 
@@ -221,4 +221,4 @@ https://intune.microsoft.com/#view/Microsoft_Intune_Apps/SettingsMenu/~/0/appId/
 
 Knappen kører den aktuelle silent-kommando i en ny Windows Sandbox og derefter det samme `Detection.ps1`, som upload sender til Intune. Tom detection-output betyder ikke installeret. Sandbox viser en besked med afslutningskoden og det detection-resultat. InstallScout læser den samme tekst tilbage i dette vindue.
 
-Kommandoen skal indeholde stien til installeren. En pakkemappe (setup plus MSI, CAB, prerequisites eller en undermappe som installeren bruger) mappes skrivebeskyttet til `C:\InstallScout\Installer`. En fil direkte i Overførsler, Skrivebord, Dokumenter, OneDrive-roden, Temp eller brugerprofilen kopieres ind i Sandbox-arbejdsmappen, så den overliggende mappe ikke deles. Det gælder også, når mappen er flyttet. En undermappe der, for eksempel `Overførsler\PSADT - CutePDF`, er stadig en pakkemappe. Arbejdsmappen kan skrives til. Netværk er slået til. Der kan kun køre én Windows Sandbox ad gangen. Når Sandbox lukkes, kasseres den. Der installeres ingenting på denne pc.
+Kommandoen skal indeholde stien til installeren. En pakkemappe (setup plus MSI, CAB, prerequisites eller en undermappe som installeren bruger) mappes skrivebeskyttet til `C:\InstallScout\Installer`. En fil direkte i Overførsler, Skrivebord, Dokumenter, OneDrive-roden, Temp eller brugerprofilen kopieres ind i Sandbox-arbejdsmappen, så den overliggende mappe ikke deles. Det gælder også, når mappen er flyttet. En undermappe der, for eksempel `Overførsler\PSADT - CutePDF`, er stadig en pakkemappe. Arbejdsmappen kan skrives til. Netværk er slået til. Der kan kun køre én Windows Sandbox ad gangen. Når Sandbox lukkes, kasseres den. Lukker du den, før et resultat kommer tilbage, tændes knappen igen, så du kan rette kommandoen og køre den igen. Der installeres ingenting på denne pc.
