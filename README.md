@@ -4,8 +4,6 @@ Public page: [mthorngaard.github.io/InstallScout-releases](https://mthorngaard.g
 
 Find silent install switches for a Windows app without running the installer. InstallScout reads an EXE, MSI, COM, or MSIX, names the engine, and writes the silent command. It can then build a PSAppDeployToolkit (PSADT) `.intunewin` package and upload the Win32 app to Microsoft Intune.
 
-**New in 1.8.64 — Anonymous usage.** Opening the program sends one anonymous start: version, language, and operating system. Country comes from the IP address. File names, product names, commands, and tenant ids are not sent.
-
 ![Twenty-second InstallScout walkthrough: drop an installer, try the silent command in Windows Sandbox, check WinGet, build the intunewin package, and upload the Win32 app](assets/installscout.gif?v=1.8.64)
 
 ## What it does
@@ -26,8 +24,9 @@ The current version is **1.8.64**: [releases](https://github.com/mthorngaard/Ins
 
 | File | Use |
 |---|---|
-| [`InstallScout-1.8.64.zip`](https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.64/InstallScout-1.8.64.zip) | The portable exe. |
+| [`InstallScout-1.8.64.zip`](https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.64/InstallScout-1.8.64.zip) | Both files in one download. |
 | `InstallScoutPortable.exe` | Copy it anywhere and run it. Nothing is installed. |
+| `InstallScout.msi` | Installs to Program Files and adds a Start menu shortcut. |
 
 The download is not code-signed. Windows or company security may warn or block it. Choose Keep / Run anyway, ask IT to allow the file, or try it in a VM or Windows Sandbox without those policies.
 
