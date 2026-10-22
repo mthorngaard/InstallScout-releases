@@ -1,6 +1,6 @@
 # InstallScout – technical reference
 
-Version **1.8.63**. Short path: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). The user workflow is in [guide.md](guide.md). This file covers engines, the command line, and Microsoft Graph. PDF: [InstallScout-reference-en.pdf](InstallScout-reference-en.pdf?v=1.8.63).
+Version **1.8.64**. Short path: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). The user workflow is in [guide.md](guide.md). This file covers engines, the command line, and Microsoft Graph. PDF: [InstallScout-reference-en.pdf](InstallScout-reference-en.pdf?v=1.8.64).
 
 InstallScout does not run the installer. It reads the file, builds a silent command, wraps PSADT 4.1.8 as `.intunewin`, and creates a Win32 app.
 
