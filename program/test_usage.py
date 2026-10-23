@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from app import build_event, post_event, session_id
+from app import build_event, post_event, session_id, shorten_locale, windows_locale_name
 
 
 class UsageEventTest(unittest.TestCase):
@@ -27,12 +27,15 @@ class UsageEventTest(unittest.TestCase):
             self.assertNotEqual(first, later)
 
     def test_event_has_no_paths_or_names(self) -> None:
-        event = build_event("1.8.64", True, session="180000000012345678")
+        event = build_event("1.8.65", True, session="180000000012345678")
         encoded = json.dumps(event)
         self.assertEqual(event["eventName"], "app_start")
         self.assertEqual(event["props"], {"source": "program"})
         self.assertTrue(event["systemProps"]["isDebug"])
-        self.assertEqual(event["systemProps"]["appVersion"], "1.8.64")
+        self.assertEqual(event["systemProps"]["appVersion"], "1.8.65")
+        self.assertLessEqual(len(event["systemProps"]["locale"]), 10)
+        self.assertNotIn("English_United", event["systemProps"]["locale"])
+        self.assertNotIn("Danish_Denmark", event["systemProps"]["locale"])
         self.assertNotIn("tenant", encoded.lower())
         self.assertNotIn("argv", encoded.lower())
         self.assertNotIn("\\", encoded)
@@ -40,8 +43,16 @@ class UsageEventTest(unittest.TestCase):
     def test_aptabase_accepts_a_debug_event(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             os.environ["LOCALAPPDATA"] = directory
-            status = post_event(build_event("1.8.64", True))
+            status = post_event(build_event("1.8.65", True))
         self.assertEqual(status, 200)
+
+    def test_windows_locale_names_fit_the_aptabase_limit(self) -> None:
+        self.assertEqual(windows_locale_name(), "")
+        self.assertEqual(shorten_locale("en_US.UTF-8"), "en-US")
+        self.assertEqual(shorten_locale("da-DK"), "da-DK")
+        self.assertEqual(shorten_locale("English_United States"), "English-Un")
+        self.assertLessEqual(len(shorten_locale("Danish_Denmark")), 10)
+        self.assertLessEqual(len(shorten_locale("English_United States")), 10)
 
 
 if __name__ == "__main__":
