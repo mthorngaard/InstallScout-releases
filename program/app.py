@@ -15,6 +15,7 @@ APP_KEY = "A-EU-9748558859"
 EVENT_URL = "https://eu.aptabase.com/api/v0/event"
 SESSION_SECONDS = 60 * 60
 SDK_VERSION = "installscout-win@1"
+LOCALE_LIMIT = 10
 
 
 def session_path() -> str:
@@ -52,16 +53,58 @@ def session_id(now: float | None = None) -> str:
     return fresh
 
 
+def shorten_locale(value: str) -> str:
+    """Aptabase rejects the whole event when locale is longer than 10 characters."""
+    text = value.strip().replace("_", "-")
+    text = text.split(".", 1)[0].split("@", 1)[0].strip()
+    return text[:LOCALE_LIMIT]
+
+
+def windows_locale_name() -> str:
+    """Return a short Windows locale such as da-DK.
+
+    Python's own name on Windows is English_United States or Danish_Denmark,
+    and Aptabase drops the event because that string is longer than 10 characters.
+    """
+    if os.name != "nt":
+        return ""
+    try:
+        import ctypes
+
+        kernel = ctypes.WinDLL("kernel32", use_last_error=True)
+        kernel.GetUserDefaultLocaleName.argtypes = [ctypes.c_wchar_p, ctypes.c_int]
+        kernel.GetUserDefaultLocaleName.restype = ctypes.c_int
+        buffer = ctypes.create_unicode_buffer(85)
+        count = kernel.GetUserDefaultLocaleName(buffer, len(buffer))
+        if count > 0 and buffer.value:
+            return buffer.value
+        kernel.GetUserDefaultLCID.restype = ctypes.c_uint
+        import locale
+
+        return locale.windows_locale.get(int(kernel.GetUserDefaultLCID()), "")
+    except Exception:
+        return ""
+
+
 def locale_name() -> str:
+    windows = windows_locale_name()
+    if windows:
+        return shorten_locale(windows) or "en"
+    chosen = ""
     try:
         import locale
 
         chosen = locale.getlocale()[0] or ""
+        if chosen:
+            normalized = locale.normalize(chosen.replace(" ", "_"))
+            short = normalized.split(".", 1)[0]
+            if short:
+                return shorten_locale(short) or "en"
     except Exception:
         chosen = ""
     if not chosen:
-        chosen = os.environ.get("LANG", "") or ""
-    return chosen.split(".", 1)[0]
+        chosen = os.environ.get("LANG", "") or os.environ.get("LC_ALL", "") or ""
+    return shorten_locale(chosen) or "en"
 
 
 def os_facts() -> tuple[str, str]:
@@ -96,7 +139,7 @@ def build_event(version: str, debug: bool, session: str | None = None) -> dict:
     }
 
 
-def post_event(event: dict, timeout: float = 2) -> int:
+def post_event(event: dict, timeout: float = 12) -> int:
     request = urllib.request.Request(
         EVENT_URL,
         data=json.dumps(event).encode("utf-8"),

@@ -1,7 +1,7 @@
 """Build a portable InstallScout exe that sends an anonymous app_start.
 
 The published program is a PyInstaller archive. This replaces its startup
-script and moves the version string from 1.8.63 to 1.8.64. The rest of the
+script and moves the version string from 1.8.63 to 1.8.65. The rest of the
 program is unchanged.
 
 Requires CPython 3.14.6, the same interpreter the portable exe was frozen with.
@@ -21,7 +21,7 @@ COOKIE_SIZE = 88
 COOKIE_STRUCT = "!8sIIii64s"
 TOC_HEAD = "!IIIBc"
 OLD_VERSION = "1.8.63"
-NEW_VERSION = "1.8.64"
+NEW_VERSION = "1.8.65"
 
 
 def _require_python() -> None:
@@ -194,7 +194,7 @@ def _verify(dest_exe: Path) -> None:
         if key == "installscout" and ispkg == 1:
             package = marshal.loads(zlib.decompress(pyz[pos : pos + length]))
             if NEW_VERSION not in package.co_consts or OLD_VERSION in package.co_consts:
-                raise SystemExit("Version was not updated to 1.8.64.")
+                raise SystemExit(f"Version was not updated to {NEW_VERSION}.")
             return
     raise SystemExit("Could not verify the installscout package.")
 
