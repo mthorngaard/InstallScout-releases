@@ -4,7 +4,7 @@ To find the silent switches for an app, give InstallScout the installer. It read
 
 A silent switch is an argument that finishes setup with no dialogs. MSI installers share `msiexec` parameters. EXE installers do not. The arguments depend on the engine that built the file: Inno Setup, NSIS, InstallShield, WiX Burn, and the others below.
 
-Version **1.8.65**. Every engine, uninstall command, and optional flag is in [reference-en.md](reference-en.md). The path from that command to an Intune Win32 app is in [guide.md](guide.md).
+Version **1.8.66**. Every engine, uninstall command, and optional flag is in [reference-en.md](reference-en.md). The path from that command to an Intune Win32 app is in [guide.md](guide.md).
 
 ## How to find the switches
 

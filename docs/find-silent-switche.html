@@ -109,7 +109,7 @@
 <h1>Find silent-switche og upload til Intune</h1>
 <p>For at finde silent-switchene til en app giver du InstallScout installeren. Programmet læser EXE-, MSI-, COM- eller MSIX-filen, navngiver motoren og skriver silent-kommandoen. Installeren bliver ikke kørt. Ud fra den kommando bygger <strong>Intune-pakke</strong> en lokal <code>.intunewin</code>, og <strong>Upload til Intune</strong> sender Win32-appen.</p>
 <p>En silent-switch er et argument, der får setup til at køre færdigt uden dialoger. MSI-filer deler parametre til <code>msiexec</code>. EXE-filer gør ikke. Argumenterne afhænger af motoren, der har bygget filen: Inno Setup, NSIS, InstallShield, WiX Burn og de øvrige nedenfor.</p>
-<p>Version <strong>1.8.65</strong>. Alle motorer, afinstallation og valgfri flag står i <a href="reference.html">reference.html</a>. Vejen fra kommandoen til en Win32-app i Intune står i <a href="vejledning.html">vejledning.html</a>.</p>
+<p>Version <strong>1.8.66</strong>. Alle motorer, afinstallation og valgfri flag står i <a href="reference.html">reference.html</a>. Vejen fra kommandoen til en Win32-app i Intune står i <a href="vejledning.html">vejledning.html</a>.</p>
 <h2>Sådan finder du switchene</h2>
 <ol><li>Start <code>InstallScoutPortable.exe</code>. Der skal ikke installeres noget.</li><li>Træk appens installer ind på vinduet.</li><li>Klik <strong>Analysér</strong>. Silent-kommandoen ligger under Kommandoer. Sikkerheden står ved siden af motoren.</li></ol>
 <p>Samme opslag fra en prompt:</p>
@@ -147,7 +147,7 @@
 <p>Mange setup-programmer skriver ingen hjælp. Motoren har stadig en kendt silent-form. InstallScout matcher mærker i filen og bruger den form. Når den ydre fil kun er en wrapper, pakkes det indre setup ud, og de switche bruges.</p>
     </article>
     <footer>
-      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.65/InstallScout-1.8.65.zip">Hent 1.8.65 (.zip)</a> · <a href="../">InstallScout</a></p>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.66/InstallScout-1.8.66.zip">Hent 1.8.66 (.zip)</a> · <a href="../">InstallScout</a></p>
     </footer>
   </div>
 </body>
