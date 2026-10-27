@@ -4,6 +4,8 @@ Public page: [mthorngaard.github.io/InstallScout-releases](https://mthorngaard.g
 
 Find silent install switches for a Windows app without running the installer. InstallScout reads an EXE, MSI, COM, or MSIX, names the engine, and writes the silent command. It can then build a PSAppDeployToolkit (PSADT) `.intunewin` package and upload the Win32 app to Microsoft Intune.
 
+**What's new in 1.8.68.** The steps are grouped into Files, Check, and Package, and they stay on one line when the window is wide. Clear sits next to More. Try in Sandbox sits under the silent command. The status says the test is running and that it may take a few minutes. Do not start Windows Sandbox manually, or the button stays grey. The window stays usable while a file is analyzed.
+
 ![Twenty-second InstallScout walkthrough: drop an installer, try the silent command in Windows Sandbox, check WinGet, build the intunewin package, and upload the Win32 app](assets/installscout.gif?v=1.8.68)
 
 ## What it does
