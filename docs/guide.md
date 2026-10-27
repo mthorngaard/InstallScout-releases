@@ -4,7 +4,7 @@ InstallScout takes a Windows installer **all the way to Intune**. You give it an
 
 Silent switches are one step. The destination is the package in Intune.
 
-Version **1.8.67**. Quick start: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). Technical reference: [reference-en.md](reference-en.md). PDF: [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.8.67). Danish: [vejledning.md](vejledning.md).
+Version **1.8.68**. Quick start: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). Technical reference: [reference-en.md](reference-en.md). PDF: [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.8.68). Danish: [vejledning.md](vejledning.md).
 
 | File | Engine | Typical result |
 |---|---|---|
@@ -21,11 +21,11 @@ Double-click `InstallScoutPortable.exe` or run `Start.bat`. No installation is r
 
 The download is **not code-signed**. Windows or company security may warn or block it. Choose Keep / Run anyway, ask IT to allow the file, or try it in a VM or Windows Sandbox without those policies.
 
-![Empty InstallScout window. Try in Sandbox sits after Analyze, and the introduction says it does not install on this PC](images/en/01-start.png)
+![Empty InstallScout window. Steps 1 Files, 2 Check and 3 Package are grouped, Clear sits left of More, and Try in Sandbox is under the silent command](images/en/01-start.png)
 
-Drop an installer on the window, or use **Add files** / **Add folder**. The empty start shows **Drop an installer here** in the file list and a short introduction on the Commands tab. **Try in Sandbox** is on that button row when Windows Sandbox is installed. EXE, MSI, COM and a whole folder can be dropped.
+Drop an installer on the window, or use **Add files** / **Add folder**. The empty start shows **Drop an installer here** in the file list and a short introduction on the Commands tab. **Try in Sandbox** sits under the silent command when Windows Sandbox is installed. EXE, MSI, COM and a whole folder can be dropped.
 
-The buttons sit on two rows. Only the next step is highlighted: **Add files** when the list is empty, **Analyze** when a file is not analyzed, **Intune package** when the selected file has no current package, and **Upload to Intune** when that package exists. The language is changed at the top right. The default is English.
+The steps sit in three groups: **1 Files**, **2 Check** and **3 Package**. They share one row when the window is wide enough, and Package moves down when it is narrow. Only the next step is highlighted: **Add files** when the list is empty, **Analyze** when a file is not analyzed, **Intune package** when the selected file has no current package, and **Upload to Intune** when that package exists. **Clear** sits left of **More**. The language is changed at the top right. The default is English.
 
 **Left:** file, engine, confidence and status. Confidence is green from 75 %, amber from 40 %, and red below that. The selected row keeps that color on a darker blue background. Status is **Analyzed**, **Packaged**, or **Rebuild**.  
 **Right:** the silent command wraps over three lines. Press Enter to save it. Above the tabs: engine, confidence, System or User, and the online result. Then **Extra switches**, and the tabs Commands, Online, Intune, Detection, PSADT, Found switches, Evidence and notes, and MSI / Version.
@@ -78,9 +78,9 @@ The process ends with upload. The silent command is a middle step.
 
 ### Try in Windows Sandbox
 
-**Try in Sandbox** is optional. It shows whether the silent command actually installs, without leaving the app on this PC. The button sits after **Analyze**, before **Silent Install HQ**, and only when Windows Sandbox is installed. You can build the Intune package and upload while the test runs. The result comes back in this window when the test finishes. The start window says the same thing in the short introduction.
+**Try in Sandbox** is optional. It shows whether the silent command actually installs, without leaving the app on this PC. The button sits under the silent command, and only when Windows Sandbox is installed. Do not start Windows Sandbox manually, or the button stays grey. You can build the Intune package and upload while the test runs. The result comes back in this window when the test finishes. The start window says the same thing in the short introduction.
 
-![Git analyzed as Inno Setup. Try in Sandbox is ready beside Silent Install HQ](images/en/02-lokal-analyse.png)
+![Git analyzed as Inno Setup. Try in Sandbox is under the silent command](images/en/02-lokal-analyse.png)
 
 The sandbox runs the silent command, then the same `Detection.ps1` that Intune will use. A message in the sandbox shows the install exit code and whether detection matched. InstallScout reports that result in this window. Close the sandbox when you are done. If you close it before a result comes back, **Try in Sandbox** turns back on so you can change the command and run it again. Its disk is discarded.
 
@@ -115,7 +115,7 @@ The installer is never executed to unpack. Large vendor SFX files are therefore 
 
 ### Example: Git (Inno Setup)
 
-![Git analyzed as Inno Setup. Try in Sandbox is ready beside Silent Install HQ](images/en/02-lokal-analyse.png)
+![Git analyzed as Inno Setup. Try in Sandbox is under the silent command](images/en/02-lokal-analyse.png)
 
 Local conclusion:
 

@@ -43,7 +43,7 @@
     </header>
     <article>
 <h1>InstallScout – technical reference</h1>
-<p>Version <strong>1.8.67</strong>. Short path: <a href="quickstart-en.html">quickstart-en.html</a>. <a href="find-silent-switches.html">Find the silent switches</a>. The user workflow is in <a href="guide.html">guide.html</a>. This file covers engines, the command line, and Microsoft Graph. PDF: <a href="InstallScout-reference-en.pdf?v=1.8.67">InstallScout-reference-en.pdf</a>.</p>
+<p>Version <strong>1.8.68</strong>. Short path: <a href="quickstart-en.html">quickstart-en.html</a>. <a href="find-silent-switches.html">Find the silent switches</a>. The user workflow is in <a href="guide.html">guide.html</a>. This file covers engines, the command line, and Microsoft Graph. PDF: <a href="InstallScout-reference-en.pdf?v=1.8.68">InstallScout-reference-en.pdf</a>.</p>
 <p>InstallScout does not run the installer. It reads the file, builds a silent command, wraps PSADT 4.1.8 as <code>.intunewin</code>, and creates a Win32 app.</p>
 <hr>
 <h2>1. Engines</h2>
@@ -107,7 +107,7 @@
 <p>The command must contain the installer path. A package folder (the setup plus MSI, CAB, prerequisites, or a subfolder the installer needs) is mapped read-only at <code>C:\InstallScout\Installer</code>. A file directly in Downloads, Desktop, Documents, the OneDrive root, Temp, or the user profile is copied into the sandbox work folder, so the parent folder is not shared. That still applies when the folder has been redirected. A subfolder there, for example <code>Downloads\PSADT - CutePDF</code>, is still a package folder. The work folder is writable. Networking is enabled. Only one Windows Sandbox can run at a time. Closing the sandbox discards it. If you close it before a result comes back, the button turns back on so you can change the command and run it again. Nothing is installed on this PC.</p>
     </article>
     <footer>
-      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.67/InstallScout-1.8.67.zip">Download 1.8.67 (.zip)</a> · <a href="../">InstallScout</a></p>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.68/InstallScout-1.8.68.zip">Download 1.8.68 (.zip)</a> · <a href="../">InstallScout</a></p>
     </footer>
   </div>
 </body>

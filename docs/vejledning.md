@@ -4,7 +4,7 @@ InstallScout tager en Windows-installer **hele vejen til Intune**. Du giver det 
 
 Silent-switche er ét trin. Målet er pakken i Intune.
 
-Version **1.8.67**. Quick start: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Teknisk reference: [reference.md](reference.md). PDF: [InstallScout-vejledning.pdf](InstallScout-vejledning.pdf?v=1.8.67). English: [guide.md](guide.md) · [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.8.67).
+Version **1.8.68**. Quick start: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Teknisk reference: [reference.md](reference.md). PDF: [InstallScout-vejledning.pdf](InstallScout-vejledning.pdf?v=1.8.68). English: [guide.md](guide.md) · [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.8.68).
 
 | Fil | Motor | Typisk resultat |
 |---|---|---|
@@ -21,11 +21,11 @@ Dobbeltklik `InstallScoutPortable.exe` eller kør `Start.bat`. Programmet kræve
 
 Downloadet er **ikke codesigned**. Windows eller virksomhedens sikkerhed kan advare eller blokere det. Vælg Behold / Kør alligevel, bed IT om at tillade filen, eller prøv den i en VM eller Windows Sandbox uden de politikker.
 
-![Tomt InstallScout-vindue. Prøv i Sandbox sidder efter Analysér, og introduktionen siger at der ikke installeres på denne pc](images/01-start.png)
+![Tomt InstallScout-vindue. Trin 1 Filer, 2 Tjek og 3 Pakke er grupperet, Ryd sidder til venstre for Mere, og Prøv i Sandbox ligger under silent-kommandoen](images/01-start.png)
 
-Træk en installer ind på vinduet, eller brug **Tilføj filer** / **Tilføj mappe**. Den tomme start viser **Træk en installer hertil** i fillisten og en kort introduktion under fanen Kommandoer. **Prøv i Sandbox** er på den knaprække, når Windows Sandbox er installeret. EXE, MSI, COM og en hel mappe kan slippes.
+Træk en installer ind på vinduet, eller brug **Tilføj filer** / **Tilføj mappe**. Den tomme start viser **Træk en installer hertil** i fillisten og en kort introduktion under fanen Kommandoer. **Prøv i Sandbox** ligger under silent-kommandoen, når Windows Sandbox er installeret. EXE, MSI, COM og en hel mappe kan slippes.
 
-Knapperne ligger på to rækker. Kun næste skridt er fremhævet: **Tilføj filer**, når listen er tom, **Analysér**, når en fil ikke er analyseret, **Intune-pakke**, når den valgte fil ikke har en aktuel pakke, og **Upload til Intune**, når pakken findes. Sproget skiftes øverst til højre. Standard er English.
+Trinnene ligger i tre grupper: **1 Filer**, **2 Tjek** og **3 Pakke**. De står på én række, når vinduet er bredt nok, og Pakke rykkes ned, når det er smalt. Kun næste skridt er fremhævet: **Tilføj filer**, når listen er tom, **Analysér**, når en fil ikke er analyseret, **Intune-pakke**, når den valgte fil ikke har en aktuel pakke, og **Upload til Intune**, når pakken findes. **Ryd** sidder til venstre for **Mere**. Sproget skiftes øverst til højre. Standard er English.
 
 **Venstre:** fil, motor, sikkerhed og status. Sikkerhed er grøn fra 75 %, gul fra 40 % og rød under det. Den valgte række beholder farven på en mørkere blå baggrund. Status er **Analyseret**, **Pakket** eller **Byg igen**.  
 **Højre:** silent-kommandoen ombrydes over tre linjer. Enter gemmer den. Over fanerne: motor, sikkerhed, System eller Bruger, og online-resultatet. Derefter **Ekstra switche** og fanerne Kommandoer, Online, Intune, Detection, PSADT, Fundne switche, Bevis og MSI/Version.
@@ -78,9 +78,9 @@ Hele forløbet slutter med upload. Silent-kommandoen er et mellemtrin.
 
 ### Prøv i Windows Sandbox
 
-**Prøv i Sandbox** er valgfri. Den viser, om silent-kommandoen faktisk installerer, uden at appen bliver liggende på denne pc. Knappen sidder efter **Analysér** og før **Silent Install HQ**, og kun når Windows Sandbox er installeret. Du kan bygge Intune-pakken og uploade, mens testen kører. Resultatet kommer tilbage i dette vindue, når testen er færdig. Startsiden siger det samme i den korte introduktion.
+**Prøv i Sandbox** er valgfri. Den viser, om silent-kommandoen faktisk installerer, uden at appen bliver liggende på denne pc. Knappen ligger under silent-kommandoen, og kun når Windows Sandbox er installeret. Start ikke Windows Sandbox manuelt, for så forbliver knappen grå. Du kan bygge Intune-pakken og uploade, mens testen kører. Resultatet kommer tilbage i dette vindue, når testen er færdig. Startsiden siger det samme i den korte introduktion.
 
-![Git analyseret som Inno Setup. Prøv i Sandbox er klar ved siden af Silent Install HQ](images/02-lokal-analyse.png)
+![Git analyseret som Inno Setup. Prøv i Sandbox ligger under silent-kommandoen](images/02-lokal-analyse.png)
 
 Sandbox kører silent-kommandoen og derefter det samme `Detection.ps1`, som Intune skal bruge. En besked i Sandbox viser afslutningskoden og om detection matchede. InstallScout viser det samme resultat i dette vindue. Luk Sandbox, når du er færdig. Lukker du den, før et resultat kommer tilbage, tændes **Prøv i Sandbox** igen, så du kan rette kommandoen og køre den igen. Dens disk kasseres.
 
@@ -115,7 +115,7 @@ Installeren køres aldrig for at pakke ud. Store vendor-SFX’er udtrækkes derf
 
 ### Eksempel: Git (Inno Setup)
 
-![Git analyseret som Inno Setup. Prøv i Sandbox er klar ved siden af Silent Install HQ](images/02-lokal-analyse.png)
+![Git analyseret som Inno Setup. Prøv i Sandbox ligger under silent-kommandoen](images/02-lokal-analyse.png)
 
 Her er den lokale konklusion:
 
