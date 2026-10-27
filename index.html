@@ -77,7 +77,7 @@
   "name": "InstallScout",
   "operatingSystem": "Windows 10, Windows 11",
   "applicationCategory": "BusinessApplication",
-  "softwareVersion": "1.8.68",
+  "softwareVersion": "1.8.69",
   "inLanguage": [
     "en",
     "da"
@@ -85,7 +85,7 @@
   "isAccessibleForFree": true,
   "url": "https://mthorngaard.github.io/InstallScout-releases/",
   "image": "https://mthorngaard.github.io/InstallScout-releases/assets/installscout.png",
-  "downloadUrl": "https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.68/InstallScout-1.8.68.zip",
+  "downloadUrl": "https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.69/InstallScout-1.8.69.zip",
   "description": "Finds silent install switches for a Windows app by reading the EXE, MSI, COM, or MSIX. It does not run the installer. It can then build a PSADT .intunewin package and upload the Win32 app to Microsoft Intune.",
   "featureList": [
     "Silent command for EXE, MSI, COM, and MSIX without running the installer",
@@ -118,14 +118,14 @@
     <h1>InstallScout</h1>
     <p><a rel="me" href="https://github.com/mthorngaard">mthorngaard on GitHub</a></p>
     <p>Find silent install switches for a Windows app without running the installer. InstallScout reads the EXE, MSI, COM, or MSIX, names the engine, and writes the silent command. <strong>Try in Sandbox</strong> is optional. It runs that command and the detection script in Windows Sandbox, so nothing is installed on this PC, and you can package and upload while it runs. It can then build a PSADT <code>.intunewin</code> package and upload the Win32 app to Microsoft Intune.</p>
-    <img class="demo" src="assets/installscout.gif?v=1.8.68" width="960" height="606" alt="Twenty-second InstallScout walkthrough: drop an installer, try the silent command in Windows Sandbox, check WinGet, build the intunewin package, and upload the Win32 app">
+    <img class="demo" src="assets/installscout.gif?v=1.8.69" width="960" height="606" alt="Twenty-second InstallScout walkthrough: drop an installer, try the silent command in Windows Sandbox, check WinGet, build the intunewin package, and upload the Win32 app">
     <div class="actions">
-      <a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.68/InstallScout-1.8.68.zip">Download 1.8.68 (.zip)</a>
-      <a class="secondary" href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.68/InstallScoutPortable.exe">Portable exe</a>
-      <a class="secondary" href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.68/InstallScout.msi">MSI</a>
+      <a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.69/InstallScout-1.8.69.zip">Download 1.8.69 (.zip)</a>
+      <a class="secondary" href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.69/InstallScoutPortable.exe">Portable exe</a>
+      <a class="secondary" href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.69/InstallScout.msi">MSI</a>
     </div>
-    <p>Version 1.8.68 for Windows 10 and 11. The zip contains the portable exe and the MSI. The portable exe runs without installation. The MSI installs to Program Files. The program does not run the installer. The interface is in English, and Dansk is in the top-right corner.</p>
-    <p class="feature"><strong>What's new in 1.8.68.</strong> The steps are grouped into Files, Check, and Package, and they stay on one line when the window is wide. Clear sits next to More. Try in Sandbox sits under the silent command. The status says the test is running and that it may take a few minutes. Do not start Windows Sandbox manually, or the button stays grey. The window stays usable while a file is analyzed.</p>
+    <p>Version 1.8.69 for Windows 10 and 11. The zip contains the portable exe and the MSI. The portable exe runs without installation. The MSI installs to Program Files. The program does not run the installer. The interface is in English, and Dansk is in the top-right corner.</p>
+    <p class="feature"><strong>What's new in 1.8.69.</strong> Wrapped installers are unpacked with the bundled 7-Zip when the payload is a cabinet or 7z archive, including Microsoft LZX cabinets. The inner MSI becomes the silent command. Try in Sandbox runs that file and keeps the cabinet and DLLs beside it.</p>
     <p class="notice"><strong>Not code-signed.</strong> Windows or company security may warn or block it. Choose Keep / Run anyway, ask IT to allow the file, or try it in a VM or Windows Sandbox without those policies.</p>
     <h2>What it does</h2>
     <ul>
