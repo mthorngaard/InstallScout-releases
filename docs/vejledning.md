@@ -4,7 +4,7 @@ InstallScout tager en Windows-installer **hele vejen til Intune**. Du giver det 
 
 Silent-switche er ét trin. Målet er pakken i Intune.
 
-Version **1.8.66**. Quick start: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Teknisk reference: [reference.md](reference.md). PDF: [InstallScout-vejledning.pdf](InstallScout-vejledning.pdf?v=1.8.66). English: [guide.md](guide.md) · [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.8.66).
+Version **1.8.67**. Quick start: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Teknisk reference: [reference.md](reference.md). PDF: [InstallScout-vejledning.pdf](InstallScout-vejledning.pdf?v=1.8.67). English: [guide.md](guide.md) · [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.8.67).
 
 | Fil | Motor | Typisk resultat |
 |---|---|---|
@@ -316,7 +316,7 @@ Det, der lander i Intune, er en Win32-app med:
 - install- og uninstall-kommando (`Invoke-AppDeployToolkit.exe … Silent`)
 - custom detection-script (`Detection.ps1`, 64-bit PowerShell). Se **Detection** nedenfor.
 - **Install context** (System eller User – forhåndsudfyldt, kan overstyres)
-- **App-logo** (`largeIcon` i Company Portal – fra EXE, fil eller udklipsholder)
+- **App-logo** (`largeIcon` i Company Portal – fra EXE, MSI, fil eller udklipsholder)
 - Minimum OS **Windows 10 22H2**, **60** minutter, genstart **No specific action**
 
 ### Trin 1 – lokal Intune-pakke
@@ -365,11 +365,11 @@ Klik **Upload til Intune…**. Dialogen tilpasser højden, så indholdet er synl
 
 **Logo**
 
-- InstallScout prøver først at trække ikonet ud af EXE’en (og kigger efter `logo.png` / `icon.ico` ved siden af filen).
+- InstallScout henter logoet fra EXE’en, fra MSI’ens Icon-tabel, eller fra `logo.png` / `icon.ico` ved siden af filen.
 - **Vælg fil…** – PNG, JPEG, ICO, GIF eller BMP.
 - **Indsæt** (Ctrl+V) – billede eller fil fra udklipsholderen.
 - **Fjern** – upload uden logo.
-- MSI har ofte kun Windows’ standardikon; brug fil eller indsæt.
+- Har pakken intet ikon, så brug fil eller indsæt.
 
 **I dialogen**
 
@@ -418,7 +418,7 @@ Efter succes åbnes et link til appen i Intune-portalen.
 | Minimum OS | Windows 10 22H2 |
 | Max runtime | 60 minutter |
 | Restart | No specific action (`suppress`) |
-| Logo | `largeIcon` (PNG/JPEG fra EXE, fil eller udklipsholder) |
+| Logo | `largeIcon` (PNG/JPEG fra EXE, MSI, fil eller udklipsholder) |
 | Supersedence | Valgfrit: **Update** eller **Replace** mod op til 10 ældre Win32-apps |
 
 ### PSADT-pakke uden Intune
@@ -431,7 +431,7 @@ Efter succes åbnes et link til appen i Intune-portalen.
 .\InstallScoutPortable.exe --cli .\setup.exe --intune C:\out\intune --publish-intune --icon .\logo.png
 ```
 
-`--publish-intune` kræver `--intune` (lokal pakke først), ligesom i GUI. Uden `--icon` trækkes logoet fra EXE’en, hvis det findes.
+`--publish-intune` kræver `--intune` (lokal pakke først), ligesom i GUI. Uden `--icon` trækkes logoet fra EXE eller MSI, hvis pakken har et.
 
 ### Login og rettigheder
 
@@ -501,7 +501,7 @@ Ukendt motor: kig i **Fundne switche** og **Bevis**. Analysér spørger også Wi
 - Intune-upload kræver Graph-rettighed og kan ramme Conditional Access.
 - Binære installere sendes ikke på nettet ved online-tjek.
 - Upload til Intune er inaktiv, indtil der findes en lokal `.intunewin` for den valgte fil.
-- MSI har ofte intet brugbart ikon. Brug **Vælg fil…** eller **Indsæt**.
+- En pakke uden ikon har intet logo. Brug **Vælg fil…** eller **Indsæt**.
 - Manuelle switche overskriver den anbefalede linje i PSADT. Prøv den i Sandbox, eller test pakken i en VM.
 - Supersedence-listen vises først, når login er færdig (*Logget på som …*).
 - Hvis supersedence fejler, ligger den nye Win32-app stadig i Intune.

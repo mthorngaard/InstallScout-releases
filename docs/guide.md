@@ -4,7 +4,7 @@ InstallScout takes a Windows installer **all the way to Intune**. You give it an
 
 Silent switches are one step. The destination is the package in Intune.
 
-Version **1.8.66**. Quick start: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). Technical reference: [reference-en.md](reference-en.md). PDF: [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.8.66). Danish: [vejledning.md](vejledning.md).
+Version **1.8.67**. Quick start: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). Technical reference: [reference-en.md](reference-en.md). PDF: [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.8.67). Danish: [vejledning.md](vejledning.md).
 
 | File | Engine | Typical result |
 |---|---|---|
@@ -316,7 +316,7 @@ What lands in Intune is a Win32 app with:
 - install and uninstall command (`Invoke-AppDeployToolkit.exe … Silent`)
 - custom detection script (`Detection.ps1`, 64-bit PowerShell). See **Detection** below.
 - **Install context** (System or User — prefilled, can be overridden)
-- **App logo** (`largeIcon` in Company Portal — from the EXE, a file, or the clipboard)
+- **App logo** (`largeIcon` in Company Portal — from the EXE, MSI, a file, or the clipboard)
 - Minimum OS **Windows 10 22H2**, **60** minutes, restart **No specific action**
 
 ### Step 1 — local Intune package
@@ -365,11 +365,11 @@ Click **Upload to Intune…**. The dialog sizes itself so the content is visible
 
 **Logo**
 
-- InstallScout first tries to extract the icon from the EXE (and looks for `logo.png` / `icon.ico` next to the file).
+- InstallScout takes the logo from the EXE, from the MSI Icon table, or from `logo.png` / `icon.ico` next to the file.
 - **Choose file…** — PNG, JPEG, ICO, GIF or BMP.
 - **Paste** (Ctrl+V) — image or file from the clipboard.
 - **Remove** — upload without a logo.
-- MSI often only has the Windows default icon; use a file or paste.
+- If the package has no icon, choose a file or paste.
 
 **In the dialog**
 
@@ -418,7 +418,7 @@ After success, a link to the app in the Intune portal opens.
 | Minimum OS | Windows 10 22H2 |
 | Max runtime | 60 minutes |
 | Restart | No specific action (`suppress`) |
-| Logo | `largeIcon` (PNG/JPEG from EXE, file or clipboard) |
+| Logo | `largeIcon` (PNG/JPEG from EXE, MSI, file or clipboard) |
 | Supersedence | Optional: **Update** or **Replace** against up to 10 older Win32 apps |
 
 ### PSADT package without Intune
@@ -431,7 +431,7 @@ After success, a link to the app in the Intune portal opens.
 .\InstallScoutPortable.exe --cli .\setup.exe --intune C:\out\intune --publish-intune --icon .\logo.png
 ```
 
-`--publish-intune` requires `--intune` (local package first), same as in the GUI. Without `--icon`, the logo is taken from the EXE if one is found.
+`--publish-intune` requires `--intune` (local package first), same as in the GUI. Without `--icon`, the logo is taken from the EXE or MSI when the package has one.
 
 ### Sign-in and permissions
 
@@ -501,7 +501,7 @@ Unknown engine: look at **Found switches** and **Evidence**. Analyze also asks W
 - Intune upload needs Graph permission and can hit Conditional Access.
 - Installer binaries are not sent over the network during the online check.
 - Upload to Intune is inactive until a local `.intunewin` exists for the selected file.
-- MSI often has no usable icon. Use **Choose file…** or **Paste**.
+- A package with no icon has no logo. Use **Choose file…** or **Paste**.
 - Manual switches overwrite the recommended line in PSADT. Try it in Sandbox, or test the package in a VM.
 - The supersedence list appears only after sign-in has finished (*Signed in as …*).
 - If supersedence fails, the new Win32 app still remains in Intune.

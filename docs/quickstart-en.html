@@ -43,8 +43,8 @@
     </header>
     <article>
 <h1>InstallScout – quick start</h1>
-<p>Version <strong>1.8.66</strong>. From an installer to a Win32 app in Intune. The program does not run the installer.</p>
-<p>The full guide is <a href="guide.html">guide.html</a>. <a href="find-silent-switches.html">Find the silent switches</a>. Engines, the CLI, and Graph are in <a href="reference-en.html">reference-en.html</a>. PDF: <a href="InstallScout-quickstart-en.pdf?v=1.8.66">InstallScout-quickstart-en.pdf</a>.</p>
+<p>Version <strong>1.8.67</strong>. From an installer to a Win32 app in Intune. The program does not run the installer.</p>
+<p>The full guide is <a href="guide.html">guide.html</a>. <a href="find-silent-switches.html">Find the silent switches</a>. Engines, the CLI, and Graph are in <a href="reference-en.html">reference-en.html</a>. PDF: <a href="InstallScout-quickstart-en.pdf?v=1.8.67">InstallScout-quickstart-en.pdf</a>.</p>
 <h2>1. Start</h2>
 <p>Double-click <code>InstallScoutPortable.exe</code>. Nothing has to be installed. The language is English. Switch to Dansk in the top-right corner. Drop an installer on the window, or use <strong>Add files…</strong>.</p>
 <p>The download is <strong>not code-signed</strong>. Windows or company security may warn or block it. Choose Keep / Run anyway, ask IT to allow the file, or try it in a VM or Windows Sandbox without those policies.</p>
@@ -58,17 +58,17 @@
 <p><strong>Upload to Intune</strong> stays grey until the package exists. If you change the command afterwards, build the package again.</p>
 <h2>4. Upload</h2>
 <p>Click <strong>Upload to Intune…</strong>.</p>
-<ol><li>Edit <strong>Name in Intune</strong> if Company Portal should not show the product name and version.</li><li>Leave <strong>System</strong> unless the app is per user (typically Squirrel).</li><li>Check the logo. An MSI often has no icon. Choose a file, paste an image, or remove the logo.</li><li>The field shows one Edge profile. Open it to pick another, then click <strong>Sign in to Intune</strong>. Wait until it says <em>Signed in as …</em>. Sign-in is bound to the tenant and Client ID.</li><li>Optionally pick older apps under supersedence. Nothing is selected beforehand. <strong>Update</strong> installs over the old app. <strong>Replace</strong> uninstalls it first.</li><li>Click <strong>Upload</strong>.</li></ol>
+<ol><li>Edit <strong>Name in Intune</strong> if Company Portal should not show the product name and version.</li><li>Leave <strong>System</strong> unless the app is per user (typically Squirrel).</li><li>Check the logo. It comes from the EXE or MSI when the package has one. Otherwise choose a file, paste an image, or remove the logo.</li><li>The field shows one Edge profile. Open it to pick another, then click <strong>Sign in to Intune</strong>. Wait until it says <em>Signed in as …</em>. Sign-in is bound to the tenant and Client ID.</li><li>Optionally pick older apps under supersedence. Nothing is selected beforehand. <strong>Update</strong> installs over the old app. <strong>Replace</strong> uninstalls it first.</li><li>Click <strong>Upload</strong>.</li></ol>
 <p>Requirement: an account that can create Win32 apps (<strong>Intune Administrator</strong>, or the Intune role <strong>Application Manager</strong>) and admin consent for <code>DeviceManagementApps.ReadWrite.All</code>. InstallScout does not create its own app.</p>
 <h2>The same run from the command line</h2>
 <pre><code class="language-powershell">.\InstallScoutPortable.exe --cli .\setup.exe --intune C:\out\intune --publish-intune --icon .\logo.png</code></pre>
-<p>Without <code>--icon</code>, the icon is taken from the EXE when one is present.</p>
+<p>Without <code>--icon</code>, the icon is taken from the EXE or MSI when one is present.</p>
 <h2>Detection, in short</h2>
 <p>Intune treats the app as installed when <code>Detection.ps1</code> writes a line and exits 0.</p>
 <ul><li>An MSI is matched on its product code.</li><li>An EXE is matched on name, publisher, and version. The version must be the same or newer.</li><li><code>Logi Options+ Installer</code> matches <code>Logi Options+</code>. <code>Logitech, Inc.</code> matches <code>Logitech</code>.</li></ul>
     </article>
     <footer>
-      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.66/InstallScout-1.8.66.zip">Download 1.8.66 (.zip)</a> · <a href="../">InstallScout</a></p>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.67/InstallScout-1.8.67.zip">Download 1.8.67 (.zip)</a> · <a href="../">InstallScout</a></p>
     </footer>
   </div>
 </body>

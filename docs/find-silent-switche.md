@@ -4,7 +4,7 @@ For at finde silent-switchene til en app giver du InstallScout installeren. Prog
 
 En silent-switch er et argument, der får setup til at køre færdigt uden dialoger. MSI-filer deler parametre til `msiexec`. EXE-filer gør ikke. Argumenterne afhænger af motoren, der har bygget filen: Inno Setup, NSIS, InstallShield, WiX Burn og de øvrige nedenfor.
 
-Version **1.8.66**. Alle motorer, afinstallation og valgfri flag står i [reference.md](reference.md). Vejen fra kommandoen til en Win32-app i Intune står i [vejledning.md](vejledning.md).
+Version **1.8.67**. Alle motorer, afinstallation og valgfri flag står i [reference.md](reference.md). Vejen fra kommandoen til en Win32-app i Intune står i [vejledning.md](vejledning.md).
 
 ## Sådan finder du switchene
 

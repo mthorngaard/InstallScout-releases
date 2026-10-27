@@ -1,6 +1,6 @@
 # InstallScout – teknisk reference
 
-Version **1.8.66**. Kort forløb: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Brugerforløbet står i [vejledning.md](vejledning.md). Denne fil beskriver motorer, kommandolinje og Microsoft Graph. PDF: [InstallScout-reference.pdf](InstallScout-reference.pdf?v=1.8.66).
+Version **1.8.67**. Kort forløb: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Brugerforløbet står i [vejledning.md](vejledning.md). Denne fil beskriver motorer, kommandolinje og Microsoft Graph. PDF: [InstallScout-reference.pdf](InstallScout-reference.pdf?v=1.8.67).
 
 InstallScout kører ikke installeren. Den læser filen, bygger en silent-kommando, pakker PSADT 4.1.8 til `.intunewin` og opretter en Win32-app.
 
@@ -102,7 +102,7 @@ Et af disse flag tvinger CLI, også uden `--cli`: `--json`, `--out`, `--psadt`, 
 | `--intune DIR` | Skriv `.intunewin`, PSADT-kilde, `Intune.txt` og `Detection.ps1` |
 | `--no-copy-installer` | Lad installeren ligge, hvor den er. Pakken peger på den oprindelige sti |
 | `--publish-intune` | Opret Win32-appen. Kræver `--intune` |
-| `--icon PATH` | PNG, JPEG, GIF, ICO eller BMP til `largeIcon`. Uden flag bruges ikon fra EXE eller en søskendefil |
+| `--icon PATH` | PNG, JPEG, GIF, ICO eller BMP til `largeIcon`. Uden flag bruges ikon fra EXE, MSI eller en søskendefil |
 | `--supersede update\|replace` | Supersedence mod ældre Win32-apps med beslægtet navn. Højst 10 |
 | `--supersede-id GUID` | Gentages. Brug kendte app-id’er i stedet for navnesøgning |
 | `--tenant ID` | Tom betyder `organizations` |
@@ -192,7 +192,7 @@ Kryptering er den samme form som Microsoft Win32 Content Prep: AES-CBC, 256-bit 
 | `largeIcon` | Udelades, når der ikke er et logo. Ellers `mimeContent` med PNG, JPEG eller GIF |
 | `returnCodes` | `0` success, `1707` success, `3010` softReboot, `1641` hardReboot, `1618` retry |
 
-Et MSI-ikon inde i pakken læses ikke. Logo kommer fra EXE/DLL/COM-ressourcen, fra `logo.png` / `icon.ico` ved siden af filen, eller fra den fil brugeren vælger.
+Logo kommer fra EXE/DLL/COM-ressourcen, fra MSI’ens Icon-tabel (ARPPRODUCTICON, ellers en genvej, ellers det eneste ikon), fra `logo.png` / `icon.ico` ved siden af filen, eller fra den fil brugeren vælger. Flere ikoner uden ARPPRODUCTICON og uden genvej bruges ikke.
 
 ### Supersedence
 

@@ -1,8 +1,8 @@
 # InstallScout – quick start
 
-Version **1.8.66**. Fra en installer til en Win32-app i Intune. Programmet kører ikke installeren.
+Version **1.8.67**. Fra en installer til en Win32-app i Intune. Programmet kører ikke installeren.
 
-Den fulde vejledning er [vejledning.md](vejledning.md). [Find silent-switchene](find-silent-switche.md). Motorer, CLI og Graph står i [reference.md](reference.md). PDF: [InstallScout-quickstart.pdf](InstallScout-quickstart.pdf?v=1.8.66).
+Den fulde vejledning er [vejledning.md](vejledning.md). [Find silent-switchene](find-silent-switche.md). Motorer, CLI og Graph står i [reference.md](reference.md). PDF: [InstallScout-quickstart.pdf](InstallScout-quickstart.pdf?v=1.8.67).
 
 ## 1. Start
 
@@ -33,7 +33,7 @@ Klik **Upload til Intune…**.
 
 1. Ret **Navn i Intune**, hvis Company Portal skal hedde noget andet end produkt og version.
 2. Lad **System** stå, medmindre appen er per bruger (typisk Squirrel).
-3. Tjek logoet. En MSI har ofte intet ikon. Vælg en fil, indsæt et billede, eller fjern logoet.
+3. Tjek logoet. Det hentes fra EXE eller MSI, når pakken har et. Ellers vælg en fil, indsæt et billede, eller fjern logoet.
 4. Feltet viser én Edge-profil. Fold det ud for at vælge en anden, og klik **Log på Intune**. Vent til der står *Logget på som …*. Login er bundet til tenant og Client ID.
 5. Vælg evt. ældre apps under supersedence. Ingenting er valgt på forhånd. **Update** installerer ovenpå. **Replace** afinstallerer først.
 6. Klik **Upload**.
@@ -46,7 +46,7 @@ Krav: en konto der kan oprette Win32-apps (**Intune Administrator**, eller Intun
 .\InstallScoutPortable.exe --cli .\setup.exe --intune C:\out\intune --publish-intune --icon .\logo.png
 ```
 
-Uden `--icon` bruges ikonet fra EXE’en, hvis der er et.
+Uden `--icon` bruges ikonet fra EXE eller MSI, hvis der er et.
 
 ## Detection, kort
 

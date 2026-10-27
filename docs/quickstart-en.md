@@ -1,8 +1,8 @@
 # InstallScout – quick start
 
-Version **1.8.66**. From an installer to a Win32 app in Intune. The program does not run the installer.
+Version **1.8.67**. From an installer to a Win32 app in Intune. The program does not run the installer.
 
-The full guide is [guide.md](guide.md). [Find the silent switches](find-silent-switches.md). Engines, the CLI, and Graph are in [reference-en.md](reference-en.md). PDF: [InstallScout-quickstart-en.pdf](InstallScout-quickstart-en.pdf?v=1.8.66).
+The full guide is [guide.md](guide.md). [Find the silent switches](find-silent-switches.md). Engines, the CLI, and Graph are in [reference-en.md](reference-en.md). PDF: [InstallScout-quickstart-en.pdf](InstallScout-quickstart-en.pdf?v=1.8.67).
 
 ## 1. Start
 
@@ -33,7 +33,7 @@ Click **Upload to Intune…**.
 
 1. Edit **Name in Intune** if Company Portal should not show the product name and version.
 2. Leave **System** unless the app is per user (typically Squirrel).
-3. Check the logo. An MSI often has no icon. Choose a file, paste an image, or remove the logo.
+3. Check the logo. It comes from the EXE or MSI when the package has one. Otherwise choose a file, paste an image, or remove the logo.
 4. The field shows one Edge profile. Open it to pick another, then click **Sign in to Intune**. Wait until it says *Signed in as …*. Sign-in is bound to the tenant and Client ID.
 5. Optionally pick older apps under supersedence. Nothing is selected beforehand. **Update** installs over the old app. **Replace** uninstalls it first.
 6. Click **Upload**.
@@ -46,7 +46,7 @@ Requirement: an account that can create Win32 apps (**Intune Administrator**, or
 .\InstallScoutPortable.exe --cli .\setup.exe --intune C:\out\intune --publish-intune --icon .\logo.png
 ```
 
-Without `--icon`, the icon is taken from the EXE when one is present.
+Without `--icon`, the icon is taken from the EXE or MSI when one is present.
 
 ## Detection, in short
 

@@ -1,6 +1,6 @@
 # InstallScout – technical reference
 
-Version **1.8.66**. Short path: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). The user workflow is in [guide.md](guide.md). This file covers engines, the command line, and Microsoft Graph. PDF: [InstallScout-reference-en.pdf](InstallScout-reference-en.pdf?v=1.8.66).
+Version **1.8.67**. Short path: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). The user workflow is in [guide.md](guide.md). This file covers engines, the command line, and Microsoft Graph. PDF: [InstallScout-reference-en.pdf](InstallScout-reference-en.pdf?v=1.8.67).
 
 InstallScout does not run the installer. It reads the file, builds a silent command, wraps PSADT 4.1.8 as `.intunewin`, and creates a Win32 app.
 
@@ -102,7 +102,7 @@ Any of these flags forces the CLI even without `--cli`: `--json`, `--out`, `--ps
 | `--intune DIR` | Write `.intunewin`, PSADT source, `Intune.txt`, and `Detection.ps1` |
 | `--no-copy-installer` | Leave the installer in place. The package points at the original path |
 | `--publish-intune` | Create the Win32 app. Requires `--intune` |
-| `--icon PATH` | PNG, JPEG, GIF, ICO, or BMP for `largeIcon`. Without the flag, the icon comes from the EXE or a sibling file |
+| `--icon PATH` | PNG, JPEG, GIF, ICO, or BMP for `largeIcon`. Without the flag, the icon comes from the EXE, the MSI, or a sibling file |
 | `--supersede update\|replace` | Supersede older Win32 apps with a related name. At most 10 |
 | `--supersede-id GUID` | Repeatable. Use known app IDs instead of a name search |
 | `--tenant ID` | Empty means `organizations` |
@@ -192,7 +192,7 @@ Encryption matches Microsoft Win32 Content Prep: AES-CBC, a 256-bit key, HMAC-SH
 | `largeIcon` | Omitted when there is no logo. Otherwise `mimeContent` as PNG, JPEG, or GIF |
 | `returnCodes` | `0` success, `1707` success, `3010` softReboot, `1641` hardReboot, `1618` retry |
 
-An icon stored inside an MSI is not read. The logo comes from an EXE/DLL/COM resource, from `logo.png` / `icon.ico` next to the file, or from the file the user picks.
+The logo comes from an EXE/DLL/COM resource, from the MSI Icon table (ARPPRODUCTICON, otherwise a shortcut, otherwise the only icon), from `logo.png` / `icon.ico` next to the file, or from the file the user picks. Several icons with no ARPPRODUCTICON and no shortcut are left unused.
 
 ### Supersedence
 

@@ -43,8 +43,8 @@
     </header>
     <article>
 <h1>InstallScout – quick start</h1>
-<p>Version <strong>1.8.66</strong>. Fra en installer til en Win32-app i Intune. Programmet kører ikke installeren.</p>
-<p>Den fulde vejledning er <a href="vejledning.html">vejledning.html</a>. <a href="find-silent-switche.html">Find silent-switchene</a>. Motorer, CLI og Graph står i <a href="reference.html">reference.html</a>. PDF: <a href="InstallScout-quickstart.pdf?v=1.8.66">InstallScout-quickstart.pdf</a>.</p>
+<p>Version <strong>1.8.67</strong>. Fra en installer til en Win32-app i Intune. Programmet kører ikke installeren.</p>
+<p>Den fulde vejledning er <a href="vejledning.html">vejledning.html</a>. <a href="find-silent-switche.html">Find silent-switchene</a>. Motorer, CLI og Graph står i <a href="reference.html">reference.html</a>. PDF: <a href="InstallScout-quickstart.pdf?v=1.8.67">InstallScout-quickstart.pdf</a>.</p>
 <h2>1. Start</h2>
 <p>Dobbeltklik <code>InstallScoutPortable.exe</code>. Der skal ikke installeres noget. Sproget er English. Skift til Dansk øverst til højre. Træk en installer ind på vinduet, eller brug <strong>Tilføj filer…</strong>.</p>
 <p>Downloadet er <strong>ikke codesigned</strong>. Windows eller virksomhedens sikkerhed kan advare eller blokere det. Vælg Behold / Kør alligevel, bed IT om at tillade filen, eller prøv den i en VM eller Windows Sandbox uden de politikker.</p>
@@ -58,17 +58,17 @@
 <p><strong>Upload til Intune</strong> er grå, indtil pakken findes. Ændrer du kommandoen bagefter, skal pakken laves igen.</p>
 <h2>4. Upload</h2>
 <p>Klik <strong>Upload til Intune…</strong>.</p>
-<ol><li>Ret <strong>Navn i Intune</strong>, hvis Company Portal skal hedde noget andet end produkt og version.</li><li>Lad <strong>System</strong> stå, medmindre appen er per bruger (typisk Squirrel).</li><li>Tjek logoet. En MSI har ofte intet ikon. Vælg en fil, indsæt et billede, eller fjern logoet.</li><li>Feltet viser én Edge-profil. Fold det ud for at vælge en anden, og klik <strong>Log på Intune</strong>. Vent til der står <em>Logget på som …</em>. Login er bundet til tenant og Client ID.</li><li>Vælg evt. ældre apps under supersedence. Ingenting er valgt på forhånd. <strong>Update</strong> installerer ovenpå. <strong>Replace</strong> afinstallerer først.</li><li>Klik <strong>Upload</strong>.</li></ol>
+<ol><li>Ret <strong>Navn i Intune</strong>, hvis Company Portal skal hedde noget andet end produkt og version.</li><li>Lad <strong>System</strong> stå, medmindre appen er per bruger (typisk Squirrel).</li><li>Tjek logoet. Det hentes fra EXE eller MSI, når pakken har et. Ellers vælg en fil, indsæt et billede, eller fjern logoet.</li><li>Feltet viser én Edge-profil. Fold det ud for at vælge en anden, og klik <strong>Log på Intune</strong>. Vent til der står <em>Logget på som …</em>. Login er bundet til tenant og Client ID.</li><li>Vælg evt. ældre apps under supersedence. Ingenting er valgt på forhånd. <strong>Update</strong> installerer ovenpå. <strong>Replace</strong> afinstallerer først.</li><li>Klik <strong>Upload</strong>.</li></ol>
 <p>Krav: en konto der kan oprette Win32-apps (<strong>Intune Administrator</strong>, eller Intune-rollen <strong>Application Manager</strong>) og admin-consent for <code>DeviceManagementApps.ReadWrite.All</code>. InstallScout opretter ikke sin egen app.</p>
 <h2>Samme løb fra kommandolinjen</h2>
 <pre><code class="language-powershell">.\InstallScoutPortable.exe --cli .\setup.exe --intune C:\out\intune --publish-intune --icon .\logo.png</code></pre>
-<p>Uden <code>--icon</code> bruges ikonet fra EXE’en, hvis der er et.</p>
+<p>Uden <code>--icon</code> bruges ikonet fra EXE eller MSI, hvis der er et.</p>
 <h2>Detection, kort</h2>
 <p>Intune ser appen som installeret, når <code>Detection.ps1</code> skriver en linje og afslutter med kode 0.</p>
 <ul><li>En MSI matches på product code.</li><li>En EXE matches på navn, udgiver og version. Versionen skal være den samme eller nyere.</li><li><code>Logi Options+ Installer</code> matcher <code>Logi Options+</code>. <code>Logitech, Inc.</code> matcher <code>Logitech</code>.</li></ul>
     </article>
     <footer>
-      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.66/InstallScout-1.8.66.zip">Hent 1.8.66 (.zip)</a> · <a href="../">InstallScout</a></p>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.67/InstallScout-1.8.67.zip">Hent 1.8.67 (.zip)</a> · <a href="../">InstallScout</a></p>
     </footer>
   </div>
 </body>
