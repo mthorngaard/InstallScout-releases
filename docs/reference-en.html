@@ -43,7 +43,7 @@
     </header>
     <article>
 <h1>InstallScout – technical reference</h1>
-<p>Version <strong>1.8.70</strong>. Short path: <a href="quickstart-en.html">quickstart-en.html</a>. <a href="find-silent-switches.html">Find the silent switches</a>. The user workflow is in <a href="guide.html">guide.html</a>. This file covers engines, the command line, and Microsoft Graph. PDF: <a href="InstallScout-reference-en.pdf?v=1.8.70">InstallScout-reference-en.pdf</a>.</p>
+<p>Version <strong>1.8.71</strong>. Short path: <a href="quickstart-en.html">quickstart-en.html</a>. <a href="find-silent-switches.html">Find the silent switches</a>. The user workflow is in <a href="guide.html">guide.html</a>. This file covers engines, the command line, and Microsoft Graph. PDF: <a href="InstallScout-reference-en.pdf?v=1.8.71">InstallScout-reference-en.pdf</a>.</p>
 <p>InstallScout does not run the installer. It reads the file, builds a silent command, wraps PSADT 4.1.8 as <code>.intunewin</code>, and creates a Win32 app.</p>
 <hr>
 <h2>1. Engines</h2>
@@ -60,7 +60,7 @@
 <h3>Detection and the engine</h3>
 <p><code>Detection.ps1</code> writes to STDOUT and exits 0 when the app is installed. Empty STDOUT means not installed. The script does not throw.</p>
 <div class="table-wrap"><table><thead><tr><th>Source</th><th>Match</th></tr></thead><tbody><tr><td>MSI <code>ProductCode</code>, or a GUID in the uninstall command</td><td>That uninstall key, and version <code>&gt;=</code></td></tr><tr><td>EXE without a product code</td><td>DisplayName, Publisher, and version <code>&gt;=</code></td></tr><tr><td>MSIX</td><td>Package name, and version when known</td></tr></tbody></table></div>
-<p>A trailing Installer, Setup, Bootstrapper, or Driver word may be absent from DisplayName. <code>Logi Options+ Installer</code> matches <code>Logi Options+</code>, and <code>Wacom Tablet Driver</code> matches <code>Wacom Tablet</code>. The uninstall key name counts too. A key named as the product still counts when DisplayName, publisher, and version are missing, as long as the key has some other value. A value that is present must still match. A leftover generic word such as Advanced is not used. Legal suffixes are ignored, so <code>Logitech, Inc.</code> matches <code>Logitech</code>. Versions are compared numerically. The same version and newer count. Older does not. A hyphen revision such as <code>6.4.14-1</code> is satisfied by both <code>6.4.14-1</code> and <code>6.4.14</code>.</p>
+<p>A trailing Installer, Setup, Bootstrapper, or Driver word may be absent from DisplayName. <code>Logi Options+ Installer</code> matches <code>Logi Options+</code>, and <code>Wacom Tablet Driver</code> matches <code>Wacom Tablet</code>. The uninstall key name counts too. A key named as the product still counts when DisplayName, publisher, and version are missing, as long as the key has some other value. A value that is present must still match. The publisher may differ when DisplayName is the product name plus a version and the name is not a short word. <code>WinRAR</code> matches <code>WinRAR 6.00 (64-bit)</code> even when the file says Alexander Roshal and the key says win.rar GmbH. <code>Git</code> still requires the right publisher. A leftover generic word such as Advanced is not used. Legal suffixes are ignored, so <code>Logitech, Inc.</code> matches <code>Logitech</code>. Versions are compared numerically. The same version and newer count. Older does not. A hyphen revision such as <code>6.4.14-1</code> is satisfied by both <code>6.4.14-1</code> and <code>6.4.14</code>.</p>
 <p>Keys read: <code>HKLM</code> and <code>HKCU</code> under <code>SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall</code>, in both the 32-bit and 64-bit views. That still holds when the script itself runs as 32-bit.</p>
 <hr>
 <h2>2. CLI</h2>
@@ -107,7 +107,7 @@
 <p>The command must contain the installer path. A package folder (the setup plus MSI, CAB, prerequisites, or a subfolder the installer needs) is mapped read-only at <code>C:\InstallScout\Installer</code>. A file directly in Downloads, Desktop, Documents, the OneDrive root, Temp, or the user profile is copied into the sandbox work folder, so the parent folder is not shared. That still applies when the folder has been redirected. A subfolder there, for example <code>Downloads\PSADT - CutePDF</code>, is still a package folder. The work folder is writable. Networking is enabled. On a PC with free RAM, the sandbox gets up to 8 GB of memory instead of the 4 GB default ceiling. Only one Windows Sandbox can run at a time. Closing the sandbox discards it. If you close it before a result comes back, the button turns back on so you can change the command and run it again. Nothing is installed on this PC.</p>
     </article>
     <footer>
-      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.70/InstallScout-1.8.70.zip">Download 1.8.70 (.zip)</a> · <a href="../">InstallScout</a></p>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.71/InstallScout-1.8.71.zip">Download 1.8.71 (.zip)</a> · <a href="../">InstallScout</a></p>
     </footer>
   </div>
 </body>

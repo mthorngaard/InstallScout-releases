@@ -43,7 +43,7 @@
     </header>
     <article>
 <h1>InstallScout – teknisk reference</h1>
-<p>Version <strong>1.8.70</strong>. Kort forløb: <a href="quickstart.html">quickstart.html</a>. <a href="find-silent-switche.html">Find silent-switchene</a>. Brugerforløbet står i <a href="vejledning.html">vejledning.html</a>. Denne fil beskriver motorer, kommandolinje og Microsoft Graph. PDF: <a href="InstallScout-reference.pdf?v=1.8.70">InstallScout-reference.pdf</a>.</p>
+<p>Version <strong>1.8.71</strong>. Kort forløb: <a href="quickstart.html">quickstart.html</a>. <a href="find-silent-switche.html">Find silent-switchene</a>. Brugerforløbet står i <a href="vejledning.html">vejledning.html</a>. Denne fil beskriver motorer, kommandolinje og Microsoft Graph. PDF: <a href="InstallScout-reference.pdf?v=1.8.71">InstallScout-reference.pdf</a>.</p>
 <p>InstallScout kører ikke installeren. Den læser filen, bygger en silent-kommando, pakker PSADT 4.1.8 til <code>.intunewin</code> og opretter en Win32-app.</p>
 <hr>
 <h2>1. Engines</h2>
@@ -60,7 +60,7 @@
 <h3>Detection i forhold til motor</h3>
 <p><code>Detection.ps1</code> skriver til STDOUT og afslutter med kode 0, når appen er installeret. Tom STDOUT betyder ikke installeret. Scriptet kaster ikke.</p>
 <div class="table-wrap"><table><thead><tr><th>Kilde</th><th>Match</th></tr></thead><tbody><tr><td>MSI <code>ProductCode</code>, eller en GUID i afinstallationskommandoen</td><td>Den nøgle i Uninstall, og version <code>&gt;=</code></td></tr><tr><td>EXE uden product code</td><td>DisplayName, Publisher og version <code>&gt;=</code></td></tr><tr><td>MSIX</td><td>Pakkenavn, og version når den kendes</td></tr></tbody></table></div>
-<p>Et efterstillet Installer, Setup, Bootstrapper eller Driver må mangle i DisplayName. <code>Logi Options+ Installer</code> matcher <code>Logi Options+</code>, og <code>Wacom Tablet Driver</code> matcher <code>Wacom Tablet</code>. Nøglens navn tæller også. En nøgle der hedder produktet, tæller selv om DisplayName, udgiver og version mangler, når nøglen i øvrigt har indhold. Et udfyldt felt skal stadig matche. Et generisk restord som Advanced bruges ikke. Selskabsendelser ignoreres, så <code>Logitech, Inc.</code> matcher <code>Logitech</code>. Version sammenlignes numerisk. Samme version og nyere tæller. Ældre gør ikke. En bindestregsrevision som <code>6.4.14-1</code> er opfyldt af både <code>6.4.14-1</code> og <code>6.4.14</code>.</p>
+<p>Et efterstillet Installer, Setup, Bootstrapper eller Driver må mangle i DisplayName. <code>Logi Options+ Installer</code> matcher <code>Logi Options+</code>, og <code>Wacom Tablet Driver</code> matcher <code>Wacom Tablet</code>. Nøglens navn tæller også. En nøgle der hedder produktet, tæller selv om DisplayName, udgiver og version mangler, når nøglen i øvrigt har indhold. Et udfyldt felt skal stadig matche. Udgiveren må afvige, når DisplayName er produktnavnet plus en version, og navnet ikke er et kort ord. <code>WinRAR</code> matcher <code>WinRAR 6.00 (64-bit)</code>, selv om filen siger Alexander Roshal og nøglen siger win.rar GmbH. <code>Git</code> kræver stadig den rigtige udgiver. Et generisk restord som Advanced bruges ikke. Selskabsendelser ignoreres, så <code>Logitech, Inc.</code> matcher <code>Logitech</code>. Version sammenlignes numerisk. Samme version og nyere tæller. Ældre gør ikke. En bindestregsrevision som <code>6.4.14-1</code> er opfyldt af både <code>6.4.14-1</code> og <code>6.4.14</code>.</p>
 <p>Nøgler der læses: <code>HKLM</code> og <code>HKCU</code> under <code>SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall</code>, i både 32-bit- og 64-bit-visningen. Det gælder også, når scriptet selv kører som 32-bit.</p>
 <hr>
 <h2>2. CLI</h2>
@@ -107,7 +107,7 @@
 <p>Kommandoen skal indeholde stien til installeren. En pakkemappe (setup plus MSI, CAB, prerequisites eller en undermappe som installeren bruger) mappes skrivebeskyttet til <code>C:\InstallScout\Installer</code>. En fil direkte i Overførsler, Skrivebord, Dokumenter, OneDrive-roden, Temp eller brugerprofilen kopieres ind i Sandbox-arbejdsmappen, så den overliggende mappe ikke deles. Det gælder også, når mappen er flyttet. En undermappe der, for eksempel <code>Overførsler\PSADT - CutePDF</code>, er stadig en pakkemappe. Arbejdsmappen kan skrives til. Netværk er slået til. På en pc med ledig RAM får Sandbox op til 8 GB hukommelse i stedet for standardloftet på 4 GB. Der kan kun køre én Windows Sandbox ad gangen. Når Sandbox lukkes, kasseres den. Lukker du den, før et resultat kommer tilbage, tændes knappen igen, så du kan rette kommandoen og køre den igen. Der installeres ingenting på denne pc.</p>
     </article>
     <footer>
-      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.70/InstallScout-1.8.70.zip">Hent 1.8.70 (.zip)</a> · <a href="../">InstallScout</a></p>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.71/InstallScout-1.8.71.zip">Hent 1.8.71 (.zip)</a> · <a href="../">InstallScout</a></p>
     </footer>
   </div>
 </body>

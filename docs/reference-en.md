@@ -1,6 +1,6 @@
 # InstallScout – technical reference
 
-Version **1.8.70**. Short path: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). The user workflow is in [guide.md](guide.md). This file covers engines, the command line, and Microsoft Graph. PDF: [InstallScout-reference-en.pdf](InstallScout-reference-en.pdf?v=1.8.70).
+Version **1.8.71**. Short path: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). The user workflow is in [guide.md](guide.md). This file covers engines, the command line, and Microsoft Graph. PDF: [InstallScout-reference-en.pdf](InstallScout-reference-en.pdf?v=1.8.71).
 
 InstallScout does not run the installer. It reads the file, builds a silent command, wraps PSADT 4.1.8 as `.intunewin`, and creates a Win32 app.
 
@@ -79,7 +79,7 @@ At most 10. File flags come first (`/analytics no`, `/sso no`, and other `name y
 | EXE without a product code | DisplayName, Publisher, and version `>=` |
 | MSIX | Package name, and version when known |
 
-A trailing Installer, Setup, Bootstrapper, or Driver word may be absent from DisplayName. `Logi Options+ Installer` matches `Logi Options+`, and `Wacom Tablet Driver` matches `Wacom Tablet`. The uninstall key name counts too. A key named as the product still counts when DisplayName, publisher, and version are missing, as long as the key has some other value. A value that is present must still match. A leftover generic word such as Advanced is not used. Legal suffixes are ignored, so `Logitech, Inc.` matches `Logitech`. Versions are compared numerically. The same version and newer count. Older does not. A hyphen revision such as `6.4.14-1` is satisfied by both `6.4.14-1` and `6.4.14`.
+A trailing Installer, Setup, Bootstrapper, or Driver word may be absent from DisplayName. `Logi Options+ Installer` matches `Logi Options+`, and `Wacom Tablet Driver` matches `Wacom Tablet`. The uninstall key name counts too. A key named as the product still counts when DisplayName, publisher, and version are missing, as long as the key has some other value. A value that is present must still match. The publisher may differ when DisplayName is the product name plus a version and the name is not a short word. `WinRAR` matches `WinRAR 6.00 (64-bit)` even when the file says Alexander Roshal and the key says win.rar GmbH. `Git` still requires the right publisher. A leftover generic word such as Advanced is not used. Legal suffixes are ignored, so `Logitech, Inc.` matches `Logitech`. Versions are compared numerically. The same version and newer count. Older does not. A hyphen revision such as `6.4.14-1` is satisfied by both `6.4.14-1` and `6.4.14`.
 
 Keys read: `HKLM` and `HKCU` under `SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall`, in both the 32-bit and 64-bit views. That still holds when the script itself runs as 32-bit.
 
