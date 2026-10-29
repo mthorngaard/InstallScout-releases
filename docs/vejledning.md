@@ -6,6 +6,8 @@ Silent-switche er ét trin. Målet er pakken i Intune.
 
 Version **1.8.72**. Quick start: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Teknisk reference: [reference.md](reference.md). PDF: [InstallScout-vejledning.pdf](InstallScout-vejledning.pdf?v=1.8.72). English: [guide.md](guide.md) · [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.8.72).
 
+[Forventet træfsikkerhed](#forventet-træfsikkerhed) for pakke og detection står længere nede i vejledningen.
+
 | Fil | Motor | Typisk resultat |
 |---|---|---|
 | `Git-2.51.0-64-bit.exe` | Inno Setup | Lokal og online enige om `/VERYSILENT …` · **System** · pakkes ikke ud |
@@ -112,6 +114,28 @@ Installeren køres aldrig for at pakke ud. Store vendor-SFX’er udtrækkes derf
 - **Anbefalet silent install** – den kommando, PSADT og Intune bruger.
 - **Fundne switche** – rå flag, der faktisk står i filen.
 - **Bevis og noter** – hvorfor motoren blev valgt, og faldgruber (fx at `/S` ikke virker på Inno).
+
+### Forventet træfsikkerhed
+
+Tallene er et skøn for en typisk Intune-kø: MSI, Inno, NSIS, InstallShield, WiX Burn og kendte leverandør-exe’er. De gælder det første resultat, før kommandoen rettes. InstallScout måler ikke, om pakken eller detection lykkedes.
+
+- Pakken installerer silent i omkring **80 %** af tilfældene.
+- Detection rammer derefter omkring **75 %** af de installationer, der lykkedes.
+- Begge dele lykkes på første forsøg i omkring **60–65 %** af tilfældene.
+
+| Klasse | Silent install | Detection efter en installation, der lykkedes |
+|---|---|---|
+| MSI og WiX MSI | omkring 95 % | omkring 95 % |
+| Inno, Advanced Installer, WiX Burn | omkring 85 % | omkring 75 % |
+| NSIS og Self Extractor med kendte flag | omkring 75 % | omkring 70 % |
+| InstallShield | omkring 60 % | omkring 70 % |
+| Squirrel, ClickOnce, Qt, ukendt exe | omkring 35 % | omkring 40 % i Sandbox, lavere i Intune |
+
+MSI bærer pakke-tallet. `msiexec /qn` er stabilt, og detection bruger product code. InstallScript uden en optaget `setup.iss`, egne dialoger, og en exe hvis navn under Apps og funktioner afviger fra filen, trækker tallet ned.
+
+Detection er det smallere trin for en exe. Den kræver navn, udgiver og version på samme tid. Filens version er ofte mere præcis end `DisplayVersion`, så scriptet kan melde appen som fraværende efter en installation, der lykkedes. En bruger-installation kan bestå i Windows Sandbox og stadig fejle i Intune, fordi detection kører som SYSTEM og læser den kontos HKCU.
+
+Under cirka 40 % sikkerhed er pakken et udkast. Træfsikkerheden ligger der nærmere en tredjedel.
 
 ### Eksempel: Git (Inno Setup)
 

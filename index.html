@@ -138,6 +138,14 @@
       <li><strong>Intune package.</strong> A local <code>.intunewin</code> with PSADT, install, uninstall, and detection.</li>
       <li><strong>Upload.</strong> The Win32 app in Intune, with a logo and optional supersedence.</li>
     </ul>
+    <h2>Expected quality</h2>
+    <p>These figures are estimates for a typical Intune queue, before the command is edited. InstallScout does not measure whether the package or the detection succeeded.</p>
+    <ul>
+      <li>The package installs silently in about <strong>80%</strong> of cases.</li>
+      <li>Detection then matches about <strong>75%</strong> of the installs that succeeded.</li>
+      <li>Both succeed on the first attempt in about <strong>60–65%</strong> of cases.</li>
+    </ul>
+    <p>MSI and WiX MSI are about 95% for both steps. Inno, Advanced Installer, and WiX Burn are about 85% silent and about 75% detection. NSIS and a Self Extractor with known flags are about 75% and 70%. InstallShield is about 60% and 70%. Squirrel, ClickOnce, Qt, and an unknown EXE are about 35% silent, and about 40% detection in Sandbox, lower in Intune. Below about 40% confidence, treat the package as a draft. The full note is in the <a href="docs/guide.html">guide</a> and the <a href="docs/vejledning.html">Danish vejledning</a>.</p>
     <h2>Prerequisites</h2>
     <p>Windows 10 or Windows 11. Finding silent switches and building a local package does not need an Azure sign-in.</p>
     <p><strong>Try in Sandbox</strong> needs Windows Sandbox installed. The button is not shown without it.</p>

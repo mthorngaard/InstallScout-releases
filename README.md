@@ -20,6 +20,30 @@ Find silent install switches for a Windows app without running the installer. In
 
 Windows 10 and 11. The interface is in English. Switch to Dansk in the top-right corner.
 
+## Expected quality
+
+These figures are estimates for a typical Intune queue: MSI, Inno, NSIS, InstallShield, WiX Burn, and known vendor EXE files. They describe the first result, before the command is edited. InstallScout does not measure whether the package or the detection succeeded.
+
+- The package installs silently in about **80%** of cases.
+- Detection then matches about **75%** of the installs that succeeded.
+- Both succeed on the first attempt in about **60–65%** of cases.
+
+| Class | Silent install | Detection after a successful install |
+|---|---|---|
+| MSI and WiX MSI | about 95% | about 95% |
+| Inno, Advanced Installer, WiX Burn | about 85% | about 75% |
+| NSIS and Self Extractor with known flags | about 75% | about 70% |
+| InstallShield | about 60% | about 70% |
+| Squirrel, ClickOnce, Qt, unknown EXE | about 35% | about 40% in Sandbox, lower in Intune |
+
+MSI carries the package rate. `msiexec /qn` is stable, and detection uses the product code. InstallScript without a recorded `setup.iss`, custom dialogs, and an EXE whose Apps & features name differs from the file pull the rate down.
+
+Detection is the narrower step for an EXE. It requires the name, the publisher, and the version together. The file version is often more precise than `DisplayVersion`, so the script can report the app as missing after a successful install. A per-user install can pass in Windows Sandbox and still fail in Intune, because detection runs as SYSTEM and reads that account’s HKCU.
+
+Below about 40% confidence, treat the package as a draft. The hit rate there is closer to one in three.
+
+The same note is in the [guide](https://mthorngaard.github.io/InstallScout-releases/docs/guide.html) and the [Danish vejledning](https://mthorngaard.github.io/InstallScout-releases/docs/vejledning.html).
+
 ## Download
 
 The current version is **1.8.72**: [releases](https://github.com/mthorngaard/InstallScout-releases/releases/latest)
