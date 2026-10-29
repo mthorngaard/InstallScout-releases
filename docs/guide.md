@@ -4,7 +4,7 @@ InstallScout takes a Windows installer **all the way to Intune**. You give it an
 
 Silent switches are one step. The destination is the package in Intune.
 
-Version **1.8.71**. Quick start: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). Technical reference: [reference-en.md](reference-en.md). PDF: [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.8.71). Danish: [vejledning.md](vejledning.md).
+Version **1.8.72**. Quick start: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). Technical reference: [reference-en.md](reference-en.md). PDF: [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.8.72). Danish: [vejledning.md](vejledning.md).
 
 | File | Engine | Typical result |
 |---|---|---|
@@ -17,7 +17,7 @@ Version **1.8.71**. Quick start: [quickstart-en.md](quickstart-en.md). [Find the
 
 ## 1. Start and window
 
-Double-click `InstallScoutPortable.exe` or run `Start.bat`. No installation is required. The UI defaults to **English**; switch to Dansk in the top-right corner. **About…** next to the language field shows the version, developer, and links to GitHub.
+Double-click `InstallScoutPortable.exe` or run `Start.bat`. No installation is required. The UI defaults to **English**; switch to Dansk in the top-right corner. **About…** next to the language field shows the version, developer, and links to GitHub. It also says that startup sends one anonymous call to Aptabase in the EU (`eu.aptabase.com`) with the version and language. File names and paths are not sent. `INSTALLSCOUT_USAGE=0` turns the call off.
 
 The download is **not code-signed**. Windows or company security may warn or block it. Choose Keep / Run anyway, ask IT to allow the file, or try it in a VM or Windows Sandbox without those policies.
 

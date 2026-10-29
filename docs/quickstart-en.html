@@ -43,11 +43,12 @@
     </header>
     <article>
 <h1>InstallScout – quick start</h1>
-<p>Version <strong>1.8.71</strong>. From an installer to a Win32 app in Intune. The program does not run the installer.</p>
-<p>The full guide is <a href="guide.html">guide.html</a>. <a href="find-silent-switches.html">Find the silent switches</a>. Engines, the CLI, and Graph are in <a href="reference-en.html">reference-en.html</a>. PDF: <a href="InstallScout-quickstart-en.pdf?v=1.8.71">InstallScout-quickstart-en.pdf</a>.</p>
+<p>Version <strong>1.8.72</strong>. From an installer to a Win32 app in Intune. The program does not run the installer.</p>
+<p>The full guide is <a href="guide.html">guide.html</a>. <a href="find-silent-switches.html">Find the silent switches</a>. Engines, the CLI, and Graph are in <a href="reference-en.html">reference-en.html</a>. PDF: <a href="InstallScout-quickstart-en.pdf?v=1.8.72">InstallScout-quickstart-en.pdf</a>.</p>
 <h2>1. Start</h2>
 <p>Double-click <code>InstallScoutPortable.exe</code>. Nothing has to be installed. The language is English. Switch to Dansk in the top-right corner. Drop an installer on the window, or use <strong>Add files…</strong>.</p>
 <p>The download is <strong>not code-signed</strong>. Windows or company security may warn or block it. Choose Keep / Run anyway, ask IT to allow the file, or try it in a VM or Windows Sandbox without those policies.</p>
+<p>On startup, one anonymous call to Aptabase in the EU (<code>eu.aptabase.com</code>) sends the version and language. File names and paths are not sent. <code>INSTALLSCOUT_USAGE=0</code> turns the call off.</p>
 <p>To put it on the Start menu, run <code>portable\Install.bat</code>. The portable exe stays where it is and can still be copied on its own.</p>
 <h2>2. Analyze</h2>
 <ol><li><strong>Add files…</strong> and choose an EXE, MSI, COM, or MSIX.</li><li>Click <strong>Analyze</strong>.</li></ol>
@@ -68,7 +69,7 @@
 <ul><li>An MSI is matched on its product code.</li><li>An EXE is matched on name, publisher, and version. The version must be the same or newer.</li><li><code>Logi Options+ Installer</code> matches <code>Logi Options+</code>. <code>Logitech, Inc.</code> matches <code>Logitech</code>.</li></ul>
     </article>
     <footer>
-      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.71/InstallScout-1.8.71.zip">Download 1.8.71 (.zip)</a> · <a href="../">InstallScout</a></p>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.72/InstallScout-1.8.72.zip">Download 1.8.72 (.zip)</a> · <a href="../">InstallScout</a></p>
     </footer>
   </div>
 </body>

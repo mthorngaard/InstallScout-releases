@@ -1,6 +1,6 @@
 # InstallScout – technical reference
 
-Version **1.8.71**. Short path: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). The user workflow is in [guide.md](guide.md). This file covers engines, the command line, and Microsoft Graph. PDF: [InstallScout-reference-en.pdf](InstallScout-reference-en.pdf?v=1.8.71).
+Version **1.8.72**. Short path: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). The user workflow is in [guide.md](guide.md). This file covers engines, the command line, and Microsoft Graph. PDF: [InstallScout-reference-en.pdf](InstallScout-reference-en.pdf?v=1.8.72).
 
 InstallScout does not run the installer. It reads the file, builds a silent command, wraps PSADT 4.1.8 as `.intunewin`, and creates a Win32 app.
 
@@ -116,6 +116,8 @@ Any of these flags forces the CLI even without `--cli`: `--json`, `--out`, `--ps
 | `--version` | Print the version and exit |
 
 Exit code `0` is success. Exit code `2` is used when no supported file was found, `--publish-intune` is missing `--intune`, or `--icon` cannot be read.
+
+On startup, one anonymous call goes to Aptabase in the EU (`eu.aptabase.com`) with the version and language. File names and paths are not sent. `INSTALLSCOUT_USAGE=0` turns the call off.
 
 ```powershell
 .\InstallScoutPortable.exe --cli .\setup.exe

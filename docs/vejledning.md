@@ -4,7 +4,7 @@ InstallScout tager en Windows-installer **hele vejen til Intune**. Du giver det 
 
 Silent-switche er ét trin. Målet er pakken i Intune.
 
-Version **1.8.71**. Quick start: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Teknisk reference: [reference.md](reference.md). PDF: [InstallScout-vejledning.pdf](InstallScout-vejledning.pdf?v=1.8.71). English: [guide.md](guide.md) · [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.8.71).
+Version **1.8.72**. Quick start: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Teknisk reference: [reference.md](reference.md). PDF: [InstallScout-vejledning.pdf](InstallScout-vejledning.pdf?v=1.8.72). English: [guide.md](guide.md) · [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.8.72).
 
 | Fil | Motor | Typisk resultat |
 |---|---|---|
@@ -17,7 +17,7 @@ Version **1.8.71**. Quick start: [quickstart.md](quickstart.md). [Find silent-sw
 
 ## 1. Start og vindue
 
-Dobbeltklik `InstallScoutPortable.exe` eller kør `Start.bat`. Programmet kræver ikke installation. **Om…** ved siden af sprogfeltet viser version, udvikler og links til GitHub.
+Dobbeltklik `InstallScoutPortable.exe` eller kør `Start.bat`. Programmet kræver ikke installation. **Om…** ved siden af sprogfeltet viser version, udvikler og links til GitHub. Der står også, at der ved start sendes et anonymt kald til Aptabase i EU (`eu.aptabase.com`) med version og sprog. Filnavne og stier sendes ikke. `INSTALLSCOUT_USAGE=0` slår kaldet fra.
 
 Downloadet er **ikke codesigned**. Windows eller virksomhedens sikkerhed kan advare eller blokere det. Vælg Behold / Kør alligevel, bed IT om at tillade filen, eller prøv den i en VM eller Windows Sandbox uden de politikker.
 

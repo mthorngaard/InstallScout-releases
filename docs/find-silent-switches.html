@@ -109,7 +109,7 @@
 <h1>Find silent install switches and upload to Intune</h1>
 <p>To find the silent switches for an app, give InstallScout the installer. It reads the EXE, MSI, COM, or MSIX, names the engine, and writes the silent command. The installer is not run. From that command, <strong>Intune package</strong> builds a local <code>.intunewin</code>, and <strong>Upload to Intune</strong> sends the Win32 app.</p>
 <p>A silent switch is an argument that finishes setup with no dialogs. MSI installers share <code>msiexec</code> parameters. EXE installers do not. The arguments depend on the engine that built the file: Inno Setup, NSIS, InstallShield, WiX Burn, and the others below.</p>
-<p>Version <strong>1.8.71</strong>. Every engine, uninstall command, and optional flag is in <a href="reference-en.html">reference-en.html</a>. The path from that command to an Intune Win32 app is in <a href="guide.html">guide.html</a>.</p>
+<p>Version <strong>1.8.72</strong>. Every engine, uninstall command, and optional flag is in <a href="reference-en.html">reference-en.html</a>. The path from that command to an Intune Win32 app is in <a href="guide.html">guide.html</a>.</p>
 <h2>How to find the switches</h2>
 <ol><li>Start <code>InstallScoutPortable.exe</code>. Nothing has to be installed.</li><li>Drop the app&#x27;s installer on the window.</li><li>Click <strong>Analyze</strong>. The silent command is on the Commands tab. Confidence is shown next to the engine.</li></ol>
 <p>The same lookup from a prompt:</p>
@@ -147,7 +147,7 @@
 <p>Many setup programs print no help. The engine still has a known silent form. InstallScout matches markers in the file and applies that form. When the outer file is only a wrapper, the inner setup is unpacked and those switches are used.</p>
     </article>
     <footer>
-      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.71/InstallScout-1.8.71.zip">Download 1.8.71 (.zip)</a> · <a href="../">InstallScout</a></p>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.72/InstallScout-1.8.72.zip">Download 1.8.72 (.zip)</a> · <a href="../">InstallScout</a></p>
     </footer>
   </div>
 </body>

@@ -1,6 +1,6 @@
 # InstallScout – teknisk reference
 
-Version **1.8.71**. Kort forløb: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Brugerforløbet står i [vejledning.md](vejledning.md). Denne fil beskriver motorer, kommandolinje og Microsoft Graph. PDF: [InstallScout-reference.pdf](InstallScout-reference.pdf?v=1.8.71).
+Version **1.8.72**. Kort forløb: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Brugerforløbet står i [vejledning.md](vejledning.md). Denne fil beskriver motorer, kommandolinje og Microsoft Graph. PDF: [InstallScout-reference.pdf](InstallScout-reference.pdf?v=1.8.72).
 
 InstallScout kører ikke installeren. Den læser filen, bygger en silent-kommando, pakker PSADT 4.1.8 til `.intunewin` og opretter en Win32-app.
 
@@ -116,6 +116,8 @@ Et af disse flag tvinger CLI, også uden `--cli`: `--json`, `--out`, `--psadt`, 
 | `--version` | Skriv version og afslut |
 
 Exitkode `0` er succes. Exitkode `2` bruges, når der ikke er nogen understøttet fil, `--publish-intune` mangler `--intune`, eller `--icon` ikke kan læses.
+
+Ved start sendes et anonymt kald til Aptabase i EU (`eu.aptabase.com`) med version og sprog. Filnavne og stier sendes ikke. `INSTALLSCOUT_USAGE=0` slår kaldet fra.
 
 ```powershell
 .\InstallScoutPortable.exe --cli .\setup.exe

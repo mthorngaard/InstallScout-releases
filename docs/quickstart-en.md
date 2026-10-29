@@ -1,14 +1,16 @@
 # InstallScout – quick start
 
-Version **1.8.71**. From an installer to a Win32 app in Intune. The program does not run the installer.
+Version **1.8.72**. From an installer to a Win32 app in Intune. The program does not run the installer.
 
-The full guide is [guide.md](guide.md). [Find the silent switches](find-silent-switches.md). Engines, the CLI, and Graph are in [reference-en.md](reference-en.md). PDF: [InstallScout-quickstart-en.pdf](InstallScout-quickstart-en.pdf?v=1.8.71).
+The full guide is [guide.md](guide.md). [Find the silent switches](find-silent-switches.md). Engines, the CLI, and Graph are in [reference-en.md](reference-en.md). PDF: [InstallScout-quickstart-en.pdf](InstallScout-quickstart-en.pdf?v=1.8.72).
 
 ## 1. Start
 
 Double-click `InstallScoutPortable.exe`. Nothing has to be installed. The language is English. Switch to Dansk in the top-right corner. Drop an installer on the window, or use **Add files…**.
 
 The download is **not code-signed**. Windows or company security may warn or block it. Choose Keep / Run anyway, ask IT to allow the file, or try it in a VM or Windows Sandbox without those policies.
+
+On startup, one anonymous call to Aptabase in the EU (`eu.aptabase.com`) sends the version and language. File names and paths are not sent. `INSTALLSCOUT_USAGE=0` turns the call off.
 
 To put it on the Start menu, run `portable\Install.bat`. The portable exe stays where it is and can still be copied on its own.
 

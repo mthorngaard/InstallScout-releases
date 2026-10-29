@@ -4,9 +4,9 @@ Public page: [mthorngaard.github.io/InstallScout-releases](https://mthorngaard.g
 
 Find silent install switches for a Windows app without running the installer. InstallScout reads an EXE, MSI, COM, or MSIX, names the engine, and writes the silent command. It can then build a PSAppDeployToolkit (PSADT) `.intunewin` package and upload the Win32 app to Microsoft Intune.
 
-**What's new in 1.8.71.** Detection accepts a different uninstall publisher when the display name is the product name plus a version. WinRAR 6.00 (64-bit) matches even when the file says Alexander Roshal and the key says win.rar GmbH. A short name such as Git still requires the publisher.
+**What's new in 1.8.72.** About names the anonymous startup call to Aptabase in the EU (eu.aptabase.com). It sends the version and language, not file names or paths. INSTALLSCOUT_USAGE=0 turns the call off.
 
-![Twenty-second InstallScout walkthrough: drop an installer, try the silent command in Windows Sandbox, check WinGet, build the intunewin package, and upload the Win32 app](assets/installscout.gif?v=1.8.71)
+![Twenty-second InstallScout walkthrough: drop an installer, try the silent command in Windows Sandbox, check WinGet, build the intunewin package, and upload the Win32 app](assets/installscout.gif?v=1.8.72)
 
 ## What it does
 
@@ -22,15 +22,17 @@ Windows 10 and 11. The interface is in English. Switch to Dansk in the top-right
 
 ## Download
 
-The current version is **1.8.71**: [releases](https://github.com/mthorngaard/InstallScout-releases/releases/latest)
+The current version is **1.8.72**: [releases](https://github.com/mthorngaard/InstallScout-releases/releases/latest)
 
 | File | Use |
 |---|---|
-| [`InstallScout-1.8.71.zip`](https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.71/InstallScout-1.8.71.zip) | Both files in one download. |
+| [`InstallScout-1.8.72.zip`](https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.72/InstallScout-1.8.72.zip) | Both files in one download. |
 | `InstallScoutPortable.exe` | Copy it anywhere and run it. Nothing is installed. |
 | `InstallScout.msi` | Installs to Program Files and adds a Start menu shortcut. |
 
 The download is not code-signed. Windows or company security may warn or block it. Choose Keep / Run anyway, ask IT to allow the file, or try it in a VM or Windows Sandbox without those policies.
+
+On startup, one anonymous call to Aptabase in the EU (`eu.aptabase.com`) sends the version and language. File names and paths are not sent. `INSTALLSCOUT_USAGE=0` turns the call off.
 
 Drop an installer on the window, or use **Add files**. **Try in Sandbox** is optional and runs the command without installing on this PC. You can package and upload while it runs, and you can still test the package in a VM before you roll it out.
 
@@ -54,7 +56,7 @@ Upload to Intune also needs:
 **Guide:** [English](https://mthorngaard.github.io/InstallScout-releases/docs/guide.html) · [Dansk](https://mthorngaard.github.io/InstallScout-releases/docs/vejledning.html)  
 **Technical reference:** [English](https://mthorngaard.github.io/InstallScout-releases/docs/reference-en.html) · [Dansk](https://mthorngaard.github.io/InstallScout-releases/docs/reference.html)
 
-PDF copies sit next to the Markdown files: [quick start](docs/InstallScout-quickstart-en.pdf?v=1.8.71), [guide](docs/InstallScout-guide.pdf?v=1.8.71), and [reference](docs/InstallScout-reference-en.pdf?v=1.8.71). Danish PDF files use the same names without `-en`.
+PDF copies sit next to the Markdown files: [quick start](docs/InstallScout-quickstart-en.pdf?v=1.8.72), [guide](docs/InstallScout-guide.pdf?v=1.8.72), and [reference](docs/InstallScout-reference-en.pdf?v=1.8.72). Danish PDF files use the same names without `-en`.
 
 ## Credits
 
