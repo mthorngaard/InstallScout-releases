@@ -4,7 +4,7 @@ InstallScout takes a Windows installer **all the way to Intune**. You give it an
 
 Silent switches are one step. The destination is the package in Intune.
 
-Version **1.8.73**. Quick start: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). Technical reference: [reference-en.md](reference-en.md). PDF: [InstallScout-guide.pdf](InstallScout-guide.pdf). Danish: [vejledning.md](vejledning.md).
+Version **1.8.74**. Quick start: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). Technical reference: [reference-en.md](reference-en.md). PDF: [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.8.74). Danish: [vejledning.md](vejledning.md).
 
 [Expected hit rate](#expected-hit-rate) for the package and detection is further down in this guide.
 
@@ -87,6 +87,8 @@ The process ends with upload. The silent command is a middle step.
 The sandbox runs the silent command, then the same `Detection.ps1` that Intune will use. A message in the sandbox shows the install exit code and whether detection matched. InstallScout reports that result in this window. Close the sandbox when you are done. If you close it before a result comes back, **Try in Sandbox** turns back on so you can change the command and run it again. Its disk is discarded.
 
 Only one Windows Sandbox can run. Close an open one before you try again. The command must still name this installer. A package folder — the setup plus MSI, CAB, or a subfolder the installer needs — is shared read-only, so the sandbox can read those files and cannot write back to this PC. A file directly in Downloads, Desktop, Documents, the OneDrive root, Temp, or the user profile is copied in on its own, even when that folder has been redirected. A subfolder there, for example `Downloads\PSADT - CutePDF`, still counts as a package folder. The sandbox has a network connection, because some installers download their payload. On a PC with free RAM it gets up to 8 GB of memory. The default ceiling is 4 GB.
+
+An MSIX or AppX command such as `Add-AppxPackage` runs through PowerShell in the sandbox. If the install fails, the error text appears in the result. InstallScout also reads the frameworks an MSIX or MSIX bundle depends on, for example `Microsoft.WindowsAppRuntime.2`, and lists them in the notes. A fresh Sandbox and an Intune device without those frameworks fail with `0x80073CF3`, so package the frameworks with the app or install them first.
 
 Analysis still does not run the installer. Sandbox is a separate test, and you start it yourself.
 
