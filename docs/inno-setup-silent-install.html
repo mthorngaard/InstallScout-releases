@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inno Setup silent install: /VERYSILENT, /SUPPRESSMSGBOXES, /NORESTART — InstallScout</title>
+  <meta name="description" content="The silent install command for Inno Setup: /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-, the difference from /SILENT, why /S does not work, log, directory, and uninstall.">
+  <link rel="canonical" href="https://mthorngaard.github.io/InstallScout-releases/docs/inno-setup-silent-install.html">
+  <link rel="alternate" hreflang="en" href="https://mthorngaard.github.io/InstallScout-releases/docs/inno-setup-silent-install.html">
+  <link rel="alternate" hreflang="da" href="https://mthorngaard.github.io/InstallScout-releases/docs/inno-setup-silent-installation.html">
+  <link rel="alternate" hreflang="x-default" href="https://mthorngaard.github.io/InstallScout-releases/docs/inno-setup-silent-install.html">
+  <meta property="og:title" content="Inno Setup silent install: /VERYSILENT, /SUPPRESSMSGBOXES, /NORESTART — InstallScout">
+  <meta property="og:description" content="The silent install command for Inno Setup: /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-, the difference from /SILENT, why /S does not work, log, directory, and uninstall.">
+  <meta property="og:url" content="https://mthorngaard.github.io/InstallScout-releases/docs/inno-setup-silent-install.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://mthorngaard.github.io/InstallScout-releases/assets/installscout.png">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="da_DK">
+  <link rel="icon" href="../assets/installscout.png">
+  <link rel="stylesheet" href="../assets/docs.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Inno Setup silent install: /VERYSILENT, /SUPPRESSMSGBOXES, /NORESTART — InstallScout",
+  "description": "The silent install command for Inno Setup: /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-, the difference from /SILENT, why /S does not work, log, directory, and uninstall.",
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://mthorngaard.github.io/InstallScout-releases/docs/inno-setup-silent-install.html",
+  "isPartOf": {
+    "@type": "SoftwareApplication",
+    "@id": "https://mthorngaard.github.io/InstallScout-releases/#app",
+    "name": "InstallScout",
+    "url": "https://mthorngaard.github.io/InstallScout-releases/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the silent switch for Inno Setup?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use \"setup.exe\" /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-. /VERYSILENT hides the wizard and the progress window."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does /S not work on an Inno Setup installer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "/S belongs to NSIS. Inno Setup ignores it, so the wizard opens. Use /VERYSILENT or /SILENT."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between /SILENT and /VERYSILENT?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "/SILENT shows a progress window. /VERYSILENT shows nothing. Use /VERYSILENT for Intune and other unattended installs."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I uninstall an Inno Setup app silently?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Run \"C:\\Program Files\\App\\unins000.exe\" /VERYSILENT /NORESTART."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="../"><img src="../assets/installscout.png" width="40" height="40" alt="">InstallScout</a>
+      <nav aria-label="Documentation"><a href="find-silent-switches.html">Find switches</a><a href="quickstart-en.html">Quick start</a><a href="guide.html">Guide</a><a href="reference-en.html">Reference</a><a href="silent-install-switches-by-installer.html">By installer</a><a href="inno-setup-silent-installation.html" hreflang="da">Dansk</a></nav>
+    </header>
+    <article>
+<h1>Inno Setup — silent install switches</h1>
+<p>Inno Setup has its own switches. They are not the MSI switches and not NSIS <code>/S</code>.</p>
+<p>Version <strong>1.8.74</strong>. <a href="find-silent-switches.html">Find the switches for any installer</a> · <a href="silent-install-switches-by-installer.html">All installer types</a>.</p>
+<h2>Silent install command</h2>
+<pre><code class="language-text">&quot;{file}&quot; /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-</code></pre>
+<p>Alternative:</p>
+<pre><code class="language-text">&quot;{file}&quot; /SILENT /NORESTART</code></pre>
+<h2>Silent uninstall</h2>
+<pre><code class="language-text">&quot;{app}\unins000.exe&quot; /VERYSILENT /NORESTART</code></pre>
+<p><code>{file}</code> is the quoted path of the installer. <code>{app}</code> is the folder the app was installed to. <code>{ProductCode}</code> is the MSI product code.</p>
+<h2>Switches</h2>
+<div class="table-wrap"><table><thead><tr><th>Switch</th><th>Meaning</th></tr></thead><tbody><tr><td><code>/VERYSILENT</code></td><td>No wizard, no progress window.</td></tr><tr><td><code>/SILENT</code></td><td>No wizard, but a progress window is shown.</td></tr><tr><td><code>/SUPPRESSMSGBOXES</code></td><td>Answer message boxes with the default choice.</td></tr><tr><td><code>/NORESTART</code></td><td>Do not restart, even if setup asks.</td></tr><tr><td><code>/SP-</code></td><td>Skip the prompt &quot;This will install ... Do you wish to continue?&quot;.</td></tr><tr><td><code>/LOG=&quot;%TEMP%\install.log&quot;</code></td><td>Write a log file.</td></tr><tr><td><code>/DIR=&quot;C:\Program Files\App&quot;</code></td><td>Set the install folder.</td></tr><tr><td><code>/MERGETASKS=!desktopicon</code></td><td>Change tasks. An exclamation mark switches a task off.</td></tr><tr><td><code>/NORESTARTAPPLICATIONS</code></td><td>Do not restart applications that were closed.</td></tr></tbody></table></div>
+<h2>Rules that trip people up</h2>
+<ul><li><code>/S</code> is not the silent switch for Inno Setup. Use <code>/VERYSILENT</code>.</li><li><code>/NORESTART</code> is Inno&#x27;s own switch, so it stays in the line.</li><li><code>/SP-</code> removes the first confirmation. Without it a silent install can still stop at that prompt.</li><li>Switches with a value need quotes around the value when it has a space: <code>/DIR=&quot;C:\Program Files\App&quot;</code>.</li><li>The uninstaller is in the install folder, normally as <code>unins000.exe</code>. A second uninstaller is <code>unins001.exe</code>.</li></ul>
+<h2>How to tell the installer is Inno Setup</h2>
+<p>The setup contains the text <code>Inno Setup</code>, and the uninstaller is called <code>unins000.exe</code>.</p>
+<h2>Use it in Intune</h2>
+<p>An Inno app is usually a per-machine install and runs as System. When it installs for the current user only, it has to run as User, and a detection script that runs as System reads another account&#x27;s registry. InstallScout picks System or User from the engine and the command, and detection matches the product name, publisher, and version.</p>
+<h2>Let InstallScout find it</h2>
+<p>Drop the file on InstallScout and click <strong>Analyze</strong>. It reads the file, names the engine, and writes this command with the path filled in. The installer is not run. The same lookup from a prompt:</p>
+<pre><code class="language-text">.\InstallScoutPortable.exe --cli &quot;C:\installers\setup.exe&quot;</code></pre>
+<p>Then <strong>Intune package</strong> builds a PSADT <code>.intunewin</code>, and <strong>Upload to Intune</strong> sends the Win32 app.</p>
+<h2>Frequently asked questions</h2>
+<h3>What is the silent switch for Inno Setup?</h3>
+<p>Use <code>&quot;setup.exe&quot; /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-</code>. <code>/VERYSILENT</code> hides the wizard and the progress window.</p>
+<h3>Why does /S not work on an Inno Setup installer?</h3>
+<p><code>/S</code> belongs to NSIS. Inno Setup ignores it, so the wizard opens. Use <code>/VERYSILENT</code> or <code>/SILENT</code>.</p>
+<h3>What is the difference between /SILENT and /VERYSILENT?</h3>
+<p><code>/SILENT</code> shows a progress window. <code>/VERYSILENT</code> shows nothing. Use <code>/VERYSILENT</code> for Intune and other unattended installs.</p>
+<h3>How do I uninstall an Inno Setup app silently?</h3>
+<p>Run <code>&quot;C:\Program Files\App\unins000.exe&quot; /VERYSILENT /NORESTART</code>.</p>
+<hr>
+<p><a href="msi-silent-install.html">MSI</a> · <a href="nsis-silent-install.html">NSIS</a> · <a href="installshield-silent-install.html">InstallShield</a> · <a href="wix-burn-silent-install.html">WiX Burn</a> · <a href="advanced-installer-silent-install.html">Advanced Installer</a> · <a href="msix-silent-install.html">MSIX</a></p>
+    </article>
+    <footer>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.74/InstallScout-1.8.74.zip">Download 1.8.74 (.zip)</a> · <a href="../">InstallScout</a></p>
+    </footer>
+  </div>
+</body>
+</html>

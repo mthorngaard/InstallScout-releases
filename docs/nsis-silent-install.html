@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NSIS silent install: /S, /D= and the NSIS uninstaller — InstallScout</title>
+  <meta name="description" content="Silent install for an NSIS installer: /S must be a capital letter, /D= must be last and unquoted, /NCRC, and how to make the uninstaller wait.">
+  <link rel="canonical" href="https://mthorngaard.github.io/InstallScout-releases/docs/nsis-silent-install.html">
+  <link rel="alternate" hreflang="en" href="https://mthorngaard.github.io/InstallScout-releases/docs/nsis-silent-install.html">
+  <link rel="alternate" hreflang="da" href="https://mthorngaard.github.io/InstallScout-releases/docs/nsis-silent-installation.html">
+  <link rel="alternate" hreflang="x-default" href="https://mthorngaard.github.io/InstallScout-releases/docs/nsis-silent-install.html">
+  <meta property="og:title" content="NSIS silent install: /S, /D= and the NSIS uninstaller — InstallScout">
+  <meta property="og:description" content="Silent install for an NSIS installer: /S must be a capital letter, /D= must be last and unquoted, /NCRC, and how to make the uninstaller wait.">
+  <meta property="og:url" content="https://mthorngaard.github.io/InstallScout-releases/docs/nsis-silent-install.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://mthorngaard.github.io/InstallScout-releases/assets/installscout.png">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="da_DK">
+  <link rel="icon" href="../assets/installscout.png">
+  <link rel="stylesheet" href="../assets/docs.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "NSIS silent install: /S, /D= and the NSIS uninstaller — InstallScout",
+  "description": "Silent install for an NSIS installer: /S must be a capital letter, /D= must be last and unquoted, /NCRC, and how to make the uninstaller wait.",
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://mthorngaard.github.io/InstallScout-releases/docs/nsis-silent-install.html",
+  "isPartOf": {
+    "@type": "SoftwareApplication",
+    "@id": "https://mthorngaard.github.io/InstallScout-releases/#app",
+    "name": "InstallScout",
+    "url": "https://mthorngaard.github.io/InstallScout-releases/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the silent switch for NSIS?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use \"setup.exe\" /S. The S is a capital letter."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I set the install folder for an NSIS installer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Add /D=C:\\Program Files\\App as the last argument, without quotes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does the NSIS uninstaller return immediately?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It copies itself to a temporary folder and exits. Run it as uninstall.exe /S _?=C:\\Program Files\\App to make the command wait for the uninstall."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="../"><img src="../assets/installscout.png" width="40" height="40" alt="">InstallScout</a>
+      <nav aria-label="Documentation"><a href="find-silent-switches.html">Find switches</a><a href="quickstart-en.html">Quick start</a><a href="guide.html">Guide</a><a href="reference-en.html">Reference</a><a href="silent-install-switches-by-installer.html">By installer</a><a href="nsis-silent-installation.html" hreflang="da">Dansk</a></nav>
+    </header>
+    <article>
+<h1>NSIS (Nullsoft Scriptable Install System) — silent install switches</h1>
+<p>NSIS installers take one common silent switch, <code>/S</code>. Two rules decide whether it works.</p>
+<p>Version <strong>1.8.74</strong>. <a href="find-silent-switches.html">Find the switches for any installer</a> · <a href="silent-install-switches-by-installer.html">All installer types</a>.</p>
+<h2>Silent install command</h2>
+<pre><code class="language-text">&quot;{file}&quot; /S</code></pre>
+<h2>Silent uninstall</h2>
+<pre><code class="language-text">&quot;{app}\uninstall.exe&quot; /S</code></pre>
+<p><code>{file}</code> is the quoted path of the installer. <code>{app}</code> is the folder the app was installed to. <code>{ProductCode}</code> is the MSI product code.</p>
+<h2>Switches</h2>
+<div class="table-wrap"><table><thead><tr><th>Switch</th><th>Meaning</th></tr></thead><tbody><tr><td><code>/S</code></td><td>Silent install. It must be a capital S.</td></tr><tr><td><code>/D=C:\Program Files\App</code></td><td>Set the install folder. It must be the last argument and has no quotes, even with spaces.</td></tr><tr><td><code>/NCRC</code></td><td>Skip the integrity check of the installer.</td></tr><tr><td><code>_?=C:\Program Files\App</code></td><td>On the uninstaller: run in place, so the command waits until it is done.</td></tr></tbody></table></div>
+<h2>Rules that trip people up</h2>
+<ul><li><code>/S</code> must be a capital S. NSIS treats <code>/s</code> as another argument.</li><li><code>/D=</code> sets the install folder. It must be the last argument and must not be quoted, even when the path has spaces.</li><li>Custom NSIS scripts can add switches of their own, and some ignore <code>/S</code>. Check the vendor&#x27;s notes when the wizard still opens.</li><li>The NSIS uninstaller copies itself to a temporary folder and starts there, so the command returns at once. Add <code>_?=&lt;install folder&gt;</code> as the last argument to run it in place and wait for it.</li></ul>
+<h2>How to tell the installer is NSIS</h2>
+<p>The file contains the text <code>Nullsoft Install System</code>. The uninstaller is usually <code>uninstall.exe</code> or <code>Uninstall.exe</code> in the install folder.</p>
+<h2>Use it in Intune</h2>
+<p>Many NSIS apps install per user. Check the install folder and the registry hive before you choose System or User, because detection has to read the same account. InstallScout picks the context from the engine and the command, and detection matches the product name, publisher, and version.</p>
+<h2>Let InstallScout find it</h2>
+<p>Drop the file on InstallScout and click <strong>Analyze</strong>. It reads the file, names the engine, and writes this command with the path filled in. The installer is not run. The same lookup from a prompt:</p>
+<pre><code class="language-text">.\InstallScoutPortable.exe --cli &quot;C:\installers\setup.exe&quot;</code></pre>
+<p>Then <strong>Intune package</strong> builds a PSADT <code>.intunewin</code>, and <strong>Upload to Intune</strong> sends the Win32 app.</p>
+<h2>Frequently asked questions</h2>
+<h3>What is the silent switch for NSIS?</h3>
+<p>Use <code>&quot;setup.exe&quot; /S</code>. The S is a capital letter.</p>
+<h3>How do I set the install folder for an NSIS installer?</h3>
+<p>Add <code>/D=C:\Program Files\App</code> as the last argument, without quotes.</p>
+<h3>Why does the NSIS uninstaller return immediately?</h3>
+<p>It copies itself to a temporary folder and exits. Run it as <code>uninstall.exe /S _?=C:\Program Files\App</code> to make the command wait for the uninstall.</p>
+<hr>
+<p><a href="msi-silent-install.html">MSI</a> · <a href="inno-setup-silent-install.html">Inno Setup</a> · <a href="installshield-silent-install.html">InstallShield</a> · <a href="wix-burn-silent-install.html">WiX Burn</a> · <a href="advanced-installer-silent-install.html">Advanced Installer</a> · <a href="msix-silent-install.html">MSIX</a></p>
+    </article>
+    <footer>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.74/InstallScout-1.8.74.zip">Download 1.8.74 (.zip)</a> · <a href="../">InstallScout</a></p>
+    </footer>
+  </div>
+</body>
+</html>

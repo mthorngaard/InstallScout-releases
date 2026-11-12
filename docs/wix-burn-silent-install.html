@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WiX Burn silent install: /quiet, /passive, /uninstall — InstallScout</title>
+  <meta name="description" content="Silent install and uninstall for a WiX Burn bundle: /quiet, /passive, /norestart, /log, and why /install is not needed.">
+  <link rel="canonical" href="https://mthorngaard.github.io/InstallScout-releases/docs/wix-burn-silent-install.html">
+  <link rel="alternate" hreflang="en" href="https://mthorngaard.github.io/InstallScout-releases/docs/wix-burn-silent-install.html">
+  <link rel="alternate" hreflang="da" href="https://mthorngaard.github.io/InstallScout-releases/docs/wix-burn-silent-installation.html">
+  <link rel="alternate" hreflang="x-default" href="https://mthorngaard.github.io/InstallScout-releases/docs/wix-burn-silent-install.html">
+  <meta property="og:title" content="WiX Burn silent install: /quiet, /passive, /uninstall — InstallScout">
+  <meta property="og:description" content="Silent install and uninstall for a WiX Burn bundle: /quiet, /passive, /norestart, /log, and why /install is not needed.">
+  <meta property="og:url" content="https://mthorngaard.github.io/InstallScout-releases/docs/wix-burn-silent-install.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://mthorngaard.github.io/InstallScout-releases/assets/installscout.png">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="da_DK">
+  <link rel="icon" href="../assets/installscout.png">
+  <link rel="stylesheet" href="../assets/docs.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "WiX Burn silent install: /quiet, /passive, /uninstall — InstallScout",
+  "description": "Silent install and uninstall for a WiX Burn bundle: /quiet, /passive, /norestart, /log, and why /install is not needed.",
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://mthorngaard.github.io/InstallScout-releases/docs/wix-burn-silent-install.html",
+  "isPartOf": {
+    "@type": "SoftwareApplication",
+    "@id": "https://mthorngaard.github.io/InstallScout-releases/#app",
+    "name": "InstallScout",
+    "url": "https://mthorngaard.github.io/InstallScout-releases/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the silent switch for a WiX Burn bundle?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use \"setup.exe\" /quiet. Add /norestart to prevent a restart."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between /quiet and /passive?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "/quiet shows nothing. /passive shows the progress and no prompts."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I uninstall a WiX Burn bundle silently?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Run the bundle with /uninstall /quiet."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="../"><img src="../assets/installscout.png" width="40" height="40" alt="">InstallScout</a>
+      <nav aria-label="Documentation"><a href="find-silent-switches.html">Find switches</a><a href="quickstart-en.html">Quick start</a><a href="guide.html">Guide</a><a href="reference-en.html">Reference</a><a href="silent-install-switches-by-installer.html">By installer</a><a href="wix-burn-silent-installation.html" hreflang="da">Dansk</a></nav>
+    </header>
+    <article>
+<h1>WiX Burn bundle — silent install switches</h1>
+<p>A WiX Burn bundle is an EXE that chains several packages. It takes the same few arguments every time.</p>
+<p>Version <strong>1.8.74</strong>. <a href="find-silent-switches.html">Find the switches for any installer</a> · <a href="silent-install-switches-by-installer.html">All installer types</a>.</p>
+<h2>Silent install command</h2>
+<pre><code class="language-text">&quot;{file}&quot; /quiet</code></pre>
+<p>Alternative:</p>
+<pre><code class="language-text">&quot;{file}&quot; /passive</code></pre>
+<h2>Silent uninstall</h2>
+<pre><code class="language-text">&quot;{file}&quot; /uninstall /quiet</code></pre>
+<p><code>{file}</code> is the quoted path of the installer. <code>{app}</code> is the folder the app was installed to. <code>{ProductCode}</code> is the MSI product code.</p>
+<h2>Switches</h2>
+<div class="table-wrap"><table><thead><tr><th>Switch</th><th>Meaning</th></tr></thead><tbody><tr><td><code>/quiet</code></td><td>No user interface.</td></tr><tr><td><code>/passive</code></td><td>Progress is shown, and there are no prompts.</td></tr><tr><td><code>/norestart</code></td><td>Do not restart.</td></tr><tr><td><code>/log &quot;%TEMP%\install.log&quot;</code></td><td>Write a log file.</td></tr><tr><td><code>/uninstall</code></td><td>Remove the bundle.</td></tr><tr><td><code>/install</code></td><td>Install. This is the default, so it is not needed.</td></tr></tbody></table></div>
+<h2>Rules that trip people up</h2>
+<ul><li><code>/quiet</code> is the silent switch. <code>/passive</code> shows progress and no prompts.</li><li><code>/install</code> is already the default, so it is left out of the line.</li><li>Add <code>/norestart</code> when the bundle must not restart the machine. Exit code <code>3010</code> reports a pending restart.</li><li>Uninstall by running the same bundle with <code>/uninstall /quiet</code>. The bundle has to be available at that path, or cached by Windows.</li></ul>
+<h2>How to tell the installer is WiX Burn</h2>
+<p>A Burn bundle is an EXE built with the WiX toolset that chains packages such as VC++ runtimes and the main MSI.</p>
+<h2>Use it in Intune</h2>
+<p>Package the bundle as the install file and use <code>/uninstall /quiet</code> for the uninstall line. Detection reads the bundle&#x27;s entry under the uninstall key and compares the version.</p>
+<h2>Let InstallScout find it</h2>
+<p>Drop the file on InstallScout and click <strong>Analyze</strong>. It reads the file, names the engine, and writes this command with the path filled in. The installer is not run. The same lookup from a prompt:</p>
+<pre><code class="language-text">.\InstallScoutPortable.exe --cli &quot;C:\installers\setup.exe&quot;</code></pre>
+<p>Then <strong>Intune package</strong> builds a PSADT <code>.intunewin</code>, and <strong>Upload to Intune</strong> sends the Win32 app.</p>
+<h2>Frequently asked questions</h2>
+<h3>What is the silent switch for a WiX Burn bundle?</h3>
+<p>Use <code>&quot;setup.exe&quot; /quiet</code>. Add <code>/norestart</code> to prevent a restart.</p>
+<h3>What is the difference between /quiet and /passive?</h3>
+<p><code>/quiet</code> shows nothing. <code>/passive</code> shows the progress and no prompts.</p>
+<h3>How do I uninstall a WiX Burn bundle silently?</h3>
+<p>Run the bundle with <code>/uninstall /quiet</code>.</p>
+<hr>
+<p><a href="msi-silent-install.html">MSI</a> · <a href="inno-setup-silent-install.html">Inno Setup</a> · <a href="nsis-silent-install.html">NSIS</a> · <a href="installshield-silent-install.html">InstallShield</a> · <a href="advanced-installer-silent-install.html">Advanced Installer</a> · <a href="msix-silent-install.html">MSIX</a></p>
+    </article>
+    <footer>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.74/InstallScout-1.8.74.zip">Download 1.8.74 (.zip)</a> · <a href="../">InstallScout</a></p>
+    </footer>
+  </div>
+</body>
+</html>

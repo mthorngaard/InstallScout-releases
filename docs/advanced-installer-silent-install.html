@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Advanced Installer silent install: /exenoui /qn — InstallScout</title>
+  <meta name="description" content="Silent install for an Advanced Installer EXE: /exenoui /qn, why /S and /VERYSILENT give Invalid command line, and the update check.">
+  <link rel="canonical" href="https://mthorngaard.github.io/InstallScout-releases/docs/advanced-installer-silent-install.html">
+  <link rel="alternate" hreflang="en" href="https://mthorngaard.github.io/InstallScout-releases/docs/advanced-installer-silent-install.html">
+  <link rel="alternate" hreflang="da" href="https://mthorngaard.github.io/InstallScout-releases/docs/advanced-installer-silent-installation.html">
+  <link rel="alternate" hreflang="x-default" href="https://mthorngaard.github.io/InstallScout-releases/docs/advanced-installer-silent-install.html">
+  <meta property="og:title" content="Advanced Installer silent install: /exenoui /qn — InstallScout">
+  <meta property="og:description" content="Silent install for an Advanced Installer EXE: /exenoui /qn, why /S and /VERYSILENT give Invalid command line, and the update check.">
+  <meta property="og:url" content="https://mthorngaard.github.io/InstallScout-releases/docs/advanced-installer-silent-install.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://mthorngaard.github.io/InstallScout-releases/assets/installscout.png">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="da_DK">
+  <link rel="icon" href="../assets/installscout.png">
+  <link rel="stylesheet" href="../assets/docs.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Advanced Installer silent install: /exenoui /qn — InstallScout",
+  "description": "Silent install for an Advanced Installer EXE: /exenoui /qn, why /S and /VERYSILENT give Invalid command line, and the update check.",
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://mthorngaard.github.io/InstallScout-releases/docs/advanced-installer-silent-install.html",
+  "isPartOf": {
+    "@type": "SoftwareApplication",
+    "@id": "https://mthorngaard.github.io/InstallScout-releases/#app",
+    "name": "InstallScout",
+    "url": "https://mthorngaard.github.io/InstallScout-releases/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the silent switch for Advanced Installer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use \"setup.exe\" /exenoui /qn."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does /S give Invalid command line on Advanced Installer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "/S is not an Advanced Installer switch. The bootstrapper expects /exenoui and the MSI switch /qn."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="../"><img src="../assets/installscout.png" width="40" height="40" alt="">InstallScout</a>
+      <nav aria-label="Documentation"><a href="find-silent-switches.html">Find switches</a><a href="quickstart-en.html">Quick start</a><a href="guide.html">Guide</a><a href="reference-en.html">Reference</a><a href="silent-install-switches-by-installer.html">By installer</a><a href="advanced-installer-silent-installation.html" hreflang="da">Dansk</a></nav>
+    </header>
+    <article>
+<h1>Advanced Installer — silent install switches</h1>
+<p>An Advanced Installer EXE is a bootstrapper around an MSI. The bootstrapper and the MSI each take a switch.</p>
+<p>Version <strong>1.8.74</strong>. <a href="find-silent-switches.html">Find the switches for any installer</a> · <a href="silent-install-switches-by-installer.html">All installer types</a>.</p>
+<h2>Silent install command</h2>
+<pre><code class="language-text">&quot;{file}&quot; /exenoui /qn</code></pre>
+<p>Alternative:</p>
+<pre><code class="language-text">&quot;{file}&quot; /exenoui /passive /qn</code></pre>
+<h2>Silent uninstall</h2>
+<pre><code class="language-text">&quot;{file}&quot; /exenoui /x // /qn</code></pre>
+<p><code>{file}</code> is the quoted path of the installer. <code>{app}</code> is the folder the app was installed to. <code>{ProductCode}</code> is the MSI product code.</p>
+<h2>Switches</h2>
+<div class="table-wrap"><table><thead><tr><th>Switch</th><th>Meaning</th></tr></thead><tbody><tr><td><code>/exenoui</code></td><td>No interface for the EXE bootstrapper.</td></tr><tr><td><code>/qn</code></td><td>Passed on to the MSI: no interface.</td></tr><tr><td><code>/passive</code></td><td>Show progress, no prompts.</td></tr><tr><td><code>/exenoupdates</code></td><td>Do not check for updates.</td></tr></tbody></table></div>
+<h2>Rules that trip people up</h2>
+<ul><li><code>/S</code> and <code>/VERYSILENT</code> typically produce <em>Invalid command line</em>. They belong to other engines.</li><li><code>/exenoui</code> silences the bootstrapper and <code>/qn</code> silences the MSI. You need both.</li><li><code>/exenoupdates</code> stops the setup from looking for a newer version at install time.</li><li>The uninstall line is the bootstrapper again. InstallScout writes it as <code>&quot;{file}&quot; /exenoui /x // /qn</code>.</li></ul>
+<h2>How to tell the installer is Advanced Installer</h2>
+<p>The setup is an EXE bootstrapper around an MSI, and the file mentions Advanced Installer. Running it with <code>/S</code> or <code>/VERYSILENT</code> often prints <em>Invalid command line</em>.</p>
+<h2>Use it in Intune</h2>
+<p>Treat the bootstrapper as the install file. The MSI inside has a product code, which is a stable key for detection when you can read it.</p>
+<h2>Let InstallScout find it</h2>
+<p>Drop the file on InstallScout and click <strong>Analyze</strong>. It reads the file, names the engine, and writes this command with the path filled in. The installer is not run. The same lookup from a prompt:</p>
+<pre><code class="language-text">.\InstallScoutPortable.exe --cli &quot;C:\installers\setup.exe&quot;</code></pre>
+<p>Then <strong>Intune package</strong> builds a PSADT <code>.intunewin</code>, and <strong>Upload to Intune</strong> sends the Win32 app.</p>
+<h2>Frequently asked questions</h2>
+<h3>What is the silent switch for Advanced Installer?</h3>
+<p>Use <code>&quot;setup.exe&quot; /exenoui /qn</code>.</p>
+<h3>Why does /S give Invalid command line on Advanced Installer?</h3>
+<p><code>/S</code> is not an Advanced Installer switch. The bootstrapper expects <code>/exenoui</code> and the MSI switch <code>/qn</code>.</p>
+<hr>
+<p><a href="msi-silent-install.html">MSI</a> · <a href="inno-setup-silent-install.html">Inno Setup</a> · <a href="nsis-silent-install.html">NSIS</a> · <a href="installshield-silent-install.html">InstallShield</a> · <a href="wix-burn-silent-install.html">WiX Burn</a> · <a href="msix-silent-install.html">MSIX</a></p>
+    </article>
+    <footer>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.74/InstallScout-1.8.74.zip">Download 1.8.74 (.zip)</a> · <a href="../">InstallScout</a></p>
+    </footer>
+  </div>
+</body>
+</html>

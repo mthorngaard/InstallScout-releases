@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MSIX silent install med PowerShell: Add-AppxPackage og provisionering — InstallScout</title>
+  <meta name="description" content="Installér en MSIX- eller AppX-pakke silent med Add-AppxPackage, provisionér den med Add-AppxProvisionedPackage, håndtér framework-afhængigheder, og detektér den på pakkenavn.">
+  <link rel="canonical" href="https://mthorngaard.github.io/InstallScout-releases/docs/msix-silent-installation.html">
+  <link rel="alternate" hreflang="en" href="https://mthorngaard.github.io/InstallScout-releases/docs/msix-silent-install.html">
+  <link rel="alternate" hreflang="da" href="https://mthorngaard.github.io/InstallScout-releases/docs/msix-silent-installation.html">
+  <link rel="alternate" hreflang="x-default" href="https://mthorngaard.github.io/InstallScout-releases/docs/msix-silent-install.html">
+  <meta property="og:title" content="MSIX silent install med PowerShell: Add-AppxPackage og provisionering — InstallScout">
+  <meta property="og:description" content="Installér en MSIX- eller AppX-pakke silent med Add-AppxPackage, provisionér den med Add-AppxProvisionedPackage, håndtér framework-afhængigheder, og detektér den på pakkenavn.">
+  <meta property="og:url" content="https://mthorngaard.github.io/InstallScout-releases/docs/msix-silent-installation.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://mthorngaard.github.io/InstallScout-releases/assets/installscout.png">
+  <meta property="og:locale" content="da_DK">
+  <meta property="og:locale:alternate" content="en_US">
+  <link rel="icon" href="../assets/installscout.png">
+  <link rel="stylesheet" href="../assets/docs.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "MSIX silent install med PowerShell: Add-AppxPackage og provisionering — InstallScout",
+  "description": "Installér en MSIX- eller AppX-pakke silent med Add-AppxPackage, provisionér den med Add-AppxProvisionedPackage, håndtér framework-afhængigheder, og detektér den på pakkenavn.",
+  "inLanguage": "da",
+  "mainEntityOfPage": "https://mthorngaard.github.io/InstallScout-releases/docs/msix-silent-installation.html",
+  "isPartOf": {
+    "@type": "SoftwareApplication",
+    "@id": "https://mthorngaard.github.io/InstallScout-releases/#app",
+    "name": "InstallScout",
+    "url": "https://mthorngaard.github.io/InstallScout-releases/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Hvordan installerer jeg en MSIX silent?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Kør Add-AppxPackage -Path \"C:\\sti\\app.msix\" i PowerShell. PowerShell har ingen brugerflade, så installationen er silent."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hvordan installerer jeg en MSIX til alle brugere?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Kør Add-AppxProvisionedPackage -Online -PackagePath \"C:\\sti\\app.msix\" -SkipLicense fra en forhøjet session. Appen installeres for hver bruger ved næste login."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hvorfor fejler en MSIX med en afhængighedsfejl?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "En framework-pakke som Microsoft.WindowsAppRuntime mangler. Installér den først, eller giv den med -DependencyPath."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="../"><img src="../assets/installscout.png" width="40" height="40" alt="">InstallScout</a>
+      <nav aria-label="Dokumentation"><a href="find-silent-switche.html">Find switche</a><a href="quickstart.html">Hurtig start</a><a href="vejledning.html">Vejledning</a><a href="reference.html">Reference</a><a href="silent-switche-pr-installer.html">Pr. installer</a><a href="msix-silent-install.html" hreflang="en">English</a></nav>
+    </header>
+    <article>
+<h1>MSIX and AppX — silent-switche</h1>
+<p>En MSIX er ikke en installer-EXE, så der er ingen silent-switche. Du installerer den med PowerShell.</p>
+<p>Version <strong>1.8.74</strong>. <a href="find-silent-switche.html">Find switchene til en hvilken som helst installer</a> · <a href="silent-switche-pr-installer.html">Alle installer-typer</a>.</p>
+<h2>Silent install-kommando</h2>
+<pre><code class="language-text">Add-AppxPackage -Path &quot;{file}&quot;</code></pre>
+<p>Alternativ:</p>
+<pre><code class="language-text">Add-AppxProvisionedPackage -Online -PackagePath &quot;{file}&quot; -SkipLicense</code></pre>
+<h2>Silent afinstallation</h2>
+<pre><code class="language-text">Get-AppxPackage -Name &quot;{PackageName}&quot; | Remove-AppxPackage</code></pre>
+<p><code>{file}</code> er den citerede sti til installeren. <code>{app}</code> er den mappe, appen blev installeret i. <code>{ProductCode}</code> er MSI-produktkoden.</p>
+<h2>Switche</h2>
+<div class="table-wrap"><table><thead><tr><th>Switch</th><th>Betydning</th></tr></thead><tbody><tr><td><code>Add-AppxPackage</code></td><td>Installér pakken til den konto, der kører kommandoen.</td></tr><tr><td><code>Add-AppxProvisionedPackage</code></td><td>Provisionér pakken, så den installeres for hver bruger ved login. Kræver en forhøjet session.</td></tr><tr><td><code>-SkipLicense</code></td><td>Provisionér uden licensfil.</td></tr><tr><td><code>-DependencyPath</code></td><td>Installér framework-pakker først.</td></tr></tbody></table></div>
+<h2>Regler, der får folk til at fejle</h2>
+<ul><li><code>Add-AppxPackage</code> installerer til den konto, der kører den. Som System i Intune er det ikke den loggede bruger. Provisionér pakken, når alle brugere skal have den.</li><li>Frameworks, som pakken afhænger af, fx <code>Microsoft.WindowsAppRuntime</code>, skal allerede være på enheden eller installeres først med <code>-DependencyPath</code>. InstallScout lister dem fra pakken.</li><li>Pakken skal være signeret med et certifikat, som enheden stoler på. En usigneret eller selvsigneret pakke fejler med en tillidsfejl.</li><li>Detektionen bruger pakkenavnet, ikke en produktkode. <code>Get-AppxPackage -Name</code> returnerer den installerede pakke og dens version.</li></ul>
+<h2>Sådan ser du, at installeren er MSIX</h2>
+<p>Filen ender på <code>.msix</code>, <code>.appx</code>, <code>.msixbundle</code> eller <code>.appxbundle</code>. Det er zip-arkiver med en <code>AppxManifest.xml</code>. De køres ikke som en EXE.</p>
+<h2>Brug det i Intune</h2>
+<p>InstallScout registrerer en MSIX på pakkenavn og, når den er kendt, version. Try in Sandbox kører Add-AppxPackage-linjen i Windows Sandbox, så du ser fejlteksten, før du uploader.</p>
+<h2>Lad InstallScout finde den</h2>
+<p>Træk filen ind i InstallScout og klik <strong>Analysér</strong>. Programmet læser filen, navngiver motoren og skriver denne kommando med stien udfyldt. Installeren bliver ikke kørt. Det samme opslag fra en prompt:</p>
+<pre><code class="language-text">.\InstallScoutPortable.exe --cli &quot;C:\installers\setup.exe&quot;</code></pre>
+<p>Derefter bygger <strong>Intune-pakke</strong> en PSADT <code>.intunewin</code>, og <strong>Upload til Intune</strong> sender Win32-appen.</p>
+<h2>Ofte stillede spørgsmål</h2>
+<h3>Hvordan installerer jeg en MSIX silent?</h3>
+<p>Kør <code>Add-AppxPackage -Path &quot;C:\sti\app.msix&quot;</code> i PowerShell. PowerShell har ingen brugerflade, så installationen er silent.</p>
+<h3>Hvordan installerer jeg en MSIX til alle brugere?</h3>
+<p>Kør <code>Add-AppxProvisionedPackage -Online -PackagePath &quot;C:\sti\app.msix&quot; -SkipLicense</code> fra en forhøjet session. Appen installeres for hver bruger ved næste login.</p>
+<h3>Hvorfor fejler en MSIX med en afhængighedsfejl?</h3>
+<p>En framework-pakke som <code>Microsoft.WindowsAppRuntime</code> mangler. Installér den først, eller giv den med <code>-DependencyPath</code>.</p>
+<hr>
+<p><a href="msi-silent-installation.html">MSI</a> · <a href="inno-setup-silent-installation.html">Inno Setup</a> · <a href="nsis-silent-installation.html">NSIS</a> · <a href="installshield-silent-installation.html">InstallShield</a> · <a href="wix-burn-silent-installation.html">WiX Burn</a> · <a href="advanced-installer-silent-installation.html">Advanced Installer</a></p>
+    </article>
+    <footer>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.74/InstallScout-1.8.74.zip">Hent 1.8.74 (.zip)</a> · <a href="../">InstallScout</a></p>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>InstallShield silent install: /s /v&quot;/qn&quot; og setup.iss — InstallScout</title>
+  <meta name="description" content="Silent install til InstallShield: /s /v&quot;/qn&quot; til setups med en MSI, en optaget setup.iss til InstallScript, log og hvorfor citationstegnene er vigtige.">
+  <link rel="canonical" href="https://mthorngaard.github.io/InstallScout-releases/docs/installshield-silent-installation.html">
+  <link rel="alternate" hreflang="en" href="https://mthorngaard.github.io/InstallScout-releases/docs/installshield-silent-install.html">
+  <link rel="alternate" hreflang="da" href="https://mthorngaard.github.io/InstallScout-releases/docs/installshield-silent-installation.html">
+  <link rel="alternate" hreflang="x-default" href="https://mthorngaard.github.io/InstallScout-releases/docs/installshield-silent-install.html">
+  <meta property="og:title" content="InstallShield silent install: /s /v&quot;/qn&quot; og setup.iss — InstallScout">
+  <meta property="og:description" content="Silent install til InstallShield: /s /v&quot;/qn&quot; til setups med en MSI, en optaget setup.iss til InstallScript, log og hvorfor citationstegnene er vigtige.">
+  <meta property="og:url" content="https://mthorngaard.github.io/InstallScout-releases/docs/installshield-silent-installation.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://mthorngaard.github.io/InstallScout-releases/assets/installscout.png">
+  <meta property="og:locale" content="da_DK">
+  <meta property="og:locale:alternate" content="en_US">
+  <link rel="icon" href="../assets/installscout.png">
+  <link rel="stylesheet" href="../assets/docs.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "InstallShield silent install: /s /v\"/qn\" og setup.iss — InstallScout",
+  "description": "Silent install til InstallShield: /s /v\"/qn\" til setups med en MSI, en optaget setup.iss til InstallScript, log og hvorfor citationstegnene er vigtige.",
+  "inLanguage": "da",
+  "mainEntityOfPage": "https://mthorngaard.github.io/InstallScout-releases/docs/installshield-silent-installation.html",
+  "isPartOf": {
+    "@type": "SoftwareApplication",
+    "@id": "https://mthorngaard.github.io/InstallScout-releases/#app",
+    "name": "InstallScout",
+    "url": "https://mthorngaard.github.io/InstallScout-releases/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Hvad er silent-switchen til InstallShield?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Brug \"setup.exe\" /s /v\"/qn\". /s gør wrapperen silent, og /v\"/qn\" giver /qn videre til MSI'en indeni."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hvordan laver jeg en setup.iss til InstallShield?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Kør setup.exe /r, og gå guiden igennem. Det optager setup.iss. Installér derefter silent med setup.exe /s /f1\"C:\\setup.iss\"."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hvorfor skal der citationstegn efter /v?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Wrapperen læser sine egne switche. Alt inden i /v\"...\" gives uændret videre til msiexec."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="../"><img src="../assets/installscout.png" width="40" height="40" alt="">InstallScout</a>
+      <nav aria-label="Dokumentation"><a href="find-silent-switche.html">Find switche</a><a href="quickstart.html">Hurtig start</a><a href="vejledning.html">Vejledning</a><a href="reference.html">Reference</a><a href="silent-switche-pr-installer.html">Pr. installer</a><a href="installshield-silent-install.html" hreflang="en">English</a></nav>
+    </header>
+    <article>
+<h1>InstallShield — silent-switche</h1>
+<p>InstallShield findes i to former. Et setup, der pakker en MSI ind, tager <code>/s /v&quot;/qn&quot;</code>. Et rent InstallScript-setup kræver en optaget svarfil.</p>
+<p>Version <strong>1.8.74</strong>. <a href="find-silent-switche.html">Find switchene til en hvilken som helst installer</a> · <a href="silent-switche-pr-installer.html">Alle installer-typer</a>.</p>
+<h2>Silent install-kommando</h2>
+<pre><code class="language-text">&quot;{file}&quot; /s /v&quot;/qn&quot;</code></pre>
+<p>Alternativ:</p>
+<pre><code class="language-text">&quot;{file}&quot; /s /sms</code></pre>
+<p><code>{file}</code> er den citerede sti til installeren. <code>{app}</code> er den mappe, appen blev installeret i. <code>{ProductCode}</code> er MSI-produktkoden.</p>
+<h2>Switche</h2>
+<div class="table-wrap"><table><thead><tr><th>Switch</th><th>Betydning</th></tr></thead><tbody><tr><td><code>/s</code></td><td>Silent setup.</td></tr><tr><td><code>/v&quot;/qn&quot;</code></td><td>Giv <code>/qn</code> videre til MSI&#x27;en indeni. Citationstegnene er en del af switchen.</td></tr><tr><td><code>/v&quot;/qn REBOOT=ReallySuppress&quot;</code></td><td>Giv flere MSI-argumenter videre i én citeret streng.</td></tr><tr><td><code>/f2&quot;%TEMP%\install.log&quot;</code></td><td>Skriv setup-loggen til en fil.</td></tr><tr><td><code>/sms</code></td><td>Hold setup-processen kørende, til installationen er færdig.</td></tr><tr><td><code>/r</code></td><td>Optag en svarfil (<code>setup.iss</code>) til et InstallScript-setup.</td></tr><tr><td><code>/s /f1&quot;C:\setup.iss&quot;</code></td><td>Afspil en optaget svarfil silent.</td></tr></tbody></table></div>
+<h2>Regler, der får folk til at fejle</h2>
+<ul><li><code>/qn</code> gives videre til MSI&#x27;en gennem <code>/v&quot;...&quot;</code>. Uden citationstegn læser wrapperen argumenterne, og ikke MSI&#x27;en.</li><li>Et ældre InstallScript-setup kan kræve en optaget <code>setup.iss</code>: kør <code>setup.exe /r</code> én gang, og derefter <code>setup.exe /s /f1&quot;C:\setup.iss&quot;</code>.</li><li>Læg alle MSI-argumenter i én <code>/v&quot;...&quot;</code>-streng. Citér værdier med mellemrum med et ekstra par citationstegn.</li><li>Når setup udpakker en MSI, kan du ofte installere den MSI direkte med <code>msiexec</code>. Det er den mere pålidelige linje, når den virker.</li></ul>
+<h2>Sådan ser du, at installeren er InstallShield</h2>
+<p>Filen indeholder teksten <code>InstallShield</code>. Et setup med en MSI indeni accepterer <code>/v</code>. Et rent InstallScript-setup har ingen MSI.</p>
+<h2>Brug det i Intune</h2>
+<p>InstallShield har den laveste hitrate ved første forsøg blandt de almindelige motorer. InstallScout sætter den til omkring 60% for silent installation. Behandl et resultat under omkring 40% sikkerhed som et udkast, og test det i Windows Sandbox eller en VM, før du uploader.</p>
+<h2>Lad InstallScout finde den</h2>
+<p>Træk filen ind i InstallScout og klik <strong>Analysér</strong>. Programmet læser filen, navngiver motoren og skriver denne kommando med stien udfyldt. Installeren bliver ikke kørt. Det samme opslag fra en prompt:</p>
+<pre><code class="language-text">.\InstallScoutPortable.exe --cli &quot;C:\installers\setup.exe&quot;</code></pre>
+<p>Derefter bygger <strong>Intune-pakke</strong> en PSADT <code>.intunewin</code>, og <strong>Upload til Intune</strong> sender Win32-appen.</p>
+<h2>Ofte stillede spørgsmål</h2>
+<h3>Hvad er silent-switchen til InstallShield?</h3>
+<p>Brug <code>&quot;setup.exe&quot; /s /v&quot;/qn&quot;</code>. <code>/s</code> gør wrapperen silent, og <code>/v&quot;/qn&quot;</code> giver <code>/qn</code> videre til MSI&#x27;en indeni.</p>
+<h3>Hvordan laver jeg en setup.iss til InstallShield?</h3>
+<p>Kør <code>setup.exe /r</code>, og gå guiden igennem. Det optager <code>setup.iss</code>. Installér derefter silent med <code>setup.exe /s /f1&quot;C:\setup.iss&quot;</code>.</p>
+<h3>Hvorfor skal der citationstegn efter /v?</h3>
+<p>Wrapperen læser sine egne switche. Alt inden i <code>/v&quot;...&quot;</code> gives uændret videre til <code>msiexec</code>.</p>
+<hr>
+<p><a href="msi-silent-installation.html">MSI</a> · <a href="inno-setup-silent-installation.html">Inno Setup</a> · <a href="nsis-silent-installation.html">NSIS</a> · <a href="wix-burn-silent-installation.html">WiX Burn</a> · <a href="advanced-installer-silent-installation.html">Advanced Installer</a> · <a href="msix-silent-installation.html">MSIX</a></p>
+    </article>
+    <footer>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.74/InstallScout-1.8.74.zip">Hent 1.8.74 (.zip)</a> · <a href="../">InstallScout</a></p>
+    </footer>
+  </div>
+</body>
+</html>

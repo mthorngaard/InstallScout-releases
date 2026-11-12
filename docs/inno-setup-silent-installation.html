@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inno Setup silent install: /VERYSILENT, /SUPPRESSMSGBOXES, /NORESTART — InstallScout</title>
+  <meta name="description" content="Silent install-kommandoen til Inno Setup: /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-, forskellen på /SILENT, hvorfor /S ikke virker, log, mappe og afinstallation.">
+  <link rel="canonical" href="https://mthorngaard.github.io/InstallScout-releases/docs/inno-setup-silent-installation.html">
+  <link rel="alternate" hreflang="en" href="https://mthorngaard.github.io/InstallScout-releases/docs/inno-setup-silent-install.html">
+  <link rel="alternate" hreflang="da" href="https://mthorngaard.github.io/InstallScout-releases/docs/inno-setup-silent-installation.html">
+  <link rel="alternate" hreflang="x-default" href="https://mthorngaard.github.io/InstallScout-releases/docs/inno-setup-silent-install.html">
+  <meta property="og:title" content="Inno Setup silent install: /VERYSILENT, /SUPPRESSMSGBOXES, /NORESTART — InstallScout">
+  <meta property="og:description" content="Silent install-kommandoen til Inno Setup: /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-, forskellen på /SILENT, hvorfor /S ikke virker, log, mappe og afinstallation.">
+  <meta property="og:url" content="https://mthorngaard.github.io/InstallScout-releases/docs/inno-setup-silent-installation.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://mthorngaard.github.io/InstallScout-releases/assets/installscout.png">
+  <meta property="og:locale" content="da_DK">
+  <meta property="og:locale:alternate" content="en_US">
+  <link rel="icon" href="../assets/installscout.png">
+  <link rel="stylesheet" href="../assets/docs.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Inno Setup silent install: /VERYSILENT, /SUPPRESSMSGBOXES, /NORESTART — InstallScout",
+  "description": "Silent install-kommandoen til Inno Setup: /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-, forskellen på /SILENT, hvorfor /S ikke virker, log, mappe og afinstallation.",
+  "inLanguage": "da",
+  "mainEntityOfPage": "https://mthorngaard.github.io/InstallScout-releases/docs/inno-setup-silent-installation.html",
+  "isPartOf": {
+    "@type": "SoftwareApplication",
+    "@id": "https://mthorngaard.github.io/InstallScout-releases/#app",
+    "name": "InstallScout",
+    "url": "https://mthorngaard.github.io/InstallScout-releases/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Hvad er silent-switchen til Inno Setup?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Brug \"setup.exe\" /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-. /VERYSILENT skjuler guiden og statusvinduet."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hvorfor virker /S ikke på en Inno Setup-installer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "/S hører til NSIS. Inno Setup ignorerer den, så guiden åbner. Brug /VERYSILENT eller /SILENT."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hvad er forskellen på /SILENT og /VERYSILENT?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "/SILENT viser et statusvindue. /VERYSILENT viser ingenting. Brug /VERYSILENT til Intune og andre uovervågede installationer."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hvordan afinstallerer jeg en Inno Setup-app silent?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Kør \"C:\\Program Files\\App\\unins000.exe\" /VERYSILENT /NORESTART."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="../"><img src="../assets/installscout.png" width="40" height="40" alt="">InstallScout</a>
+      <nav aria-label="Dokumentation"><a href="find-silent-switche.html">Find switche</a><a href="quickstart.html">Hurtig start</a><a href="vejledning.html">Vejledning</a><a href="reference.html">Reference</a><a href="silent-switche-pr-installer.html">Pr. installer</a><a href="inno-setup-silent-install.html" hreflang="en">English</a></nav>
+    </header>
+    <article>
+<h1>Inno Setup — silent-switche</h1>
+<p>Inno Setup har sine egne switche. De er ikke MSI-switchene og ikke NSIS <code>/S</code>.</p>
+<p>Version <strong>1.8.74</strong>. <a href="find-silent-switche.html">Find switchene til en hvilken som helst installer</a> · <a href="silent-switche-pr-installer.html">Alle installer-typer</a>.</p>
+<h2>Silent install-kommando</h2>
+<pre><code class="language-text">&quot;{file}&quot; /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-</code></pre>
+<p>Alternativ:</p>
+<pre><code class="language-text">&quot;{file}&quot; /SILENT /NORESTART</code></pre>
+<h2>Silent afinstallation</h2>
+<pre><code class="language-text">&quot;{app}\unins000.exe&quot; /VERYSILENT /NORESTART</code></pre>
+<p><code>{file}</code> er den citerede sti til installeren. <code>{app}</code> er den mappe, appen blev installeret i. <code>{ProductCode}</code> er MSI-produktkoden.</p>
+<h2>Switche</h2>
+<div class="table-wrap"><table><thead><tr><th>Switch</th><th>Betydning</th></tr></thead><tbody><tr><td><code>/VERYSILENT</code></td><td>Ingen guide og intet statusvindue.</td></tr><tr><td><code>/SILENT</code></td><td>Ingen guide, men et statusvindue vises.</td></tr><tr><td><code>/SUPPRESSMSGBOXES</code></td><td>Besvar beskedbokse med standardvalget.</td></tr><tr><td><code>/NORESTART</code></td><td>Genstart ikke, selv hvis setup beder om det.</td></tr><tr><td><code>/SP-</code></td><td>Spring spørgsmålet &quot;This will install ... Do you wish to continue?&quot; over.</td></tr><tr><td><code>/LOG=&quot;%TEMP%\install.log&quot;</code></td><td>Skriv en logfil.</td></tr><tr><td><code>/DIR=&quot;C:\Program Files\App&quot;</code></td><td>Angiv installationsmappen.</td></tr><tr><td><code>/MERGETASKS=!desktopicon</code></td><td>Ændr opgaver. Et udråbstegn slår en opgave fra.</td></tr><tr><td><code>/NORESTARTAPPLICATIONS</code></td><td>Genstart ikke programmer, der blev lukket.</td></tr></tbody></table></div>
+<h2>Regler, der får folk til at fejle</h2>
+<ul><li><code>/S</code> er ikke silent-switchen til Inno Setup. Brug <code>/VERYSILENT</code>.</li><li><code>/NORESTART</code> er Innos egen switch, så den bliver i linjen.</li><li><code>/SP-</code> fjerner den første bekræftelse. Uden den kan en silent installation stadig stoppe ved det spørgsmål.</li><li>Switche med en værdi skal have citationstegn om værdien, når den har et mellemrum: <code>/DIR=&quot;C:\Program Files\App&quot;</code>.</li><li>Afinstalleren ligger i installationsmappen, normalt som <code>unins000.exe</code>. En anden afinstaller hedder <code>unins001.exe</code>.</li></ul>
+<h2>Sådan ser du, at installeren er Inno Setup</h2>
+<p>Setup indeholder teksten <code>Inno Setup</code>, og afinstalleren hedder <code>unins000.exe</code>.</p>
+<h2>Brug det i Intune</h2>
+<p>En Inno-app er som regel en installation til maskinen og kører som System. Når den kun installerer til den aktuelle bruger, skal den køre som User, og et detektionsscript, der kører som System, læser en anden kontos registry. InstallScout vælger System eller User ud fra motoren og kommandoen, og detektionen matcher produktnavn, udgiver og version.</p>
+<h2>Lad InstallScout finde den</h2>
+<p>Træk filen ind i InstallScout og klik <strong>Analysér</strong>. Programmet læser filen, navngiver motoren og skriver denne kommando med stien udfyldt. Installeren bliver ikke kørt. Det samme opslag fra en prompt:</p>
+<pre><code class="language-text">.\InstallScoutPortable.exe --cli &quot;C:\installers\setup.exe&quot;</code></pre>
+<p>Derefter bygger <strong>Intune-pakke</strong> en PSADT <code>.intunewin</code>, og <strong>Upload til Intune</strong> sender Win32-appen.</p>
+<h2>Ofte stillede spørgsmål</h2>
+<h3>Hvad er silent-switchen til Inno Setup?</h3>
+<p>Brug <code>&quot;setup.exe&quot; /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-</code>. <code>/VERYSILENT</code> skjuler guiden og statusvinduet.</p>
+<h3>Hvorfor virker /S ikke på en Inno Setup-installer?</h3>
+<p><code>/S</code> hører til NSIS. Inno Setup ignorerer den, så guiden åbner. Brug <code>/VERYSILENT</code> eller <code>/SILENT</code>.</p>
+<h3>Hvad er forskellen på /SILENT og /VERYSILENT?</h3>
+<p><code>/SILENT</code> viser et statusvindue. <code>/VERYSILENT</code> viser ingenting. Brug <code>/VERYSILENT</code> til Intune og andre uovervågede installationer.</p>
+<h3>Hvordan afinstallerer jeg en Inno Setup-app silent?</h3>
+<p>Kør <code>&quot;C:\Program Files\App\unins000.exe&quot; /VERYSILENT /NORESTART</code>.</p>
+<hr>
+<p><a href="msi-silent-installation.html">MSI</a> · <a href="nsis-silent-installation.html">NSIS</a> · <a href="installshield-silent-installation.html">InstallShield</a> · <a href="wix-burn-silent-installation.html">WiX Burn</a> · <a href="advanced-installer-silent-installation.html">Advanced Installer</a> · <a href="msix-silent-installation.html">MSIX</a></p>
+    </article>
+    <footer>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.74/InstallScout-1.8.74.zip">Hent 1.8.74 (.zip)</a> · <a href="../">InstallScout</a></p>
+    </footer>
+  </div>
+</body>
+</html>

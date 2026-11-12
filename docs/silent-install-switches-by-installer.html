@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Silent install switches by installer type — InstallScout</title>
+  <meta name="description" content="Silent install switches for MSI, Inno Setup, NSIS, InstallShield, WiX Burn, Advanced Installer, and MSIX, with the uninstall command and the rules that make each one fail.">
+  <link rel="canonical" href="https://mthorngaard.github.io/InstallScout-releases/docs/silent-install-switches-by-installer.html">
+  <link rel="alternate" hreflang="en" href="https://mthorngaard.github.io/InstallScout-releases/docs/silent-install-switches-by-installer.html">
+  <link rel="alternate" hreflang="da" href="https://mthorngaard.github.io/InstallScout-releases/docs/silent-switche-pr-installer.html">
+  <link rel="alternate" hreflang="x-default" href="https://mthorngaard.github.io/InstallScout-releases/docs/silent-install-switches-by-installer.html">
+  <meta property="og:title" content="Silent install switches by installer type — InstallScout">
+  <meta property="og:description" content="Silent install switches for MSI, Inno Setup, NSIS, InstallShield, WiX Burn, Advanced Installer, and MSIX, with the uninstall command and the rules that make each one fail.">
+  <meta property="og:url" content="https://mthorngaard.github.io/InstallScout-releases/docs/silent-install-switches-by-installer.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://mthorngaard.github.io/InstallScout-releases/assets/installscout.png">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="da_DK">
+  <link rel="icon" href="../assets/installscout.png">
+  <link rel="stylesheet" href="../assets/docs.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Silent install switches by installer type — InstallScout",
+  "description": "Silent install switches for MSI, Inno Setup, NSIS, InstallShield, WiX Burn, Advanced Installer, and MSIX, with the uninstall command and the rules that make each one fail.",
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://mthorngaard.github.io/InstallScout-releases/docs/silent-install-switches-by-installer.html",
+  "isPartOf": {
+    "@type": "SoftwareApplication",
+    "@id": "https://mthorngaard.github.io/InstallScout-releases/#app",
+    "name": "InstallScout",
+    "url": "https://mthorngaard.github.io/InstallScout-releases/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is there one silent switch that works for every EXE?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. /S, /silent, /quiet, /VERYSILENT, and /qn belong to different engines. The wrong one is ignored or ends with an error. Find the engine first."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I find out which installer type an EXE is?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Search the file for strings such as Inno Setup, Nullsoft, InstallShield, or WiX. InstallScout does this automatically, names the engine, and writes the silent command without running the installer."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if setup.exe /? shows nothing?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Many setup programs print no help text. The engine still has a known silent form. Identify the engine and use its switch."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="../"><img src="../assets/installscout.png" width="40" height="40" alt="">InstallScout</a>
+      <nav aria-label="Documentation"><a href="find-silent-switches.html">Find switches</a><a href="quickstart-en.html">Quick start</a><a href="guide.html">Guide</a><a href="reference-en.html">Reference</a><a href="silent-install-switches-by-installer.html" aria-current="page">By installer</a><a href="silent-switche-pr-installer.html" hreflang="da">Dansk</a></nav>
+    </header>
+    <article>
+<h1>Silent install switches by installer type</h1>
+<p>There is no switch that silences every EXE. The right argument depends on the engine that built the installer. Find the engine first, then use its switch. <code>{file}</code> below is the quoted path of the installer.</p>
+<p>Version <strong>1.8.74</strong>. <a href="find-silent-switches.html">Find the switches for any installer</a>.</p>
+<h2>The common engines</h2>
+<div class="table-wrap"><table><thead><tr><th>Installer</th><th>Silent install</th><th>Details</th></tr></thead><tbody><tr><td>MSI</td><td><code>msiexec /i &quot;{file}&quot; /qn</code></td><td><a href="msi-silent-install.html">MSI (Windows Installer)</a></td></tr><tr><td>Inno Setup</td><td><code>&quot;{file}&quot; /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-</code></td><td><a href="inno-setup-silent-install.html">Inno Setup</a></td></tr><tr><td>NSIS</td><td><code>&quot;{file}&quot; /S</code></td><td><a href="nsis-silent-install.html">NSIS (Nullsoft Scriptable Install System)</a></td></tr><tr><td>InstallShield</td><td><code>&quot;{file}&quot; /s /v&quot;/qn&quot;</code></td><td><a href="installshield-silent-install.html">InstallShield</a></td></tr><tr><td>WiX Burn</td><td><code>&quot;{file}&quot; /quiet</code></td><td><a href="wix-burn-silent-install.html">WiX Burn bundle</a></td></tr><tr><td>Advanced Installer</td><td><code>&quot;{file}&quot; /exenoui /qn</code></td><td><a href="advanced-installer-silent-install.html">Advanced Installer</a></td></tr><tr><td>MSIX</td><td><code>Add-AppxPackage -Path &quot;{file}&quot;</code></td><td><a href="msix-silent-install.html">MSIX and AppX</a></td></tr></tbody></table></div>
+<h2>Other engines</h2>
+<div class="table-wrap"><table><thead><tr><th>Installer</th><th>Silent install</th></tr></thead><tbody><tr><td>Wacom Tablet Driver</td><td><code>&quot;{file}&quot; /s</code></td></tr><tr><td>Dell Display and Peripheral Manager</td><td><code>&quot;{file}&quot; /Silent</code></td></tr><tr><td>BitRock InstallBuilder</td><td><code>&quot;{file}&quot; --mode unattended --unattendedmodeui none</code></td></tr><tr><td>install4j</td><td><code>&quot;{file}&quot; -q</code></td></tr><tr><td>InstallAware</td><td><code>&quot;{file}&quot; /s</code></td></tr><tr><td>7-Zip SFX</td><td><code>&quot;{file}&quot; -y</code></td></tr><tr><td>Qt Installer Framework</td><td><code>&quot;{file}&quot; --silent --accept-licenses</code></td></tr><tr><td>WinRAR SFX</td><td><code>&quot;{file}&quot; /S</code></td></tr><tr><td>Squirrel</td><td><code>&quot;{file}&quot; --silent</code></td></tr><tr><td>IExpress</td><td><code>&quot;{file}&quot; /Q</code></td></tr><tr><td>Wise Installer</td><td><code>&quot;{file}&quot; /s</code></td></tr></tbody></table></div>
+<h2>How to find out which engine a file uses</h2>
+<p>Open the file properties and read Details. Look at the file in a hex viewer for strings such as <code>Inno Setup</code>, <code>Nullsoft</code>, or <code>InstallShield</code>. An <code>.msi</code> is always Windows Installer. InstallScout does this for you: it matches markers in the file, section names in the PE header, and files next to the installer, and then shows the engine with a confidence.</p>
+<h2>Frequently asked questions</h2>
+<h3>Is there one silent switch that works for every EXE?</h3>
+<p>No. <code>/S</code>, <code>/silent</code>, <code>/quiet</code>, <code>/VERYSILENT</code>, and <code>/qn</code> belong to different engines. The wrong one is ignored or ends with an error. Find the engine first.</p>
+<h3>How do I find out which installer type an EXE is?</h3>
+<p>Search the file for strings such as Inno Setup, Nullsoft, InstallShield, or WiX. InstallScout does this automatically, names the engine, and writes the silent command without running the installer.</p>
+<h3>What if setup.exe /? shows nothing?</h3>
+<p>Many setup programs print no help text. The engine still has a known silent form. Identify the engine and use its switch.</p>
+    </article>
+    <footer>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.74/InstallScout-1.8.74.zip">Download 1.8.74 (.zip)</a> · <a href="../">InstallScout</a></p>
+    </footer>
+  </div>
+</body>
+</html>

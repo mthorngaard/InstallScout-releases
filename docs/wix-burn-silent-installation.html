@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WiX Burn silent install: /quiet, /passive, /uninstall — InstallScout</title>
+  <meta name="description" content="Silent install og afinstallation af en WiX Burn-bundle: /quiet, /passive, /norestart, /log og hvorfor /install ikke er nødvendig.">
+  <link rel="canonical" href="https://mthorngaard.github.io/InstallScout-releases/docs/wix-burn-silent-installation.html">
+  <link rel="alternate" hreflang="en" href="https://mthorngaard.github.io/InstallScout-releases/docs/wix-burn-silent-install.html">
+  <link rel="alternate" hreflang="da" href="https://mthorngaard.github.io/InstallScout-releases/docs/wix-burn-silent-installation.html">
+  <link rel="alternate" hreflang="x-default" href="https://mthorngaard.github.io/InstallScout-releases/docs/wix-burn-silent-install.html">
+  <meta property="og:title" content="WiX Burn silent install: /quiet, /passive, /uninstall — InstallScout">
+  <meta property="og:description" content="Silent install og afinstallation af en WiX Burn-bundle: /quiet, /passive, /norestart, /log og hvorfor /install ikke er nødvendig.">
+  <meta property="og:url" content="https://mthorngaard.github.io/InstallScout-releases/docs/wix-burn-silent-installation.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://mthorngaard.github.io/InstallScout-releases/assets/installscout.png">
+  <meta property="og:locale" content="da_DK">
+  <meta property="og:locale:alternate" content="en_US">
+  <link rel="icon" href="../assets/installscout.png">
+  <link rel="stylesheet" href="../assets/docs.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "WiX Burn silent install: /quiet, /passive, /uninstall — InstallScout",
+  "description": "Silent install og afinstallation af en WiX Burn-bundle: /quiet, /passive, /norestart, /log og hvorfor /install ikke er nødvendig.",
+  "inLanguage": "da",
+  "mainEntityOfPage": "https://mthorngaard.github.io/InstallScout-releases/docs/wix-burn-silent-installation.html",
+  "isPartOf": {
+    "@type": "SoftwareApplication",
+    "@id": "https://mthorngaard.github.io/InstallScout-releases/#app",
+    "name": "InstallScout",
+    "url": "https://mthorngaard.github.io/InstallScout-releases/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Hvad er silent-switchen til en WiX Burn-bundle?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Brug \"setup.exe\" /quiet. Tilføj /norestart for at forhindre en genstart."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hvad er forskellen på /quiet og /passive?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "/quiet viser ingenting. /passive viser fremdriften og ingen spørgsmål."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hvordan afinstallerer jeg en WiX Burn-bundle silent?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Kør bundlen med /uninstall /quiet."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="../"><img src="../assets/installscout.png" width="40" height="40" alt="">InstallScout</a>
+      <nav aria-label="Dokumentation"><a href="find-silent-switche.html">Find switche</a><a href="quickstart.html">Hurtig start</a><a href="vejledning.html">Vejledning</a><a href="reference.html">Reference</a><a href="silent-switche-pr-installer.html">Pr. installer</a><a href="wix-burn-silent-install.html" hreflang="en">English</a></nav>
+    </header>
+    <article>
+<h1>WiX Burn bundle — silent-switche</h1>
+<p>En WiX Burn-bundle er en EXE, der kæder flere pakker sammen. Den tager de samme få argumenter hver gang.</p>
+<p>Version <strong>1.8.74</strong>. <a href="find-silent-switche.html">Find switchene til en hvilken som helst installer</a> · <a href="silent-switche-pr-installer.html">Alle installer-typer</a>.</p>
+<h2>Silent install-kommando</h2>
+<pre><code class="language-text">&quot;{file}&quot; /quiet</code></pre>
+<p>Alternativ:</p>
+<pre><code class="language-text">&quot;{file}&quot; /passive</code></pre>
+<h2>Silent afinstallation</h2>
+<pre><code class="language-text">&quot;{file}&quot; /uninstall /quiet</code></pre>
+<p><code>{file}</code> er den citerede sti til installeren. <code>{app}</code> er den mappe, appen blev installeret i. <code>{ProductCode}</code> er MSI-produktkoden.</p>
+<h2>Switche</h2>
+<div class="table-wrap"><table><thead><tr><th>Switch</th><th>Betydning</th></tr></thead><tbody><tr><td><code>/quiet</code></td><td>Ingen brugerflade.</td></tr><tr><td><code>/passive</code></td><td>Fremdrift vises, og der er ingen spørgsmål.</td></tr><tr><td><code>/norestart</code></td><td>Genstart ikke.</td></tr><tr><td><code>/log &quot;%TEMP%\install.log&quot;</code></td><td>Skriv en logfil.</td></tr><tr><td><code>/uninstall</code></td><td>Fjern bundlen.</td></tr><tr><td><code>/install</code></td><td>Installér. Det er standard, så den er ikke nødvendig.</td></tr></tbody></table></div>
+<h2>Regler, der får folk til at fejle</h2>
+<ul><li><code>/quiet</code> er silent-switchen. <code>/passive</code> viser fremdrift og ingen spørgsmål.</li><li><code>/install</code> er allerede standard, så den er udeladt af linjen.</li><li>Tilføj <code>/norestart</code>, når bundlen ikke må genstarte maskinen. Exit-kode <code>3010</code> melder en afventende genstart.</li><li>Afinstallér ved at køre den samme bundle med <code>/uninstall /quiet</code>. Bundlen skal være tilgængelig på den sti eller cachet af Windows.</li></ul>
+<h2>Sådan ser du, at installeren er WiX Burn</h2>
+<p>En Burn-bundle er en EXE bygget med WiX-værktøjet, som kæder pakker sammen, fx VC++-runtimes og den primære MSI.</p>
+<h2>Brug det i Intune</h2>
+<p>Pak bundlen som installationsfil, og brug <code>/uninstall /quiet</code> som afinstallationslinje. Detektionen læser bundlens post under afinstallationsnøglen og sammenligner versionen.</p>
+<h2>Lad InstallScout finde den</h2>
+<p>Træk filen ind i InstallScout og klik <strong>Analysér</strong>. Programmet læser filen, navngiver motoren og skriver denne kommando med stien udfyldt. Installeren bliver ikke kørt. Det samme opslag fra en prompt:</p>
+<pre><code class="language-text">.\InstallScoutPortable.exe --cli &quot;C:\installers\setup.exe&quot;</code></pre>
+<p>Derefter bygger <strong>Intune-pakke</strong> en PSADT <code>.intunewin</code>, og <strong>Upload til Intune</strong> sender Win32-appen.</p>
+<h2>Ofte stillede spørgsmål</h2>
+<h3>Hvad er silent-switchen til en WiX Burn-bundle?</h3>
+<p>Brug <code>&quot;setup.exe&quot; /quiet</code>. Tilføj <code>/norestart</code> for at forhindre en genstart.</p>
+<h3>Hvad er forskellen på /quiet og /passive?</h3>
+<p><code>/quiet</code> viser ingenting. <code>/passive</code> viser fremdriften og ingen spørgsmål.</p>
+<h3>Hvordan afinstallerer jeg en WiX Burn-bundle silent?</h3>
+<p>Kør bundlen med <code>/uninstall /quiet</code>.</p>
+<hr>
+<p><a href="msi-silent-installation.html">MSI</a> · <a href="inno-setup-silent-installation.html">Inno Setup</a> · <a href="nsis-silent-installation.html">NSIS</a> · <a href="installshield-silent-installation.html">InstallShield</a> · <a href="advanced-installer-silent-installation.html">Advanced Installer</a> · <a href="msix-silent-installation.html">MSIX</a></p>
+    </article>
+    <footer>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.74/InstallScout-1.8.74.zip">Hent 1.8.74 (.zip)</a> · <a href="../">InstallScout</a></p>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MSI silent install: msiexec /qn, log og exit-koder — InstallScout</title>
+  <meta name="description" content="Silent install og afinstallation af en MSI med msiexec: /qn, /qb, /norestart, log, ALLUSERS, transforms og exit-koderne 0, 1603, 1618, 1641 og 3010.">
+  <link rel="canonical" href="https://mthorngaard.github.io/InstallScout-releases/docs/msi-silent-installation.html">
+  <link rel="alternate" hreflang="en" href="https://mthorngaard.github.io/InstallScout-releases/docs/msi-silent-install.html">
+  <link rel="alternate" hreflang="da" href="https://mthorngaard.github.io/InstallScout-releases/docs/msi-silent-installation.html">
+  <link rel="alternate" hreflang="x-default" href="https://mthorngaard.github.io/InstallScout-releases/docs/msi-silent-install.html">
+  <meta property="og:title" content="MSI silent install: msiexec /qn, log og exit-koder — InstallScout">
+  <meta property="og:description" content="Silent install og afinstallation af en MSI med msiexec: /qn, /qb, /norestart, log, ALLUSERS, transforms og exit-koderne 0, 1603, 1618, 1641 og 3010.">
+  <meta property="og:url" content="https://mthorngaard.github.io/InstallScout-releases/docs/msi-silent-installation.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://mthorngaard.github.io/InstallScout-releases/assets/installscout.png">
+  <meta property="og:locale" content="da_DK">
+  <meta property="og:locale:alternate" content="en_US">
+  <link rel="icon" href="../assets/installscout.png">
+  <link rel="stylesheet" href="../assets/docs.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "MSI silent install: msiexec /qn, log og exit-koder — InstallScout",
+  "description": "Silent install og afinstallation af en MSI med msiexec: /qn, /qb, /norestart, log, ALLUSERS, transforms og exit-koderne 0, 1603, 1618, 1641 og 3010.",
+  "inLanguage": "da",
+  "mainEntityOfPage": "https://mthorngaard.github.io/InstallScout-releases/docs/msi-silent-installation.html",
+  "isPartOf": {
+    "@type": "SoftwareApplication",
+    "@id": "https://mthorngaard.github.io/InstallScout-releases/#app",
+    "name": "InstallScout",
+    "url": "https://mthorngaard.github.io/InstallScout-releases/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Hvordan installerer jeg en MSI silent?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Kør msiexec /i \"C:\\sti\\app.msi\" /qn /norestart. /qn fjerner brugerfladen, og /norestart forhindrer en genstart."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hvordan afinstallerer jeg en MSI silent?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Kør msiexec /x {ProductCode} /qn /norestart. Produktkoden ligger i pakken, og et installeret produkt har den som navn på sin nøgle under HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hvad betyder MSI exit-kode 3010?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Installationen lykkedes, og en genstart afventer. Intune læser den som en soft reboot. Tilføj REBOOT=ReallySuppress for at undgå, at maskinen genstarter."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="../"><img src="../assets/installscout.png" width="40" height="40" alt="">InstallScout</a>
+      <nav aria-label="Dokumentation"><a href="find-silent-switche.html">Find switche</a><a href="quickstart.html">Hurtig start</a><a href="vejledning.html">Vejledning</a><a href="reference.html">Reference</a><a href="silent-switche-pr-installer.html">Pr. installer</a><a href="msi-silent-install.html" hreflang="en">English</a></nav>
+    </header>
+    <article>
+<h1>MSI (Windows Installer) — silent-switche</h1>
+<p>En MSI installeres af Windows Installer, så switchene hører til <code>msiexec</code>, ikke til pakken. Den samme linje virker til alle MSI-filer.</p>
+<p>Version <strong>1.8.74</strong>. <a href="find-silent-switche.html">Find switchene til en hvilken som helst installer</a> · <a href="silent-switche-pr-installer.html">Alle installer-typer</a>.</p>
+<h2>Silent install-kommando</h2>
+<pre><code class="language-text">msiexec /i &quot;{file}&quot; /qn /norestart</code></pre>
+<p>Alternativ:</p>
+<pre><code class="language-text">msiexec /i &quot;{file}&quot; /qb</code></pre>
+<h2>Silent afinstallation</h2>
+<pre><code class="language-text">msiexec /x &quot;{ProductCode}&quot; /qn /norestart</code></pre>
+<p><code>{file}</code> er den citerede sti til installeren. <code>{app}</code> er den mappe, appen blev installeret i. <code>{ProductCode}</code> er MSI-produktkoden.</p>
+<h2>Switche</h2>
+<div class="table-wrap"><table><thead><tr><th>Switch</th><th>Betydning</th></tr></thead><tbody><tr><td><code>/i</code></td><td>Installér pakken.</td></tr><tr><td><code>/x</code></td><td>Afinstallér via pakkens sti eller <code>{ProductCode}</code>.</td></tr><tr><td><code>/qn</code></td><td>Ingen brugerflade overhovedet.</td></tr><tr><td><code>/qb</code></td><td>Basal brugerflade: en statuslinje og ingen spørgsmål.</td></tr><tr><td><code>/norestart</code></td><td>Genstart aldrig. Exit-kode 3010 melder en afventende genstart.</td></tr><tr><td><code>/l*v &quot;%TEMP%\install.log&quot;</code></td><td>Udførlig log af installationen.</td></tr><tr><td><code>ALLUSERS=1</code></td><td>Installér til maskinen, ikke til én bruger.</td></tr><tr><td><code>REBOOT=ReallySuppress</code></td><td>Undertryk alle anmodninger om genstart.</td></tr><tr><td><code>TRANSFORMS=&quot;app.mst&quot;</code></td><td>Anvend en transform-fil.</td></tr></tbody></table></div>
+<h2>Regler, der får folk til at fejle</h2>
+<ul><li>Citér stien. <code>msiexec /i C:\Mine Apps\app.msi</code> fejler på grund af mellemrummet.</li><li>Offentlige properties som <code>ALLUSERS</code> er med store bogstaver, og der skelnes mellem store og små.</li><li><code>msiexec</code> er et Windows-program, så en batch-fil venter ikke på det. Brug <code>start /wait msiexec ...</code>, eller <code>Start-Process msiexec -Wait</code> i PowerShell, for at få exit-koden.</li><li>Exit-kode <code>0</code> er succes, <code>3010</code> er succes med en afventende genstart, <code>1641</code> startede en genstart, <code>1618</code> betyder, at en anden installation kører, og <code>1603</code> er en fatal fejl. Læs <code>/l*v</code>-loggen for årsagen.</li></ul>
+<h2>Sådan ser du, at installeren er MSI</h2>
+<p>Filen ender på <code>.msi</code>. Windows Installer gemmer en <code>ProductCode</code> i pakken, og InstallScout læser den til afinstallationskommandoen og til detektion.</p>
+<h2>Brug det i Intune</h2>
+<p>Intune kan registrere en MSI ud fra produktkoden. InstallScout bruger <code>ProductCode</code>: programmet leder efter den afinstallationsnøgle og en version, der er lig med eller nyere end pakkens. Win32-appen returnerer <code>0</code> og <code>1707</code> som succes, <code>3010</code> som soft reboot, <code>1641</code> som hard reboot og <code>1618</code> som retry.</p>
+<h2>Lad InstallScout finde den</h2>
+<p>Træk filen ind i InstallScout og klik <strong>Analysér</strong>. Programmet læser filen, navngiver motoren og skriver denne kommando med stien udfyldt. Installeren bliver ikke kørt. Det samme opslag fra en prompt:</p>
+<pre><code class="language-text">.\InstallScoutPortable.exe --cli &quot;C:\installers\setup.exe&quot;</code></pre>
+<p>Derefter bygger <strong>Intune-pakke</strong> en PSADT <code>.intunewin</code>, og <strong>Upload til Intune</strong> sender Win32-appen.</p>
+<h2>Ofte stillede spørgsmål</h2>
+<h3>Hvordan installerer jeg en MSI silent?</h3>
+<p>Kør <code>msiexec /i &quot;C:\sti\app.msi&quot; /qn /norestart</code>. <code>/qn</code> fjerner brugerfladen, og <code>/norestart</code> forhindrer en genstart.</p>
+<h3>Hvordan afinstallerer jeg en MSI silent?</h3>
+<p>Kør <code>msiexec /x {ProductCode} /qn /norestart</code>. Produktkoden ligger i pakken, og et installeret produkt har den som navn på sin nøgle under <code>HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall</code>.</p>
+<h3>Hvad betyder MSI exit-kode 3010?</h3>
+<p>Installationen lykkedes, og en genstart afventer. Intune læser den som en soft reboot. Tilføj <code>REBOOT=ReallySuppress</code> for at undgå, at maskinen genstarter.</p>
+<hr>
+<p><a href="inno-setup-silent-installation.html">Inno Setup</a> · <a href="nsis-silent-installation.html">NSIS</a> · <a href="installshield-silent-installation.html">InstallShield</a> · <a href="wix-burn-silent-installation.html">WiX Burn</a> · <a href="advanced-installer-silent-installation.html">Advanced Installer</a> · <a href="msix-silent-installation.html">MSIX</a></p>
+    </article>
+    <footer>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.74/InstallScout-1.8.74.zip">Hent 1.8.74 (.zip)</a> · <a href="../">InstallScout</a></p>
+    </footer>
+  </div>
+</body>
+</html>

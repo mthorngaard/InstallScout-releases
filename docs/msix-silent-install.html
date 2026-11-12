@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MSIX silent install with PowerShell: Add-AppxPackage and provisioning — InstallScout</title>
+  <meta name="description" content="Install an MSIX or AppX package silently with Add-AppxPackage, provision it with Add-AppxProvisionedPackage, handle framework dependencies, and detect it by package name.">
+  <link rel="canonical" href="https://mthorngaard.github.io/InstallScout-releases/docs/msix-silent-install.html">
+  <link rel="alternate" hreflang="en" href="https://mthorngaard.github.io/InstallScout-releases/docs/msix-silent-install.html">
+  <link rel="alternate" hreflang="da" href="https://mthorngaard.github.io/InstallScout-releases/docs/msix-silent-installation.html">
+  <link rel="alternate" hreflang="x-default" href="https://mthorngaard.github.io/InstallScout-releases/docs/msix-silent-install.html">
+  <meta property="og:title" content="MSIX silent install with PowerShell: Add-AppxPackage and provisioning — InstallScout">
+  <meta property="og:description" content="Install an MSIX or AppX package silently with Add-AppxPackage, provision it with Add-AppxProvisionedPackage, handle framework dependencies, and detect it by package name.">
+  <meta property="og:url" content="https://mthorngaard.github.io/InstallScout-releases/docs/msix-silent-install.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://mthorngaard.github.io/InstallScout-releases/assets/installscout.png">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="da_DK">
+  <link rel="icon" href="../assets/installscout.png">
+  <link rel="stylesheet" href="../assets/docs.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "MSIX silent install with PowerShell: Add-AppxPackage and provisioning — InstallScout",
+  "description": "Install an MSIX or AppX package silently with Add-AppxPackage, provision it with Add-AppxProvisionedPackage, handle framework dependencies, and detect it by package name.",
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://mthorngaard.github.io/InstallScout-releases/docs/msix-silent-install.html",
+  "isPartOf": {
+    "@type": "SoftwareApplication",
+    "@id": "https://mthorngaard.github.io/InstallScout-releases/#app",
+    "name": "InstallScout",
+    "url": "https://mthorngaard.github.io/InstallScout-releases/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I install an MSIX silently?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Run Add-AppxPackage -Path \"C:\\path\\app.msix\" in PowerShell. There is no UI in PowerShell, so the install is silent."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I install an MSIX for all users?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Run Add-AppxProvisionedPackage -Online -PackagePath \"C:\\path\\app.msix\" -SkipLicense from an elevated session. The app installs for each user at their next sign-in."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does an MSIX fail with a dependency error?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A framework package such as Microsoft.WindowsAppRuntime is missing. Install it first, or pass it with -DependencyPath."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="../"><img src="../assets/installscout.png" width="40" height="40" alt="">InstallScout</a>
+      <nav aria-label="Documentation"><a href="find-silent-switches.html">Find switches</a><a href="quickstart-en.html">Quick start</a><a href="guide.html">Guide</a><a href="reference-en.html">Reference</a><a href="silent-install-switches-by-installer.html">By installer</a><a href="msix-silent-installation.html" hreflang="da">Dansk</a></nav>
+    </header>
+    <article>
+<h1>MSIX and AppX — silent install switches</h1>
+<p>An MSIX is not an installer EXE, so there are no silent switches. You install it with PowerShell.</p>
+<p>Version <strong>1.8.74</strong>. <a href="find-silent-switches.html">Find the switches for any installer</a> · <a href="silent-install-switches-by-installer.html">All installer types</a>.</p>
+<h2>Silent install command</h2>
+<pre><code class="language-text">Add-AppxPackage -Path &quot;{file}&quot;</code></pre>
+<p>Alternative:</p>
+<pre><code class="language-text">Add-AppxProvisionedPackage -Online -PackagePath &quot;{file}&quot; -SkipLicense</code></pre>
+<h2>Silent uninstall</h2>
+<pre><code class="language-text">Get-AppxPackage -Name &quot;{PackageName}&quot; | Remove-AppxPackage</code></pre>
+<p><code>{file}</code> is the quoted path of the installer. <code>{app}</code> is the folder the app was installed to. <code>{ProductCode}</code> is the MSI product code.</p>
+<h2>Switches</h2>
+<div class="table-wrap"><table><thead><tr><th>Switch</th><th>Meaning</th></tr></thead><tbody><tr><td><code>Add-AppxPackage</code></td><td>Install the package for the account that runs the command.</td></tr><tr><td><code>Add-AppxProvisionedPackage</code></td><td>Provision the package so it installs for each user at sign-in. It needs an elevated session.</td></tr><tr><td><code>-SkipLicense</code></td><td>Provision without a license file.</td></tr><tr><td><code>-DependencyPath</code></td><td>Install framework packages first.</td></tr></tbody></table></div>
+<h2>Rules that trip people up</h2>
+<ul><li><code>Add-AppxPackage</code> installs for the account that runs it. As System in Intune, that is not the signed-in user. Provision the package when every user needs it.</li><li>Frameworks that the package depends on, such as <code>Microsoft.WindowsAppRuntime</code>, must already be on the device or be installed first with <code>-DependencyPath</code>. InstallScout lists them from the package.</li><li>The package must be signed by a certificate the device trusts. An unsigned or self-signed package fails with a trust error.</li><li>Detection uses the package name, not a product code. <code>Get-AppxPackage -Name</code> returns the installed package and its version.</li></ul>
+<h2>How to tell the installer is MSIX</h2>
+<p>The file ends in <code>.msix</code>, <code>.appx</code>, <code>.msixbundle</code>, or <code>.appxbundle</code>. These are zip archives with an <code>AppxManifest.xml</code>. They are not run as an EXE.</p>
+<h2>Use it in Intune</h2>
+<p>InstallScout detects an MSIX by package name and, when known, version. Try in Sandbox runs the Add-AppxPackage line in Windows Sandbox, so you see the error text before you upload.</p>
+<h2>Let InstallScout find it</h2>
+<p>Drop the file on InstallScout and click <strong>Analyze</strong>. It reads the file, names the engine, and writes this command with the path filled in. The installer is not run. The same lookup from a prompt:</p>
+<pre><code class="language-text">.\InstallScoutPortable.exe --cli &quot;C:\installers\setup.exe&quot;</code></pre>
+<p>Then <strong>Intune package</strong> builds a PSADT <code>.intunewin</code>, and <strong>Upload to Intune</strong> sends the Win32 app.</p>
+<h2>Frequently asked questions</h2>
+<h3>How do I install an MSIX silently?</h3>
+<p>Run <code>Add-AppxPackage -Path &quot;C:\path\app.msix&quot;</code> in PowerShell. There is no UI in PowerShell, so the install is silent.</p>
+<h3>How do I install an MSIX for all users?</h3>
+<p>Run <code>Add-AppxProvisionedPackage -Online -PackagePath &quot;C:\path\app.msix&quot; -SkipLicense</code> from an elevated session. The app installs for each user at their next sign-in.</p>
+<h3>Why does an MSIX fail with a dependency error?</h3>
+<p>A framework package such as <code>Microsoft.WindowsAppRuntime</code> is missing. Install it first, or pass it with <code>-DependencyPath</code>.</p>
+<hr>
+<p><a href="msi-silent-install.html">MSI</a> · <a href="inno-setup-silent-install.html">Inno Setup</a> · <a href="nsis-silent-install.html">NSIS</a> · <a href="installshield-silent-install.html">InstallShield</a> · <a href="wix-burn-silent-install.html">WiX Burn</a> · <a href="advanced-installer-silent-install.html">Advanced Installer</a></p>
+    </article>
+    <footer>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.74/InstallScout-1.8.74.zip">Download 1.8.74 (.zip)</a> · <a href="../">InstallScout</a></p>
+    </footer>
+  </div>
+</body>
+</html>

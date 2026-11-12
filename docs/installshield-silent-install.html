@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>InstallShield silent install: /s /v&quot;/qn&quot; and setup.iss — InstallScout</title>
+  <meta name="description" content="Silent install for InstallShield: /s /v&quot;/qn&quot; for setups with an MSI, a recorded setup.iss for InstallScript, logging, and why the quotes matter.">
+  <link rel="canonical" href="https://mthorngaard.github.io/InstallScout-releases/docs/installshield-silent-install.html">
+  <link rel="alternate" hreflang="en" href="https://mthorngaard.github.io/InstallScout-releases/docs/installshield-silent-install.html">
+  <link rel="alternate" hreflang="da" href="https://mthorngaard.github.io/InstallScout-releases/docs/installshield-silent-installation.html">
+  <link rel="alternate" hreflang="x-default" href="https://mthorngaard.github.io/InstallScout-releases/docs/installshield-silent-install.html">
+  <meta property="og:title" content="InstallShield silent install: /s /v&quot;/qn&quot; and setup.iss — InstallScout">
+  <meta property="og:description" content="Silent install for InstallShield: /s /v&quot;/qn&quot; for setups with an MSI, a recorded setup.iss for InstallScript, logging, and why the quotes matter.">
+  <meta property="og:url" content="https://mthorngaard.github.io/InstallScout-releases/docs/installshield-silent-install.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://mthorngaard.github.io/InstallScout-releases/assets/installscout.png">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="da_DK">
+  <link rel="icon" href="../assets/installscout.png">
+  <link rel="stylesheet" href="../assets/docs.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "InstallShield silent install: /s /v\"/qn\" and setup.iss — InstallScout",
+  "description": "Silent install for InstallShield: /s /v\"/qn\" for setups with an MSI, a recorded setup.iss for InstallScript, logging, and why the quotes matter.",
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://mthorngaard.github.io/InstallScout-releases/docs/installshield-silent-install.html",
+  "isPartOf": {
+    "@type": "SoftwareApplication",
+    "@id": "https://mthorngaard.github.io/InstallScout-releases/#app",
+    "name": "InstallScout",
+    "url": "https://mthorngaard.github.io/InstallScout-releases/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the silent switch for InstallShield?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use \"setup.exe\" /s /v\"/qn\". /s makes the wrapper silent, and /v\"/qn\" hands /qn to the MSI inside."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I make a setup.iss for InstallShield?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Run setup.exe /r and click through the wizard. That records setup.iss. Then install silently with setup.exe /s /f1\"C:\\setup.iss\"."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why are the quotes after /v needed?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The wrapper reads its own switches. Everything inside /v\"...\" is passed on to msiexec unchanged."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="../"><img src="../assets/installscout.png" width="40" height="40" alt="">InstallScout</a>
+      <nav aria-label="Documentation"><a href="find-silent-switches.html">Find switches</a><a href="quickstart-en.html">Quick start</a><a href="guide.html">Guide</a><a href="reference-en.html">Reference</a><a href="silent-install-switches-by-installer.html">By installer</a><a href="installshield-silent-installation.html" hreflang="da">Dansk</a></nav>
+    </header>
+    <article>
+<h1>InstallShield — silent install switches</h1>
+<p>InstallShield comes in two forms. A setup that wraps an MSI takes <code>/s /v&quot;/qn&quot;</code>. A pure InstallScript setup needs a recorded response file.</p>
+<p>Version <strong>1.8.74</strong>. <a href="find-silent-switches.html">Find the switches for any installer</a> · <a href="silent-install-switches-by-installer.html">All installer types</a>.</p>
+<h2>Silent install command</h2>
+<pre><code class="language-text">&quot;{file}&quot; /s /v&quot;/qn&quot;</code></pre>
+<p>Alternative:</p>
+<pre><code class="language-text">&quot;{file}&quot; /s /sms</code></pre>
+<p><code>{file}</code> is the quoted path of the installer. <code>{app}</code> is the folder the app was installed to. <code>{ProductCode}</code> is the MSI product code.</p>
+<h2>Switches</h2>
+<div class="table-wrap"><table><thead><tr><th>Switch</th><th>Meaning</th></tr></thead><tbody><tr><td><code>/s</code></td><td>Silent setup.</td></tr><tr><td><code>/v&quot;/qn&quot;</code></td><td>Pass <code>/qn</code> to the MSI inside. The quotes are part of the switch.</td></tr><tr><td><code>/v&quot;/qn REBOOT=ReallySuppress&quot;</code></td><td>Pass several MSI arguments in one quoted string.</td></tr><tr><td><code>/f2&quot;%TEMP%\install.log&quot;</code></td><td>Write the setup log to a file.</td></tr><tr><td><code>/sms</code></td><td>Keep the setup process running until the install is done.</td></tr><tr><td><code>/r</code></td><td>Record a response file (<code>setup.iss</code>) for an InstallScript setup.</td></tr><tr><td><code>/s /f1&quot;C:\setup.iss&quot;</code></td><td>Play back a recorded response file silently.</td></tr></tbody></table></div>
+<h2>Rules that trip people up</h2>
+<ul><li><code>/qn</code> is passed to the MSI through <code>/v&quot;...&quot;</code>. Without the quotes, the arguments are read by the wrapper and not by the MSI.</li><li>An older InstallScript setup may need a recorded <code>setup.iss</code>: run <code>setup.exe /r</code> once, then <code>setup.exe /s /f1&quot;C:\setup.iss&quot;</code>.</li><li>Put every MSI argument inside one <code>/v&quot;...&quot;</code> string. Quote values that have spaces with an extra pair of quotes.</li><li>When the setup extracts an MSI, you can often install that MSI with <code>msiexec</code> directly. That is the more reliable line when it works.</li></ul>
+<h2>How to tell the installer is InstallShield</h2>
+<p>The file contains the text <code>InstallShield</code>. A setup with an MSI inside accepts <code>/v</code>. A pure InstallScript setup has no MSI.</p>
+<h2>Use it in Intune</h2>
+<p>InstallShield has the lowest first-try rate of the common engines. InstallScout puts it at about 60% for the silent install. Treat a result below about 40% confidence as a draft and test it in Windows Sandbox or a VM before you upload.</p>
+<h2>Let InstallScout find it</h2>
+<p>Drop the file on InstallScout and click <strong>Analyze</strong>. It reads the file, names the engine, and writes this command with the path filled in. The installer is not run. The same lookup from a prompt:</p>
+<pre><code class="language-text">.\InstallScoutPortable.exe --cli &quot;C:\installers\setup.exe&quot;</code></pre>
+<p>Then <strong>Intune package</strong> builds a PSADT <code>.intunewin</code>, and <strong>Upload to Intune</strong> sends the Win32 app.</p>
+<h2>Frequently asked questions</h2>
+<h3>What is the silent switch for InstallShield?</h3>
+<p>Use <code>&quot;setup.exe&quot; /s /v&quot;/qn&quot;</code>. <code>/s</code> makes the wrapper silent, and <code>/v&quot;/qn&quot;</code> hands <code>/qn</code> to the MSI inside.</p>
+<h3>How do I make a setup.iss for InstallShield?</h3>
+<p>Run <code>setup.exe /r</code> and click through the wizard. That records <code>setup.iss</code>. Then install silently with <code>setup.exe /s /f1&quot;C:\setup.iss&quot;</code>.</p>
+<h3>Why are the quotes after /v needed?</h3>
+<p>The wrapper reads its own switches. Everything inside <code>/v&quot;...&quot;</code> is passed on to <code>msiexec</code> unchanged.</p>
+<hr>
+<p><a href="msi-silent-install.html">MSI</a> · <a href="inno-setup-silent-install.html">Inno Setup</a> · <a href="nsis-silent-install.html">NSIS</a> · <a href="wix-burn-silent-install.html">WiX Burn</a> · <a href="advanced-installer-silent-install.html">Advanced Installer</a> · <a href="msix-silent-install.html">MSIX</a></p>
+    </article>
+    <footer>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.74/InstallScout-1.8.74.zip">Download 1.8.74 (.zip)</a> · <a href="../">InstallScout</a></p>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NSIS silent install: /S, /D= og NSIS-afinstalleren — InstallScout</title>
+  <meta name="description" content="Silent install til en NSIS-installer: /S skal være et stort bogstav, /D= skal stå sidst og uden citationstegn, /NCRC, og hvordan afinstalleren får lov at vente.">
+  <link rel="canonical" href="https://mthorngaard.github.io/InstallScout-releases/docs/nsis-silent-installation.html">
+  <link rel="alternate" hreflang="en" href="https://mthorngaard.github.io/InstallScout-releases/docs/nsis-silent-install.html">
+  <link rel="alternate" hreflang="da" href="https://mthorngaard.github.io/InstallScout-releases/docs/nsis-silent-installation.html">
+  <link rel="alternate" hreflang="x-default" href="https://mthorngaard.github.io/InstallScout-releases/docs/nsis-silent-install.html">
+  <meta property="og:title" content="NSIS silent install: /S, /D= og NSIS-afinstalleren — InstallScout">
+  <meta property="og:description" content="Silent install til en NSIS-installer: /S skal være et stort bogstav, /D= skal stå sidst og uden citationstegn, /NCRC, og hvordan afinstalleren får lov at vente.">
+  <meta property="og:url" content="https://mthorngaard.github.io/InstallScout-releases/docs/nsis-silent-installation.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://mthorngaard.github.io/InstallScout-releases/assets/installscout.png">
+  <meta property="og:locale" content="da_DK">
+  <meta property="og:locale:alternate" content="en_US">
+  <link rel="icon" href="../assets/installscout.png">
+  <link rel="stylesheet" href="../assets/docs.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "NSIS silent install: /S, /D= og NSIS-afinstalleren — InstallScout",
+  "description": "Silent install til en NSIS-installer: /S skal være et stort bogstav, /D= skal stå sidst og uden citationstegn, /NCRC, og hvordan afinstalleren får lov at vente.",
+  "inLanguage": "da",
+  "mainEntityOfPage": "https://mthorngaard.github.io/InstallScout-releases/docs/nsis-silent-installation.html",
+  "isPartOf": {
+    "@type": "SoftwareApplication",
+    "@id": "https://mthorngaard.github.io/InstallScout-releases/#app",
+    "name": "InstallScout",
+    "url": "https://mthorngaard.github.io/InstallScout-releases/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Hvad er silent-switchen til NSIS?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Brug \"setup.exe\" /S. S'et er et stort bogstav."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hvordan angiver jeg installationsmappen til en NSIS-installer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tilføj /D=C:\\Program Files\\App som sidste argument, uden citationstegn."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hvorfor vender NSIS-afinstalleren straks tilbage?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Den kopierer sig selv til en midlertidig mappe og afslutter. Kør den som uninstall.exe /S _?=C:\\Program Files\\App, så kommandoen venter på afinstallationen."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="../"><img src="../assets/installscout.png" width="40" height="40" alt="">InstallScout</a>
+      <nav aria-label="Dokumentation"><a href="find-silent-switche.html">Find switche</a><a href="quickstart.html">Hurtig start</a><a href="vejledning.html">Vejledning</a><a href="reference.html">Reference</a><a href="silent-switche-pr-installer.html">Pr. installer</a><a href="nsis-silent-install.html" hreflang="en">English</a></nav>
+    </header>
+    <article>
+<h1>NSIS (Nullsoft Scriptable Install System) — silent-switche</h1>
+<p>NSIS-installere tager én fælles silent-switch, <code>/S</code>. To regler afgør, om den virker.</p>
+<p>Version <strong>1.8.74</strong>. <a href="find-silent-switche.html">Find switchene til en hvilken som helst installer</a> · <a href="silent-switche-pr-installer.html">Alle installer-typer</a>.</p>
+<h2>Silent install-kommando</h2>
+<pre><code class="language-text">&quot;{file}&quot; /S</code></pre>
+<h2>Silent afinstallation</h2>
+<pre><code class="language-text">&quot;{app}\uninstall.exe&quot; /S</code></pre>
+<p><code>{file}</code> er den citerede sti til installeren. <code>{app}</code> er den mappe, appen blev installeret i. <code>{ProductCode}</code> er MSI-produktkoden.</p>
+<h2>Switche</h2>
+<div class="table-wrap"><table><thead><tr><th>Switch</th><th>Betydning</th></tr></thead><tbody><tr><td><code>/S</code></td><td>Silent installation. Det skal være et stort S.</td></tr><tr><td><code>/D=C:\Program Files\App</code></td><td>Angiv installationsmappen. Den skal være det sidste argument og har ingen citationstegn, heller ikke med mellemrum.</td></tr><tr><td><code>/NCRC</code></td><td>Spring integritetskontrollen af installeren over.</td></tr><tr><td><code>_?=C:\Program Files\App</code></td><td>På afinstalleren: kør på stedet, så kommandoen venter, til den er færdig.</td></tr></tbody></table></div>
+<h2>Regler, der får folk til at fejle</h2>
+<ul><li><code>/S</code> skal være et stort S. NSIS behandler <code>/s</code> som et andet argument.</li><li><code>/D=</code> angiver installationsmappen. Den skal være det sidste argument og må ikke have citationstegn, heller ikke når stien har mellemrum.</li><li>Egne NSIS-scripts kan tilføje egne switche, og nogle ignorerer <code>/S</code>. Læs leverandørens noter, hvis guiden stadig åbner.</li><li>NSIS-afinstalleren kopierer sig selv til en midlertidig mappe og starter derfra, så kommandoen vender straks tilbage. Tilføj <code>_?=&lt;installationsmappen&gt;</code> som sidste argument for at køre den på stedet og vente.</li></ul>
+<h2>Sådan ser du, at installeren er NSIS</h2>
+<p>Filen indeholder teksten <code>Nullsoft Install System</code>. Afinstalleren er som regel <code>uninstall.exe</code> eller <code>Uninstall.exe</code> i installationsmappen.</p>
+<h2>Brug det i Intune</h2>
+<p>Mange NSIS-apps installerer pr. bruger. Tjek installationsmappen og registry-hive, før du vælger System eller User, fordi detektionen skal læse den samme konto. InstallScout vælger konteksten ud fra motoren og kommandoen, og detektionen matcher produktnavn, udgiver og version.</p>
+<h2>Lad InstallScout finde den</h2>
+<p>Træk filen ind i InstallScout og klik <strong>Analysér</strong>. Programmet læser filen, navngiver motoren og skriver denne kommando med stien udfyldt. Installeren bliver ikke kørt. Det samme opslag fra en prompt:</p>
+<pre><code class="language-text">.\InstallScoutPortable.exe --cli &quot;C:\installers\setup.exe&quot;</code></pre>
+<p>Derefter bygger <strong>Intune-pakke</strong> en PSADT <code>.intunewin</code>, og <strong>Upload til Intune</strong> sender Win32-appen.</p>
+<h2>Ofte stillede spørgsmål</h2>
+<h3>Hvad er silent-switchen til NSIS?</h3>
+<p>Brug <code>&quot;setup.exe&quot; /S</code>. S&#x27;et er et stort bogstav.</p>
+<h3>Hvordan angiver jeg installationsmappen til en NSIS-installer?</h3>
+<p>Tilføj <code>/D=C:\Program Files\App</code> som sidste argument, uden citationstegn.</p>
+<h3>Hvorfor vender NSIS-afinstalleren straks tilbage?</h3>
+<p>Den kopierer sig selv til en midlertidig mappe og afslutter. Kør den som <code>uninstall.exe /S _?=C:\Program Files\App</code>, så kommandoen venter på afinstallationen.</p>
+<hr>
+<p><a href="msi-silent-installation.html">MSI</a> · <a href="inno-setup-silent-installation.html">Inno Setup</a> · <a href="installshield-silent-installation.html">InstallShield</a> · <a href="wix-burn-silent-installation.html">WiX Burn</a> · <a href="advanced-installer-silent-installation.html">Advanced Installer</a> · <a href="msix-silent-installation.html">MSIX</a></p>
+    </article>
+    <footer>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.74/InstallScout-1.8.74.zip">Hent 1.8.74 (.zip)</a> · <a href="../">InstallScout</a></p>
+    </footer>
+  </div>
+</body>
+</html>

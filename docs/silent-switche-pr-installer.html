@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Silent-switche pr. installer-type — InstallScout</title>
+  <meta name="description" content="Silent install-switche til MSI, Inno Setup, NSIS, InstallShield, WiX Burn, Advanced Installer og MSIX, med afinstallationskommando og de regler, der får hver af dem til at fejle.">
+  <link rel="canonical" href="https://mthorngaard.github.io/InstallScout-releases/docs/silent-switche-pr-installer.html">
+  <link rel="alternate" hreflang="en" href="https://mthorngaard.github.io/InstallScout-releases/docs/silent-install-switches-by-installer.html">
+  <link rel="alternate" hreflang="da" href="https://mthorngaard.github.io/InstallScout-releases/docs/silent-switche-pr-installer.html">
+  <link rel="alternate" hreflang="x-default" href="https://mthorngaard.github.io/InstallScout-releases/docs/silent-install-switches-by-installer.html">
+  <meta property="og:title" content="Silent-switche pr. installer-type — InstallScout">
+  <meta property="og:description" content="Silent install-switche til MSI, Inno Setup, NSIS, InstallShield, WiX Burn, Advanced Installer og MSIX, med afinstallationskommando og de regler, der får hver af dem til at fejle.">
+  <meta property="og:url" content="https://mthorngaard.github.io/InstallScout-releases/docs/silent-switche-pr-installer.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://mthorngaard.github.io/InstallScout-releases/assets/installscout.png">
+  <meta property="og:locale" content="da_DK">
+  <meta property="og:locale:alternate" content="en_US">
+  <link rel="icon" href="../assets/installscout.png">
+  <link rel="stylesheet" href="../assets/docs.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Silent-switche pr. installer-type — InstallScout",
+  "description": "Silent install-switche til MSI, Inno Setup, NSIS, InstallShield, WiX Burn, Advanced Installer og MSIX, med afinstallationskommando og de regler, der får hver af dem til at fejle.",
+  "inLanguage": "da",
+  "mainEntityOfPage": "https://mthorngaard.github.io/InstallScout-releases/docs/silent-switche-pr-installer.html",
+  "isPartOf": {
+    "@type": "SoftwareApplication",
+    "@id": "https://mthorngaard.github.io/InstallScout-releases/#app",
+    "name": "InstallScout",
+    "url": "https://mthorngaard.github.io/InstallScout-releases/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Findes der én silent-switch, der virker til alle EXE-filer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nej. /S, /silent, /quiet, /VERYSILENT og /qn hører til forskellige motorer. Den forkerte bliver ignoreret eller giver en fejl. Find motoren først."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hvordan finder jeg ud af, hvilken installer-type en EXE er?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Søg i filen efter tekst som Inno Setup, Nullsoft, InstallShield eller WiX. InstallScout gør det automatisk, navngiver motoren og skriver silent-kommandoen uden at køre installeren."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hvad hvis setup.exe /? ikke viser noget?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Mange setup-programmer viser ingen hjælp. Motoren har stadig en kendt silent-form. Find motoren, og brug dens switch."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="../"><img src="../assets/installscout.png" width="40" height="40" alt="">InstallScout</a>
+      <nav aria-label="Dokumentation"><a href="find-silent-switche.html">Find switche</a><a href="quickstart.html">Hurtig start</a><a href="vejledning.html">Vejledning</a><a href="reference.html">Reference</a><a href="silent-switche-pr-installer.html" aria-current="page">Pr. installer</a><a href="silent-install-switches-by-installer.html" hreflang="en">English</a></nav>
+    </header>
+    <article>
+<h1>Silent-switche pr. installer-type</h1>
+<p>Der findes ingen switch, der gør alle EXE-filer lydløse. Det rigtige argument afhænger af den motor, der har bygget installeren. Find motoren først, og brug derefter dens switch. <code>{file}</code> nedenfor er den citerede sti til installeren.</p>
+<p>Version <strong>1.8.74</strong>. <a href="find-silent-switche.html">Find switchene til en hvilken som helst installer</a>.</p>
+<h2>De almindelige motorer</h2>
+<div class="table-wrap"><table><thead><tr><th>Installer</th><th>Silent install</th><th>Detaljer</th></tr></thead><tbody><tr><td>MSI</td><td><code>msiexec /i &quot;{file}&quot; /qn</code></td><td><a href="msi-silent-installation.html">MSI (Windows Installer)</a></td></tr><tr><td>Inno Setup</td><td><code>&quot;{file}&quot; /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-</code></td><td><a href="inno-setup-silent-installation.html">Inno Setup</a></td></tr><tr><td>NSIS</td><td><code>&quot;{file}&quot; /S</code></td><td><a href="nsis-silent-installation.html">NSIS (Nullsoft Scriptable Install System)</a></td></tr><tr><td>InstallShield</td><td><code>&quot;{file}&quot; /s /v&quot;/qn&quot;</code></td><td><a href="installshield-silent-installation.html">InstallShield</a></td></tr><tr><td>WiX Burn</td><td><code>&quot;{file}&quot; /quiet</code></td><td><a href="wix-burn-silent-installation.html">WiX Burn bundle</a></td></tr><tr><td>Advanced Installer</td><td><code>&quot;{file}&quot; /exenoui /qn</code></td><td><a href="advanced-installer-silent-installation.html">Advanced Installer</a></td></tr><tr><td>MSIX</td><td><code>Add-AppxPackage -Path &quot;{file}&quot;</code></td><td><a href="msix-silent-installation.html">MSIX and AppX</a></td></tr></tbody></table></div>
+<h2>Andre motorer</h2>
+<div class="table-wrap"><table><thead><tr><th>Installer</th><th>Silent install</th></tr></thead><tbody><tr><td>Wacom Tablet Driver</td><td><code>&quot;{file}&quot; /s</code></td></tr><tr><td>Dell Display and Peripheral Manager</td><td><code>&quot;{file}&quot; /Silent</code></td></tr><tr><td>BitRock InstallBuilder</td><td><code>&quot;{file}&quot; --mode unattended --unattendedmodeui none</code></td></tr><tr><td>install4j</td><td><code>&quot;{file}&quot; -q</code></td></tr><tr><td>InstallAware</td><td><code>&quot;{file}&quot; /s</code></td></tr><tr><td>7-Zip SFX</td><td><code>&quot;{file}&quot; -y</code></td></tr><tr><td>Qt Installer Framework</td><td><code>&quot;{file}&quot; --silent --accept-licenses</code></td></tr><tr><td>WinRAR SFX</td><td><code>&quot;{file}&quot; /S</code></td></tr><tr><td>Squirrel</td><td><code>&quot;{file}&quot; --silent</code></td></tr><tr><td>IExpress</td><td><code>&quot;{file}&quot; /Q</code></td></tr><tr><td>Wise Installer</td><td><code>&quot;{file}&quot; /s</code></td></tr></tbody></table></div>
+<h2>Sådan finder du ud af, hvilken motor en fil bruger</h2>
+<p>Åbn filens egenskaber og læs fanen Detaljer. Se filen i en hex-viewer efter tekst som <code>Inno Setup</code>, <code>Nullsoft</code> eller <code>InstallShield</code>. En <code>.msi</code> er altid Windows Installer. InstallScout gør det for dig: programmet matcher markører i filen, sektionsnavne i PE-headeren og filer ved siden af installeren og viser derefter motoren med en sikkerhed.</p>
+<h2>Ofte stillede spørgsmål</h2>
+<h3>Findes der én silent-switch, der virker til alle EXE-filer?</h3>
+<p>Nej. <code>/S</code>, <code>/silent</code>, <code>/quiet</code>, <code>/VERYSILENT</code> og <code>/qn</code> hører til forskellige motorer. Den forkerte bliver ignoreret eller giver en fejl. Find motoren først.</p>
+<h3>Hvordan finder jeg ud af, hvilken installer-type en EXE er?</h3>
+<p>Søg i filen efter tekst som Inno Setup, Nullsoft, InstallShield eller WiX. InstallScout gør det automatisk, navngiver motoren og skriver silent-kommandoen uden at køre installeren.</p>
+<h3>Hvad hvis setup.exe /? ikke viser noget?</h3>
+<p>Mange setup-programmer viser ingen hjælp. Motoren har stadig en kendt silent-form. Find motoren, og brug dens switch.</p>
+    </article>
+    <footer>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.74/InstallScout-1.8.74.zip">Hent 1.8.74 (.zip)</a> · <a href="../">InstallScout</a></p>
+    </footer>
+  </div>
+</body>
+</html>

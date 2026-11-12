@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MSI silent install: msiexec /qn switches, log, and exit codes — InstallScout</title>
+  <meta name="description" content="Silent install and uninstall for an MSI with msiexec: /qn, /qb, /norestart, logging, ALLUSERS, transforms, and the exit codes 0, 1603, 1618, 1641, and 3010.">
+  <link rel="canonical" href="https://mthorngaard.github.io/InstallScout-releases/docs/msi-silent-install.html">
+  <link rel="alternate" hreflang="en" href="https://mthorngaard.github.io/InstallScout-releases/docs/msi-silent-install.html">
+  <link rel="alternate" hreflang="da" href="https://mthorngaard.github.io/InstallScout-releases/docs/msi-silent-installation.html">
+  <link rel="alternate" hreflang="x-default" href="https://mthorngaard.github.io/InstallScout-releases/docs/msi-silent-install.html">
+  <meta property="og:title" content="MSI silent install: msiexec /qn switches, log, and exit codes — InstallScout">
+  <meta property="og:description" content="Silent install and uninstall for an MSI with msiexec: /qn, /qb, /norestart, logging, ALLUSERS, transforms, and the exit codes 0, 1603, 1618, 1641, and 3010.">
+  <meta property="og:url" content="https://mthorngaard.github.io/InstallScout-releases/docs/msi-silent-install.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://mthorngaard.github.io/InstallScout-releases/assets/installscout.png">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="da_DK">
+  <link rel="icon" href="../assets/installscout.png">
+  <link rel="stylesheet" href="../assets/docs.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "MSI silent install: msiexec /qn switches, log, and exit codes — InstallScout",
+  "description": "Silent install and uninstall for an MSI with msiexec: /qn, /qb, /norestart, logging, ALLUSERS, transforms, and the exit codes 0, 1603, 1618, 1641, and 3010.",
+  "inLanguage": "en",
+  "mainEntityOfPage": "https://mthorngaard.github.io/InstallScout-releases/docs/msi-silent-install.html",
+  "isPartOf": {
+    "@type": "SoftwareApplication",
+    "@id": "https://mthorngaard.github.io/InstallScout-releases/#app",
+    "name": "InstallScout",
+    "url": "https://mthorngaard.github.io/InstallScout-releases/"
+  }
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I install an MSI silently?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Run msiexec /i \"C:\\path\\app.msi\" /qn /norestart. /qn removes the interface and /norestart stops a restart."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I uninstall an MSI silently?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Run msiexec /x {ProductCode} /qn /norestart. The product code is in the package, and an installed product has it as the name of its key under HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does MSI exit code 3010 mean?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The install worked, and a restart is pending. Intune reads it as a soft reboot. Add REBOOT=ReallySuppress to keep the machine from restarting."
+      }
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="../"><img src="../assets/installscout.png" width="40" height="40" alt="">InstallScout</a>
+      <nav aria-label="Documentation"><a href="find-silent-switches.html">Find switches</a><a href="quickstart-en.html">Quick start</a><a href="guide.html">Guide</a><a href="reference-en.html">Reference</a><a href="silent-install-switches-by-installer.html">By installer</a><a href="msi-silent-installation.html" hreflang="da">Dansk</a></nav>
+    </header>
+    <article>
+<h1>MSI (Windows Installer) — silent install switches</h1>
+<p>An MSI is installed by Windows Installer, so the switches belong to <code>msiexec</code>, not to the package. The same line works for every MSI.</p>
+<p>Version <strong>1.8.74</strong>. <a href="find-silent-switches.html">Find the switches for any installer</a> · <a href="silent-install-switches-by-installer.html">All installer types</a>.</p>
+<h2>Silent install command</h2>
+<pre><code class="language-text">msiexec /i &quot;{file}&quot; /qn /norestart</code></pre>
+<p>Alternative:</p>
+<pre><code class="language-text">msiexec /i &quot;{file}&quot; /qb</code></pre>
+<h2>Silent uninstall</h2>
+<pre><code class="language-text">msiexec /x &quot;{ProductCode}&quot; /qn /norestart</code></pre>
+<p><code>{file}</code> is the quoted path of the installer. <code>{app}</code> is the folder the app was installed to. <code>{ProductCode}</code> is the MSI product code.</p>
+<h2>Switches</h2>
+<div class="table-wrap"><table><thead><tr><th>Switch</th><th>Meaning</th></tr></thead><tbody><tr><td><code>/i</code></td><td>Install the package.</td></tr><tr><td><code>/x</code></td><td>Uninstall by package path or by <code>{ProductCode}</code>.</td></tr><tr><td><code>/qn</code></td><td>No user interface at all.</td></tr><tr><td><code>/qb</code></td><td>Basic interface: a progress bar and no prompts.</td></tr><tr><td><code>/norestart</code></td><td>Never restart. Exit code 3010 reports a pending restart.</td></tr><tr><td><code>/l*v &quot;%TEMP%\install.log&quot;</code></td><td>Verbose log of the install.</td></tr><tr><td><code>ALLUSERS=1</code></td><td>Install for the machine, not for one user.</td></tr><tr><td><code>REBOOT=ReallySuppress</code></td><td>Suppress every restart request.</td></tr><tr><td><code>TRANSFORMS=&quot;app.mst&quot;</code></td><td>Apply a transform file.</td></tr></tbody></table></div>
+<h2>Rules that trip people up</h2>
+<ul><li>Quote the path. <code>msiexec /i C:\My Apps\app.msi</code> fails because of the space.</li><li>Public properties such as <code>ALLUSERS</code> are upper case and case-sensitive.</li><li><code>msiexec</code> is a Windows program, so a batch file does not wait for it. Use <code>start /wait msiexec ...</code>, or <code>Start-Process msiexec -Wait</code> in PowerShell, to get the exit code.</li><li>Exit code <code>0</code> is success, <code>3010</code> is success with a restart pending, <code>1641</code> started a restart, <code>1618</code> means another install is running, and <code>1603</code> is a fatal error. Read the <code>/l*v</code> log for the cause.</li></ul>
+<h2>How to tell the installer is MSI</h2>
+<p>The file ends in <code>.msi</code>. Windows Installer stores a <code>ProductCode</code> in the package, and InstallScout reads it for the uninstall command and for detection.</p>
+<h2>Use it in Intune</h2>
+<p>Intune can detect an MSI by its product code. InstallScout uses the <code>ProductCode</code>: it looks for that uninstall key and a version equal to or newer than the package. The Win32 app returns <code>0</code> and <code>1707</code> as success, <code>3010</code> as soft reboot, <code>1641</code> as hard reboot, and <code>1618</code> as retry.</p>
+<h2>Let InstallScout find it</h2>
+<p>Drop the file on InstallScout and click <strong>Analyze</strong>. It reads the file, names the engine, and writes this command with the path filled in. The installer is not run. The same lookup from a prompt:</p>
+<pre><code class="language-text">.\InstallScoutPortable.exe --cli &quot;C:\installers\setup.exe&quot;</code></pre>
+<p>Then <strong>Intune package</strong> builds a PSADT <code>.intunewin</code>, and <strong>Upload to Intune</strong> sends the Win32 app.</p>
+<h2>Frequently asked questions</h2>
+<h3>How do I install an MSI silently?</h3>
+<p>Run <code>msiexec /i &quot;C:\path\app.msi&quot; /qn /norestart</code>. <code>/qn</code> removes the interface and <code>/norestart</code> stops a restart.</p>
+<h3>How do I uninstall an MSI silently?</h3>
+<p>Run <code>msiexec /x {ProductCode} /qn /norestart</code>. The product code is in the package, and an installed product has it as the name of its key under <code>HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall</code>.</p>
+<h3>What does MSI exit code 3010 mean?</h3>
+<p>The install worked, and a restart is pending. Intune reads it as a soft reboot. Add <code>REBOOT=ReallySuppress</code> to keep the machine from restarting.</p>
+<hr>
+<p><a href="inno-setup-silent-install.html">Inno Setup</a> · <a href="nsis-silent-install.html">NSIS</a> · <a href="installshield-silent-install.html">InstallShield</a> · <a href="wix-burn-silent-install.html">WiX Burn</a> · <a href="advanced-installer-silent-install.html">Advanced Installer</a> · <a href="msix-silent-install.html">MSIX</a></p>
+    </article>
+    <footer>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.8.74/InstallScout-1.8.74.zip">Download 1.8.74 (.zip)</a> · <a href="../">InstallScout</a></p>
+    </footer>
+  </div>
+</body>
+</html>
