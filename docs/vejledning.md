@@ -4,7 +4,7 @@ InstallScout tager en Windows-installer **hele vejen til Intune**. Du giver det 
 
 Silent-switche er ét trin. Målet er pakken i Intune.
 
-Version **1.8.74**. Quick start: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Teknisk reference: [reference.md](reference.md). PDF: [InstallScout-vejledning.pdf](InstallScout-vejledning.pdf?v=1.8.74). English: [guide.md](guide.md) · [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.8.74).
+Version **1.9.0**. Quick start: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Teknisk reference: [reference.md](reference.md). PDF: [InstallScout-vejledning.pdf](InstallScout-vejledning.pdf?v=1.9.0). English: [guide.md](guide.md) · [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.9.0).
 
 [Forventet træfsikkerhed](#forventet-træfsikkerhed) for pakke og detection står længere nede i vejledningen.
 
@@ -446,6 +446,37 @@ Efter succes åbnes et link til appen i Intune-portalen.
 | Restart | No specific action (`suppress`) |
 | Logo | `largeIcon` (PNG/JPEG fra EXE, MSI, fil eller udklipsholder) |
 | Supersedence | Valgfrit: **Update** eller **Replace** mod op til 10 ældre Win32-apps |
+
+### Opdateringer til tredjepartsprogrammer (beta)
+
+> **Beta.** Matchning, download, pakning og upload er afprøvet, men funktionen er ny. Kontrollér de første pakker selv, tildel dem en pilotgruppe, før de rulles bredt ud, og bekræft gæt med **Sæt pakke-ID…**. Den automatiske supersedence-kæde er dækket af tests, men er endnu ikke kørt mod en rigtig tenant.
+
+Programmer som Git, 7-Zip, Notepad++ og Firefox kræver en ny Win32-app, hver gang leverandøren udgiver en version. **Mere › Opdateringstjek…** finder dem, der er bagud, og bygger opdateringen.
+
+0. **Log på Intune** – øverst i vinduet. Den viser den loggede konto eller *Ikke logget på*. Vælg Edge-profilen til Microsoft-login, og skriv en tenant, hvis du ikke bruger `organizations`. **Tjek Intune** logger selv på, når det er nødvendigt, med de samme valg.
+1. **Tjek Intune** – logger på, læser dine Win32-apps med visningsversion og samler versioner af samme produkt (*Git 2.40.0* og *Git 2.45.0* er ét produkt). Hvert produkt matches mod en pakke, og den nyeste version vises ved siden af din. WinGet kommer først: listen over alle WinGet-pakker hentes en gang i døgnet og matches på denne pc, så der ikke skal bruges en søgetjeneste, og `winget.exe` ikke behøver at være installeret. Har WinGet intet, spørges Chocolatey, og kun når navnet er identisk. Kun produktnavne sendes, og kun til Chocolatey.
+2. Matchet er et gæt ud fra navn og udgiver, og listen skriver **(gæt)**. **Sæt pakke-ID…** bekræfter det. Skriv et WinGet-ID som `Git.Git`, eller `choco:clickshare-desktop` for Chocolatey. InstallScout husker valget. Et tomt ID glemmer det. Produkter med *Intet match* er som regel leverandør- eller egenudviklet software, som ingen af kataloger har. Bekræft et af dem selv, hvis du kender dets pakke.
+3. **Byg opdatering** – henter installeren fra manifestet og kontrollerer dens **SHA256**. En fil, der ikke passer, bliver slettet, og der bygges ikke noget. Manifestet giver også silent-switche, det præcise navn og den udgiver, som *Apps og funktioner* viser, versionen og MSI-produktkoden. Detection passer dermed til produktet i stedet for et gæt. Pakken skrives til din Intune-mappe. Downloaden ligger i undermappen `_winget`.
+4. **Bed brugerne lukke disse programmer** – valgfrit. Skriv navne som `git, code`. Install command kører så med `-DeployMode Auto`: en dialog, når nogen er logget på, og silent, når ingen er. Brugerne kan udsætte i op til tre dage, og de bliver spurgt igen efter fire timer. Derefter lukkes programmerne efter en nedtælling på ti minutter. Appen får også returkoden `1602` som *retry*, så en udsættelse ikke tæller som en mislykket installation. Uden navne er pakken silent som før.
+5. **Test opgradering i Sandbox** – installerer den version, Intune har nu (forrige WinGet-version, når den er væk; består dens download ikke SHA256-kontrollen, fordi leverandøren har udskiftet filen, prøves de næste ældre versioner, højst tre), derefter den nye, og kører det nye detection-script før og efter. Detection skal sige *ikke installeret* først og *installeret* til sidst. Resultatet navngiver problemet: den gamle version blev ikke installeret, detection er for løs (Intune ville aldrig opdatere), opgraderingen fejlede, eller detection finder ikke den nye version (Intune ville blive ved med at geninstallere). Testen viser også de programmer, den nye version har lagt på. De kommer i feltet til programmer, der skal lukkes, når det er tomt.
+6. **Upload og supersede…** – uploader appen og superseder de tidligere versioner i samme produktgruppe som **Update**, højst 10.
+
+Grænser:
+
+- Kun WinGet-pakker med én silent installerfil kan bygges: MSI, EXE (Inno, NSIS, WiX Burn og andre), MSIX eller en ZIP, hvor manifestet udpeger setup-filen indeni (Adobe Acrobat Pro er et eksempel). ZIP-filen kontrolleres mod sin SHA256 og pakkes ud, og hele mappen kommer med i pakken, fordi sådan en setup skal bruge de øvrige filer ved siden af. Selve ZIP-filen gemmes ikke. Portable-pakker og Store-pakker afvises med en besked.
+- Chocolatey er mest en kilde til den nyeste version. En Chocolatey-pakke kan kun bygges, når dens installscript henter én MSI, EXE eller MSIX fra en https-adresse og angiver en SHA256. Pakker, der har installeren inde i selve pakken, pakker en zip ud eller regner adressen ud i kode, afvises med årsagen. Hent i stedet installeren hos leverandøren og træk den ind i InstallScout.
+- Manifestets hash kan halte efter en leverandør, der har udskiftet filen på stedet. Downloaden bliver så afvist, og det er meningen.
+- WinGet-manifester læses fra GitHub, som tillader omkring 60 anonyme kald i timen. Versionslister gemmes i seks timer. Sæt miljøvariablen `GITHUB_TOKEN` for mere.
+- Intet bliver installeret på denne pc, og intet bliver tildelt en gruppe. Tildel den nye app selv.
+- En række med **Opdatering findes (manuelt)** har en nyere version, men installeren kan ikke bygges her, fx fordi en Chocolatey-pakke har installeren inde i selve pakken. Markér rækken for at se hvorfor, hent installeren hos leverandøren, og læg den i InstallScout.
+- Læsning af Win32-apps kræver samme Graph-login som upload. At læse tenanten ændrer ikke noget.
+
+```powershell
+.\InstallScoutPortable.exe --cli --outdated
+.\InstallScoutPortable.exe --cli --outdated --only git --map "Git=Git.Git"
+.\InstallScoutPortable.exe --cli --winget Git.Git --intune C:\out\intune
+.\InstallScoutPortable.exe --cli --winget Git.Git --intune C:\out\intune --close-apps git --upgrade-test --publish-intune
+```
 
 ### PSADT-pakke uden Intune
 

@@ -1,6 +1,6 @@
 # InstallScout – teknisk reference
 
-Version **1.8.74**. Kort forløb: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Brugerforløbet står i [vejledning.md](vejledning.md). Denne fil beskriver motorer, kommandolinje og Microsoft Graph. PDF: [InstallScout-reference.pdf](InstallScout-reference.pdf?v=1.8.74).
+Version **1.9.0**. Kort forløb: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Brugerforløbet står i [vejledning.md](vejledning.md). Denne fil beskriver motorer, kommandolinje og Microsoft Graph. PDF: [InstallScout-reference.pdf](InstallScout-reference.pdf?v=1.9.0).
 
 InstallScout kører ikke installeren. Den læser filen, bygger en silent-kommando, pakker PSADT 4.1.8 til `.intunewin` og opretter en Win32-app.
 
@@ -89,7 +89,7 @@ Nøgler der læses: `HKLM` og `HKCU` under `SOFTWARE\Microsoft\Windows\CurrentVe
 
 `InstallScoutPortable.exe` uden argumenter åbner GUI. En frossen EXE åbner også GUI, medmindre et CLI-flag er sat. Fra kilde er `python -m installscout` det samme.
 
-Et af disse flag tvinger CLI, også uden `--cli`: `--json`, `--out`, `--psadt`, `--intune`, `--online`, `--sihq`, `--publish-intune`, `--switches`, `--icon`, `--supersede`, `--supersede-id`.
+Et af disse flag tvinger CLI, også uden `--cli`: `--json`, `--out`, `--psadt`, `--intune`, `--online`, `--sihq`, `--publish-intune`, `--switches`, `--icon`, `--supersede`, `--supersede-id`, `--outdated`, `--winget`.
 
 | Flag | Betydning |
 |---|---|
@@ -105,6 +105,16 @@ Et af disse flag tvinger CLI, også uden `--cli`: `--json`, `--out`, `--psadt`, 
 | `--icon PATH` | PNG, JPEG, GIF, ICO eller BMP til `largeIcon`. Uden flag bruges ikon fra EXE, MSI eller en søskendefil |
 | `--supersede update\|replace` | Supersedence mod ældre Win32-apps med beslægtet navn. Højst 10 |
 | `--supersede-id GUID` | Gentages. Brug kendte app-id’er i stedet for navnesøgning |
+| `--no-supersede` | Med `--winget --publish-intune`: superseder ikke tidligere versioner. Ellers er `update` standard der |
+| `--outdated` | Sammenlign tenantens Win32-apps med den nyeste WinGet- eller Chocolatey-version. Logger på. Ændrer intet |
+| `--only TEKST` | Med `--outdated`: produkter, hvis navn indeholder teksten |
+| `--map "Navn=Udgiver.Pakke"` | Med `--outdated`: bekræft et match. Brug `Navn=choco:id` til Chocolatey. Gentages. Tomt ID glemmer matchet |
+| `--winget ID` | Hent nyeste version af en WinGet-pakke (eller `choco:id`), kontrollér dens SHA256, analyser den og byg pakken. Kombinér med `--intune` og `--publish-intune` |
+| `--winget-version V` | Med `--winget`: denne version i stedet for den nyeste |
+| `--arch x64\|x86\|arm64` | Med `--winget`: installerens arkitektur. Standard `x64` |
+| `--close-apps a,b` | Med `--winget`: programmer, brugeren skal bede om at lukke. Install command bliver `-DeployMode Auto` |
+| `--upgrade-test` | Med `--winget`: installér forrige version og derefter den nye i Windows Sandbox, og kontrollér detection. Stopper med exitkode 5, medmindre opgraderingen består |
+| `--from-version V` | Med `--upgrade-test`: start fra denne version |
 | `--tenant ID` | Tom betyder `organizations` |
 | `--client-id ID` | Tom betyder Microsoft Graph PowerShell |
 | `--online` | WinGet og Chocolatey. Kun produktnavn og vendor sendes |
@@ -115,7 +125,7 @@ Et af disse flag tvinger CLI, også uden `--cli`: `--json`, `--out`, `--psadt`, 
 | `--no-recursive` | Kun den angivne mappe |
 | `--version` | Skriv version og afslut |
 
-Exitkode `0` er succes. Exitkode `2` bruges, når der ikke er nogen understøttet fil, `--publish-intune` mangler `--intune`, eller `--icon` ikke kan læses.
+Exitkode `0` er succes. Exitkode `2` bruges, når der ikke er nogen understøttet fil, `--publish-intune` mangler `--intune`, `--icon` ikke kan læses, en WinGet-pakke ikke kan læses eller pakkes, eller Windows Sandbox mangler. Exitkode `3` betyder, at downloaden ikke passede til manifestets SHA256. Exitkode `4` betyder, at sandboxen lukkede uden resultat. Exitkode `5` betyder, at opgraderingstesten ikke bestod.
 
 Ved start sendes et anonymt kald til Aptabase i EU (`eu.aptabase.com`) med version og sprog. Filnavne og stier sendes ikke. `INSTALLSCOUT_USAGE=0` slår kaldet fra.
 
@@ -135,6 +145,12 @@ Intune-installationslinjen i portalen er altid PSADT, ikke den rå silent-komman
 ```text
 .\Invoke-AppDeployToolkit.exe -DeploymentType Install -DeployMode Silent
 .\Invoke-AppDeployToolkit.exe -DeploymentType Uninstall -DeployMode Silent
+```
+
+Når en pakke har programmer, der skal lukkes (`--close-apps` eller opdateringsvinduet), er installationslinjen i stedet `-DeployMode Auto`, og appen får også returkode `1602` som `retry`:
+
+```text
+.\Invoke-AppDeployToolkit.exe -DeploymentType Install -DeployMode Auto
 ```
 
 `setupFilePath` er `Invoke-AppDeployToolkit.exe`.
@@ -224,3 +240,35 @@ https://intune.microsoft.com/#view/Microsoft_Intune_Apps/SettingsMenu/~/0/appId/
 Knappen kører den aktuelle silent-kommando i en ny Windows Sandbox og derefter det samme `Detection.ps1`, som upload sender til Intune. Tom detection-output betyder ikke installeret. Sandbox viser en besked med afslutningskoden og det detection-resultat. InstallScout læser den samme tekst tilbage i dette vindue.
 
 Kommandoen skal indeholde stien til installeren. En pakkemappe (setup plus MSI, CAB, prerequisites eller en undermappe som installeren bruger) mappes skrivebeskyttet til `C:\InstallScout\Installer`. En fil direkte i Overførsler, Skrivebord, Dokumenter, OneDrive-roden, Temp eller brugerprofilen kopieres ind i Sandbox-arbejdsmappen, så den overliggende mappe ikke deles. Det gælder også, når mappen er flyttet. En undermappe der, for eksempel `Overførsler\PSADT - CutePDF`, er stadig en pakkemappe. Arbejdsmappen kan skrives til. Netværk er slået til. På en pc med ledig RAM får Sandbox op til 8 GB hukommelse i stedet for standardloftet på 4 GB. Der kan kun køre én Windows Sandbox ad gangen. Når Sandbox lukkes, kasseres den. Lukker du den, før et resultat kommer tilbage, tændes knappen igen, så du kan rette kommandoen og køre den igen. Der installeres ingenting på denne pc.
+
+Sandboxen viser også de programmer, installeren har lagt på: nye `.exe`-filer under Program Files og `%LOCALAPPDATA%\Programs`, skrevet til `processes.txt`. Opdateringsvinduet bruger listen som forslag til programmer, der skal lukkes.
+
+### Opgraderingstest
+
+Opdateringsvinduet og `--upgrade-test` bruger et andet rapportscript. Det installerer den gamle version (`install_old.cmd`, fra `payload_old`), kører det nye `Detection.ps1`, installerer den nye version (`install_new.cmd`, fra `payload_new`) og kører detection igen. Dommen:
+
+| Dom | Betydning |
+|---|---|
+| `ok` | Detection sagde ikke installeret med den gamle version og installeret med den nye |
+| `old_failed` | Den gamle version blev ikke installeret |
+| `detection_lax` | Detection sagde allerede installeret med den gamle version. Intune ville aldrig opdatere |
+| `new_failed` | Opgraderingen fejlede |
+| `detection_missing` | Detection finder ikke den nye version. Intune ville geninstallere den for evigt |
+| `incomplete` | Sandboxen lukkede, eller rapporten er delvis |
+
+## 5. Opdateringer til tredjepartsprogrammer (beta)
+
+Kilde: WinGets fællesrepository `microsoft/winget-pkgs`. Kun produktnavn, udgiver og et pakke-id forlader pc'en.
+
+- **Versioner.** `GET api.github.com/repos/microsoft/winget-pkgs/contents/manifests/<bogstav>/<Id-dele>`. Et pakke-id som `Git.Git` bliver til `manifests/g/Git/Git`. Listen gemmes i seks timer. `GITHUB_TOKEN` sendes, når den er sat.
+- **Manifester.** `raw.githubusercontent.com/.../<version>/<Id>.installer.yaml` og `<Id>.locale.en-US.yaml`, med enkeltfilen `<Id>.yaml` som reserve. Versioner sorteres efter tal, så 2.9 er ældre end 2.10, og et indledende `v` ignoreres.
+- **Match, WinGet.** `https://cdn.winget.microsoft.com/cache/source.msix` er det indeks, `winget` selv bruger: en zip med en SQLite-database over alle pakke-id'er, navne og udgivere. Den hentes højst en gang i døgnet (cirka 20 MB), og en kort liste gemmes i `winget_catalog.json` ved siden af indstillingerne. Intune-appens navn og udgiver matches på denne pc. En forældet kopi bruges, hvis hentningen fejler. Uden kataloget er `winget.exe search` reserven, hvis det er installeret.
+- **Match, Chocolatey.** Kun når WinGet intet har. `GET community.chocolatey.org/api/v2/Search()` med produktnavnet, højst et kald hvert 0,4 sekund. Et hit tæller kun, når titlen har de samme ord som produktet. Nyeste version: `Packages()` med `IsLatestVersion`. Ældre versioner: `FindPackagesById()`, kun stabile, højst 40.
+- **Bekræftelse.** Et match er et gæt, til det bekræftes med **Sæt pakke-ID…** eller `--map`. Bekræftede id'er gemmes i indstillingerne under `winget_map`. Chocolatey-id'er skrives `choco:<id>`.
+- **Chocolatey-installer.** `.nupkg` hentes (højst 8 MB). Dens `tools/chocolateyInstall.ps1` skal kalde `Install-ChocolateyPackage` med `fileType` exe, msi eller msix, en `https` `url` eller `url64bit` og en `checksum` på 64 hex-tegn. Simple variable (`$version`, `${version}`, `$env:ChocolateyPackageVersion`) opløses. Det, der regnes ud i kode, gør ikke. En pakke med kun en afhængighed (`7zip` kræver `7zip.install`) følges et skridt. En større pakke, en zip eller en installer inde i pakken afvises med årsagen.
+- **ZIP.** Et manifest med `InstallerType: zip` bruges, når `NestedInstallerType` er en installerbar type, og `NestedInstallerFiles` udpeger setup-filen (`RelativeFilePath`, uden `..` og uden drev). ZIP-filen hentes, og dens SHA256 kontrolleres først. Den pakkes derefter ud til `<version>\package\` (højst 100.000 filer og 8 GB, og ingen sti må forlade mappen), ZIP-filen slettes, og den udpegede setup er installeren. Dens mappe kopieres hel ind i `Files`. En ZIP med en portable setup afvises.
+- **Installer.** Den første `https`-installer, der passer til arkitektur og scope, af typen MSI, WiX, Burn, Inno, NSIS, EXE, MSIX eller APPX. Downloaden afvises uden SHA256 og slettes, når hashen ikke passer. Filerne ligger i `<mappe>\_winget\<Id>\<version>\`.
+- **Pakke.** Manifestet overstyrer visningsnavn, udgiver, version, silent-switche og MSI-produktkode. Detection bruger navnet fra Apps og funktioner i manifestet. En produktkode bruges kun, når den er et GUID.
+- **Inventar.** `GET /deviceAppManagement/mobileApps` med Win32-filter og uden `$select`, så Graph returnerer `displayVersion`. Kun læsning. Versioner sammenlignes på det indledende punktum-adskilte tal. Et produkt er *outdated*, *current*, *ahead*, *unknown*, *unmatched* eller *error*.
+- **Supersedence.** Tenantens apps grupperes efter navn uden version. Alt ældre end den nye app tilføjes som `update`, højst 10, nyeste først.
+- **Luk programmer.** Med navne sat får PSADTs `Show-ADTInstallationWelcome` navnene i `AppProcessesToClose`, `DeferDays = 3`, `DeferRunInterval = 4h` og `CloseProcessesCountdown = 600`. Install line er `-DeployMode Auto`. PSADT afslutter med `1602` ved udsættelse. For disse pakker har Graph `returnCodes` `1602` som `retry`.

@@ -4,7 +4,7 @@ InstallScout takes a Windows installer **all the way to Intune**. You give it an
 
 Silent switches are one step. The destination is the package in Intune.
 
-Version **1.8.74**. Quick start: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). Technical reference: [reference-en.md](reference-en.md). PDF: [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.8.74). Danish: [vejledning.md](vejledning.md).
+Version **1.9.0**. Quick start: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). Technical reference: [reference-en.md](reference-en.md). PDF: [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.9.0). Danish: [vejledning.md](vejledning.md).
 
 [Expected hit rate](#expected-hit-rate) for the package and detection is further down in this guide.
 
@@ -446,6 +446,37 @@ After success, a link to the app in the Intune portal opens.
 | Restart | No specific action (`suppress`) |
 | Logo | `largeIcon` (PNG/JPEG from EXE, MSI, file or clipboard) |
 | Supersedence | Optional: **Update** or **Replace** against up to 10 older Win32 apps |
+
+### Third-party updates (beta)
+
+> **Beta.** Matching, download, packaging, and upload are tested, but the feature is new. Check the first packages yourself, assign them to a pilot group before a wider rollout, and confirm guessed matches with **Set package ID…**. The automatic supersedence chain is covered by tests, but has not been run against a live tenant yet.
+
+Apps such as Git, 7-Zip, Notepad++, or Firefox need a new Win32 app every time the vendor ships a version. **More › Update check…** finds the ones that are behind and builds the update.
+
+0. **Sign in to Intune** — at the top of the window. It shows the signed-in account, or *Not signed in*. Pick the Edge profile for the Microsoft sign-in, and fill in a tenant if you do not use `organizations`. **Check Intune** signs in by itself when needed, with the same choices.
+1. **Check Intune** — signs in, reads your Win32 apps with their display version, and groups versions of the same product (*Git 2.40.0* and *Git 2.45.0* are one product). Each product is matched to a package, and the newest version is shown next to yours. WinGet comes first: the list of all WinGet packages is downloaded once a day and matched on this PC, so no search service is needed and `winget.exe` does not have to be installed. When WinGet has nothing, Chocolatey is asked, and only when the name is identical. Only product names are sent, and only to Chocolatey.
+2. The match is a guess from name and publisher, and the list says **(guess)**. **Set package ID…** confirms it. Write a WinGet ID such as `Git.Git`, or `choco:clickshare-desktop` for Chocolatey. InstallScout remembers the choice. An empty ID forgets it. Products with *No match* are usually vendor or in-house software that neither catalogue has. Confirm one by hand when you know its package.
+3. **Build update** — downloads the installer from the manifest and checks its **SHA256**. A file that does not match is deleted, and nothing is built. The manifest also gives the silent switches, the exact *Apps & features* name and publisher, the version, and the MSI product code, so detection fits the product instead of a guess. The package is written to your Intune folder. The download sits in its `_winget` subfolder.
+4. **Ask users to close these programs** — optional. Enter names such as `git, code`. The install command then runs with `-DeployMode Auto`: a dialog when someone is signed in, silent when nobody is. Users can defer for up to three days, and they are asked again after four hours. After that the programs close after a ten minute countdown. The app also gets the return code `1602` as *retry*, so a deferral does not count as a failed install. Without names, the package is silent as before.
+5. **Test upgrade in Sandbox** — installs the version Intune has now (the previous WinGet version when that one is gone; when its download fails the SHA256 check, because the vendor replaced the file, the next older versions are tried, three at most), then the new one, and runs the new detection script before and after. Detection must say *not installed* first and *installed* last. The result names the problem: the old version did not install, detection is too lax (Intune would never update), the upgrade failed, or detection does not find the new version (Intune would keep reinstalling). The test also lists the programs the new version added. They go into the close-programs field when it is empty.
+6. **Upload and supersede…** — uploads the app and supersedes the earlier versions in the same product group as **Update**, at most 10.
+
+Limits:
+
+- Only WinGet packages with one silent installer file can be built: MSI, EXE (Inno, NSIS, WiX Burn, and others), MSIX, or a ZIP whose manifest names the setup inside it (Adobe Acrobat Pro is one). The ZIP is checked against its SHA256 and unpacked, and the whole folder goes into the package, because such a setup needs its neighbouring files. The ZIP itself is not kept. Portable packages and Store-only packages are refused with a message.
+- Chocolatey is mainly a source of the newest version. A Chocolatey package can be built only when its install script downloads one MSI, EXE, or MSIX from an https address and lists a SHA256. Packages that carry the installer inside the package, unpack a zip, or compute the address in code are refused with the reason. Download the installer from the vendor and drop it in InstallScout instead.
+- The manifest hash can lag behind a vendor that replaced the file in place. The download is then refused, which is the intended result.
+- WinGet manifests are read from GitHub, which allows about 60 unauthenticated requests per hour. Version lists are cached for six hours. Set the environment variable `GITHUB_TOKEN` for more.
+- Nothing is installed on this PC, and nothing is assigned to a group. Assign the new app yourself.
+- A row that says **Update available (manual)** has a newer version, but its installer cannot be built here, for example because a Chocolatey package carries the installer inside the package. Select the row to read why, download the installer from the vendor, and drop it in InstallScout.
+- Reading Win32 apps needs the same Graph sign-in as upload. A read of the tenant does not change anything.
+
+```powershell
+.\InstallScoutPortable.exe --cli --outdated
+.\InstallScoutPortable.exe --cli --outdated --only git --map "Git=Git.Git"
+.\InstallScoutPortable.exe --cli --winget Git.Git --intune C:\out\intune
+.\InstallScoutPortable.exe --cli --winget Git.Git --intune C:\out\intune --close-apps git --upgrade-test --publish-intune
+```
 
 ### PSADT package without Intune
 

@@ -1,6 +1,6 @@
 # InstallScout – technical reference
 
-Version **1.8.74**. Short path: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). The user workflow is in [guide.md](guide.md). This file covers engines, the command line, and Microsoft Graph. PDF: [InstallScout-reference-en.pdf](InstallScout-reference-en.pdf?v=1.8.74).
+Version **1.9.0**. Short path: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). The user workflow is in [guide.md](guide.md). This file covers engines, the command line, and Microsoft Graph. PDF: [InstallScout-reference-en.pdf](InstallScout-reference-en.pdf?v=1.9.0).
 
 InstallScout does not run the installer. It reads the file, builds a silent command, wraps PSADT 4.1.8 as `.intunewin`, and creates a Win32 app.
 
@@ -89,7 +89,7 @@ Keys read: `HKLM` and `HKCU` under `SOFTWARE\Microsoft\Windows\CurrentVersion\Un
 
 `InstallScoutPortable.exe` with no arguments opens the GUI. A frozen EXE also opens the GUI unless a CLI flag is set. From source, `python -m installscout` behaves the same way.
 
-Any of these flags forces the CLI even without `--cli`: `--json`, `--out`, `--psadt`, `--intune`, `--online`, `--sihq`, `--publish-intune`, `--switches`, `--icon`, `--supersede`, `--supersede-id`.
+Any of these flags forces the CLI even without `--cli`: `--json`, `--out`, `--psadt`, `--intune`, `--online`, `--sihq`, `--publish-intune`, `--switches`, `--icon`, `--supersede`, `--supersede-id`, `--outdated`, `--winget`.
 
 | Flag | Meaning |
 |---|---|
@@ -105,6 +105,16 @@ Any of these flags forces the CLI even without `--cli`: `--json`, `--out`, `--ps
 | `--icon PATH` | PNG, JPEG, GIF, ICO, or BMP for `largeIcon`. Without the flag, the icon comes from the EXE, the MSI, or a sibling file |
 | `--supersede update\|replace` | Supersede older Win32 apps with a related name. At most 10 |
 | `--supersede-id GUID` | Repeatable. Use known app IDs instead of a name search |
+| `--no-supersede` | With `--winget --publish-intune`: do not supersede earlier versions. Otherwise `update` is the default there |
+| `--outdated` | Compare the tenant's Win32 apps with the newest WinGet or Chocolatey version. Signs in. Changes nothing |
+| `--only TEXT` | With `--outdated`: products whose name contains the text |
+| `--map "Name=Publisher.Package"` | With `--outdated`: confirm a match. Use `Name=choco:id` for Chocolatey. Repeatable. An empty ID forgets the match |
+| `--winget ID` | Download the newest version of a WinGet package (or `choco:id`), verify its SHA256, analyze it, and build the package. Pair with `--intune` and `--publish-intune` |
+| `--winget-version V` | With `--winget`: this version instead of the newest |
+| `--arch x64\|x86\|arm64` | With `--winget`: installer architecture. Default `x64` |
+| `--close-apps a,b` | With `--winget`: programs to ask the user to close. The install command becomes `-DeployMode Auto` |
+| `--upgrade-test` | With `--winget`: install the previous version and then the new one in Windows Sandbox, and check detection. Stops with exit code 5 unless the upgrade passes |
+| `--from-version V` | With `--upgrade-test`: start from this version |
 | `--tenant ID` | Empty means `organizations` |
 | `--client-id ID` | Empty means Microsoft Graph PowerShell |
 | `--online` | WinGet and Chocolatey. Only the product name and vendor are sent |
@@ -115,7 +125,7 @@ Any of these flags forces the CLI even without `--cli`: `--json`, `--out`, `--ps
 | `--no-recursive` | Only the given folder |
 | `--version` | Print the version and exit |
 
-Exit code `0` is success. Exit code `2` is used when no supported file was found, `--publish-intune` is missing `--intune`, or `--icon` cannot be read.
+Exit code `0` is success. Exit code `2` is used when no supported file was found, `--publish-intune` is missing `--intune`, `--icon` cannot be read, a WinGet package cannot be read or packaged, or Windows Sandbox is missing. Exit code `3` means the download did not match the manifest's SHA256. Exit code `4` means the sandbox closed without a result. Exit code `5` means the upgrade test did not pass.
 
 On startup, one anonymous call goes to Aptabase in the EU (`eu.aptabase.com`) with the version and language. File names and paths are not sent. `INSTALLSCOUT_USAGE=0` turns the call off.
 
@@ -135,6 +145,12 @@ The install line written to the portal is always PSADT, not the raw silent comma
 ```text
 .\Invoke-AppDeployToolkit.exe -DeploymentType Install -DeployMode Silent
 .\Invoke-AppDeployToolkit.exe -DeploymentType Uninstall -DeployMode Silent
+```
+
+When a package lists programs to close (`--close-apps` or the Update check window), the install line is `-DeployMode Auto` instead, and the app also gets return code `1602` as `retry`:
+
+```text
+.\Invoke-AppDeployToolkit.exe -DeploymentType Install -DeployMode Auto
 ```
 
 `setupFilePath` is `Invoke-AppDeployToolkit.exe`.
@@ -224,3 +240,35 @@ https://intune.microsoft.com/#view/Microsoft_Intune_Apps/SettingsMenu/~/0/appId/
 The button runs the current silent command inside a new Windows Sandbox, then the same `Detection.ps1` that upload sends to Intune. Empty detection output means not installed. The sandbox shows a message with the install exit code and that detection result. InstallScout reads the same text back into this window.
 
 The command must contain the installer path. A package folder (the setup plus MSI, CAB, prerequisites, or a subfolder the installer needs) is mapped read-only at `C:\InstallScout\Installer`. A file directly in Downloads, Desktop, Documents, the OneDrive root, Temp, or the user profile is copied into the sandbox work folder, so the parent folder is not shared. That still applies when the folder has been redirected. A subfolder there, for example `Downloads\PSADT - CutePDF`, is still a package folder. The work folder is writable. Networking is enabled. On a PC with free RAM, the sandbox gets up to 8 GB of memory instead of the 4 GB default ceiling. Only one Windows Sandbox can run at a time. Closing the sandbox discards it. If you close it before a result comes back, the button turns back on so you can change the command and run it again. Nothing is installed on this PC.
+
+The sandbox also lists the programs the installer added: new `.exe` files under Program Files and `%LOCALAPPDATA%\Programs`, written to `processes.txt`. The Update check window uses that list as suggestions for programs to close.
+
+### Upgrade test
+
+The Update check window and `--upgrade-test` use a second report script. It installs the old version (`install_old.cmd`, from `payload_old`), runs the new `Detection.ps1`, installs the new version (`install_new.cmd`, from `payload_new`), and runs detection again. The verdict:
+
+| Verdict | Meaning |
+|---|---|
+| `ok` | Detection said not installed with the old version and installed with the new one |
+| `old_failed` | The old version did not install |
+| `detection_lax` | Detection already said installed with the old version. Intune would never update |
+| `new_failed` | The upgrade failed |
+| `detection_missing` | Detection does not find the new version. Intune would reinstall it forever |
+| `incomplete` | The sandbox closed or the report is partial |
+
+## 5. Third-party updates (beta)
+
+Source: the WinGet community repository `microsoft/winget-pkgs`. Nothing but the product name, the publisher, and a package ID leaves the PC.
+
+- **Versions.** `GET api.github.com/repos/microsoft/winget-pkgs/contents/manifests/<letter>/<Id parts>`. A package ID such as `Git.Git` maps to `manifests/g/Git/Git`. The list is cached for six hours. `GITHUB_TOKEN` is sent when set.
+- **Manifests.** `raw.githubusercontent.com/.../<version>/<Id>.installer.yaml` and `<Id>.locale.en-US.yaml`, with the single-file `<Id>.yaml` as fallback. Versions sort by numeric parts, so 2.9 is older than 2.10, and a leading `v` is ignored.
+- **Match, WinGet.** `https://cdn.winget.microsoft.com/cache/source.msix` is the index `winget` itself uses: a zip with a SQLite database of every package ID, name, and publisher. It is downloaded at most once a day (about 20 MB) and a short list is kept in `winget_catalog.json` next to the preferences. The Intune app's name and publisher are matched on this PC. A stale copy is used when the download fails. Without the catalogue, `winget.exe search` is the fallback when installed.
+- **Match, Chocolatey.** Only when WinGet has nothing. `GET community.chocolatey.org/api/v2/Search()` with the product name, at most one call every 0.4 s. A hit counts only when the title has the same words as the product. Newest version: `Packages()` with `IsLatestVersion`. Older versions: `FindPackagesById()`, stable ones only, 40 at most.
+- **Confirming.** A match stays a guess until confirmed with **Set package ID…** or `--map`. Confirmed IDs are stored in the preferences under `winget_map`. Chocolatey IDs are written `choco:<id>`.
+- **Chocolatey installer.** The `.nupkg` is downloaded (at most 8 MB). Its `tools/chocolateyInstall.ps1` must call `Install-ChocolateyPackage` with `fileType` exe, msi, or msix, an `https` `url` or `url64bit`, and a 64 hex digit `checksum`. Simple variables (`$version`, `${version}`, `$env:ChocolateyPackageVersion`) are resolved. Anything computed in code is not. A package with only a dependency (`7zip` needs `7zip.install`) is followed one step. A larger package, a zip, or an installer inside the package is refused with the reason.
+- **ZIP.** A manifest with `InstallerType: zip` is used when `NestedInstallerType` is an installable type and `NestedInstallerFiles` names the setup (`RelativeFilePath`, no `..`, no drive). The ZIP is downloaded and its SHA256 checked first. It is then unpacked to `<version>\package\` (at most 100,000 files and 8 GB, and no path may leave that folder), the ZIP is deleted, and the named setup is the installer. Its folder is copied whole into `Files`. A ZIP with a portable setup is refused.
+- **Installer.** The first `https` installer that fits architecture and scope, of type MSI, WiX, Burn, Inno, NSIS, EXE, MSIX, or APPX. The download is refused without a SHA256 and deleted when the hash does not match. Files go to `<folder>\_winget\<Id>\<version>\`.
+- **Package.** The manifest overrides the display name, publisher, version, silent switches, and MSI product code. Detection uses the Apps & features name from the manifest. A product code is used only when it is a GUID.
+- **Inventory.** `GET /deviceAppManagement/mobileApps` with a Win32 filter, without `$select`, so Graph returns `displayVersion`. Read only. Versions are compared by their leading dotted number. A product is *outdated*, *current*, *ahead*, *unknown*, *unmatched*, or *error*.
+- **Supersedence.** The tenant's apps are grouped by name without version. Everything older than the new app is added as `update`, at most 10, newest first.
+- **Close programs.** With names set, PSADT's `Show-ADTInstallationWelcome` gets the names in `AppProcessesToClose`, `DeferDays = 3`, `DeferRunInterval = 4h`, and `CloseProcessesCountdown = 600`. The install line is `-DeployMode Auto`. PSADT exits with `1602` on a deferral. For these packages, Graph `returnCodes` has `1602` as `retry`.
