@@ -4,7 +4,7 @@ Public page: [mthorngaard.github.io/InstallScout-releases](https://mthorngaard.g
 
 Find silent install switches for a Windows app without running the installer. InstallScout reads an EXE, MSI, COM, or MSIX, names the engine, and writes the silent command. It can then build a PSAppDeployToolkit (PSADT) `.intunewin` package and upload the Win32 app to Microsoft Intune.
 
-**What's new in 1.9.0.** Update check (beta) finds Win32 apps in Intune that are behind WinGet or Chocolatey, downloads the newest installer with a SHA256 check, builds the PSADT package, and can test the upgrade in Windows Sandbox and upload with supersedence. ZIP installers such as Adobe Acrobat Pro are supported.
+**What's new in 1.9.0.** Update check (beta), under **More › Update check (beta)…** in the main window, finds Win32 apps in Intune that are behind WinGet or Chocolatey, downloads the newest installer with a SHA256 check, builds the PSADT package, and can test the upgrade in Windows Sandbox and upload with supersedence. ZIP installers such as Adobe Acrobat Pro are supported.
 
 ![Twenty-second InstallScout walkthrough: drop an installer, try the silent command in Windows Sandbox, check WinGet, build the intunewin package, and upload the Win32 app](assets/installscout.gif?v=1.9.0)
 

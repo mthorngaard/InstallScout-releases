@@ -451,7 +451,7 @@ After success, a link to the app in the Intune portal opens.
 
 > **Beta.** Matching, download, packaging, and upload are tested, but the feature is new. Check the first packages yourself, assign them to a pilot group before a wider rollout, and confirm guessed matches with **Set package ID…**. The automatic supersedence chain is covered by tests, but has not been run against a live tenant yet.
 
-Apps such as Git, 7-Zip, Notepad++, or Firefox need a new Win32 app every time the vendor ships a version. **More › Update check…** finds the ones that are behind and builds the update.
+Apps such as Git, 7-Zip, Notepad++, or Firefox need a new Win32 app every time the vendor ships a version. **More › Update check (beta)…** in the main window finds the ones that are behind and builds the update.
 
 0. **Sign in to Intune** — at the top of the window. It shows the signed-in account, or *Not signed in*. Pick the Edge profile for the Microsoft sign-in, and fill in a tenant if you do not use `organizations`. **Check Intune** signs in by itself when needed, with the same choices.
 1. **Check Intune** — signs in, reads your Win32 apps with their display version, and groups versions of the same product (*Git 2.40.0* and *Git 2.45.0* are one product). Each product is matched to a package, and the newest version is shown next to yours. WinGet comes first: the list of all WinGet packages is downloaded once a day and matched on this PC, so no search service is needed and `winget.exe` does not have to be installed. When WinGet has nothing, Chocolatey is asked, and only when the name is identical. Only product names are sent, and only to Chocolatey.
