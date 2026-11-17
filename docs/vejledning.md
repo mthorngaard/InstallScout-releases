@@ -4,7 +4,7 @@ InstallScout tager en Windows-installer **hele vejen til Intune**. Du giver det 
 
 Silent-switche er ét trin. Målet er pakken i Intune.
 
-Version **1.9.0**. Quick start: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Teknisk reference: [reference.md](reference.md). PDF: [InstallScout-vejledning.pdf](InstallScout-vejledning.pdf?v=1.9.0). English: [guide.md](guide.md) · [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.9.0).
+Version **1.9.1**. Quick start: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Teknisk reference: [reference.md](reference.md). PDF: [InstallScout-vejledning.pdf](InstallScout-vejledning.pdf?v=1.9.1). English: [guide.md](guide.md) · [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.9.1).
 
 [Forventet træfsikkerhed](#forventet-træfsikkerhed) for pakke og detection står længere nede i vejledningen.
 
@@ -452,6 +452,10 @@ Efter succes åbnes et link til appen i Intune-portalen.
 > **Beta.** Matchning, download, pakning og upload er afprøvet, men funktionen er ny. Kontrollér de første pakker selv, tildel dem en pilotgruppe, før de rulles bredt ud, og bekræft gæt med **Sæt pakke-ID…**. Den automatiske supersedence-kæde er dækket af tests, men er endnu ikke kørt mod en rigtig tenant.
 
 Programmer som Git, 7-Zip, Notepad++ og Firefox kræver en ny Win32-app, hver gang leverandøren udgiver en version. **Mere › Opdateringstjek (beta)…** i hovedvinduet finder dem, der er bagud, og bygger opdateringen.
+
+![Menuen Mere med Opdateringstjek (beta) som sidste punkt](images/12-opdateringstjek-menu.png)
+
+![Opdateringer til tredjepartsprogrammer (beta): Git og Notepad++ er bagud, ClickShare er bagud, men skal hentes manuelt, 7-Zip er opdateret](images/13-opdateringstjek.png)
 
 0. **Log på Intune** – øverst i vinduet. Den viser den loggede konto eller *Ikke logget på*. Vælg Edge-profilen til Microsoft-login, og skriv en tenant, hvis du ikke bruger `organizations`. **Tjek Intune** logger selv på, når det er nødvendigt, med de samme valg.
 1. **Tjek Intune** – logger på, læser dine Win32-apps med visningsversion og samler versioner af samme produkt (*Git 2.40.0* og *Git 2.45.0* er ét produkt). Hvert produkt matches mod en pakke, og den nyeste version vises ved siden af din. WinGet kommer først: listen over alle WinGet-pakker hentes en gang i døgnet og matches på denne pc, så der ikke skal bruges en søgetjeneste, og `winget.exe` ikke behøver at være installeret. Har WinGet intet, spørges Chocolatey, og kun når navnet er identisk. Kun produktnavne sendes, og kun til Chocolatey.

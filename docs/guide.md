@@ -4,7 +4,7 @@ InstallScout takes a Windows installer **all the way to Intune**. You give it an
 
 Silent switches are one step. The destination is the package in Intune.
 
-Version **1.9.0**. Quick start: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). Technical reference: [reference-en.md](reference-en.md). PDF: [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.9.0). Danish: [vejledning.md](vejledning.md).
+Version **1.9.1**. Quick start: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). Technical reference: [reference-en.md](reference-en.md). PDF: [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.9.1). Danish: [vejledning.md](vejledning.md).
 
 [Expected hit rate](#expected-hit-rate) for the package and detection is further down in this guide.
 
@@ -452,6 +452,10 @@ After success, a link to the app in the Intune portal opens.
 > **Beta.** Matching, download, packaging, and upload are tested, but the feature is new. Check the first packages yourself, assign them to a pilot group before a wider rollout, and confirm guessed matches with **Set package ID…**. The automatic supersedence chain is covered by tests, but has not been run against a live tenant yet.
 
 Apps such as Git, 7-Zip, Notepad++, or Firefox need a new Win32 app every time the vendor ships a version. **More › Update check (beta)…** in the main window finds the ones that are behind and builds the update.
+
+![The More menu with Update check (beta) as the last entry](images/en/12-opdateringstjek-menu.png)
+
+![Third-party updates (beta): Git and Notepad++ are behind, ClickShare is behind but must be downloaded by hand, 7-Zip is up to date](images/en/13-opdateringstjek.png)
 
 0. **Sign in to Intune** — at the top of the window. It shows the signed-in account, or *Not signed in*. Pick the Edge profile for the Microsoft sign-in, and fill in a tenant if you do not use `organizations`. **Check Intune** signs in by itself when needed, with the same choices.
 1. **Check Intune** — signs in, reads your Win32 apps with their display version, and groups versions of the same product (*Git 2.40.0* and *Git 2.45.0* are one product). Each product is matched to a package, and the newest version is shown next to yours. WinGet comes first: the list of all WinGet packages is downloaded once a day and matched on this PC, so no search service is needed and `winget.exe` does not have to be installed. When WinGet has nothing, Chocolatey is asked, and only when the name is identical. Only product names are sent, and only to Chocolatey.
