@@ -76,7 +76,7 @@
     <article>
 <h1>Silent install switches by installer type</h1>
 <p>There is no switch that silences every EXE. The right argument depends on the engine that built the installer. Find the engine first, then use its switch. <code>{file}</code> below is the quoted path of the installer.</p>
-<p>Version <strong>1.9.2</strong>. <a href="find-silent-switches.html">Find the switches for any installer</a>.</p>
+<p>Version <strong>1.9.3</strong>. <a href="find-silent-switches.html">Find the switches for any installer</a>.</p>
 <h2>The common engines</h2>
 <div class="table-wrap"><table><thead><tr><th>Installer</th><th>Silent install</th><th>Details</th></tr></thead><tbody><tr><td>MSI</td><td><code>msiexec /i &quot;{file}&quot; /qn</code></td><td><a href="msi-silent-install.html">MSI (Windows Installer)</a></td></tr><tr><td>Inno Setup</td><td><code>&quot;{file}&quot; /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-</code></td><td><a href="inno-setup-silent-install.html">Inno Setup</a></td></tr><tr><td>NSIS</td><td><code>&quot;{file}&quot; /S</code></td><td><a href="nsis-silent-install.html">NSIS (Nullsoft Scriptable Install System)</a></td></tr><tr><td>InstallShield</td><td><code>&quot;{file}&quot; /s /v&quot;/qn&quot;</code></td><td><a href="installshield-silent-install.html">InstallShield</a></td></tr><tr><td>WiX Burn</td><td><code>&quot;{file}&quot; /quiet</code></td><td><a href="wix-burn-silent-install.html">WiX Burn bundle</a></td></tr><tr><td>Advanced Installer</td><td><code>&quot;{file}&quot; /exenoui /qn</code></td><td><a href="advanced-installer-silent-install.html">Advanced Installer</a></td></tr><tr><td>MSIX</td><td><code>Add-AppxPackage -Path &quot;{file}&quot;</code></td><td><a href="msix-silent-install.html">MSIX and AppX</a></td></tr></tbody></table></div>
 <h2>Other engines</h2>
@@ -92,7 +92,7 @@
 <p>Many setup programs print no help text. The engine still has a known silent form. Identify the engine and use its switch.</p>
     </article>
     <footer>
-      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.9.2/InstallScout-1.9.2.zip">Download 1.9.2 (.zip)</a> · <a href="../">InstallScout</a></p>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.9.3/InstallScout-1.9.3.zip">Download 1.9.3 (.zip)</a> · <a href="../">InstallScout</a></p>
     </footer>
   </div>
 </body>

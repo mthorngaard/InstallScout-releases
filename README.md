@@ -6,7 +6,7 @@ Find silent install switches for a Windows app without running the installer. In
 
 **What's new in 1.9.1.** Update check (beta), under **More › Update check (beta)…** in the main window, finds Win32 apps in Intune that are behind WinGet or Chocolatey, downloads the newest installer with a SHA256 check, builds the PSADT package, and can test the upgrade in Windows Sandbox and upload with supersedence. ZIP installers such as Adobe Acrobat Pro are supported.
 
-![Twenty-second InstallScout walkthrough: drop an installer, try the silent command in Windows Sandbox, check WinGet, build the intunewin package, and upload the Win32 app](assets/installscout.gif?v=1.9.2)
+![Twenty-second InstallScout walkthrough: drop an installer, try the silent command in Windows Sandbox, check WinGet, build the intunewin package, and upload the Win32 app](assets/installscout.gif?v=1.9.3)
 
 ## What it does
 
@@ -46,13 +46,15 @@ The same note is in the [guide](https://mthorngaard.github.io/InstallScout-relea
 
 ## Download
 
-The current version is **1.9.2**: [releases](https://github.com/mthorngaard/InstallScout-releases/releases/latest)
+The current version is **1.9.3**: [releases](https://github.com/mthorngaard/InstallScout-releases/releases/latest)
 
 | File | Use |
 |---|---|
-| [`InstallScout-1.9.2.zip`](https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.9.2/InstallScout-1.9.2.zip) | Both files in one download. |
-| `InstallScoutPortable.exe` | Copy it anywhere and run it. Nothing is installed. |
-| `InstallScout.msi` | Installs to Program Files and adds a Start menu shortcut. |
+| [`InstallScout-1.9.3.zip`](https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.9.3/InstallScout-1.9.3.zip) | Both files in one download. |
+| `InstallScoutPortable.exe` | Copy it anywhere and run it. Nothing is installed. It is a single file that unpacks itself to `%TEMP%\_MEI*` on every start. |
+| `InstallScout.msi` | A full installation. It puts `InstallScout.exe` and an `_internal` folder with the Python runtime, DLLs and assets in `C:\Program Files\InstallScout`, and adds a Start menu shortcut. Nothing is unpacked to `%TEMP%` when it starts. |
+
+Use the MSI where AppLocker blocks executables and DLLs in Temp, or where EDR flags the `_MEI*` folders. Settings in `%LOCALAPPDATA%\InstallScout` are kept on uninstall.
 
 The download is not code-signed. Windows or company security may warn or block it. Choose Keep / Run anyway, ask IT to allow the file, or try it in a VM or Windows Sandbox without those policies.
 
@@ -80,7 +82,7 @@ Upload to Intune also needs:
 **Guide:** [English](https://mthorngaard.github.io/InstallScout-releases/docs/guide.html) · [Dansk](https://mthorngaard.github.io/InstallScout-releases/docs/vejledning.html)  
 **Technical reference:** [English](https://mthorngaard.github.io/InstallScout-releases/docs/reference-en.html) · [Dansk](https://mthorngaard.github.io/InstallScout-releases/docs/reference.html)
 
-PDF copies sit next to the Markdown files: [quick start](docs/InstallScout-quickstart-en.pdf?v=1.9.2), [guide](docs/InstallScout-guide.pdf?v=1.9.2), and [reference](docs/InstallScout-reference-en.pdf?v=1.9.2). Danish PDF files use the same names without `-en`.
+PDF copies sit next to the Markdown files: [quick start](docs/InstallScout-quickstart-en.pdf?v=1.9.3), [guide](docs/InstallScout-guide.pdf?v=1.9.3), and [reference](docs/InstallScout-reference-en.pdf?v=1.9.3). Danish PDF files use the same names without `-en`.
 
 ## Credits
 

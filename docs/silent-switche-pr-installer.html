@@ -76,7 +76,7 @@
     <article>
 <h1>Silent-switche pr. installer-type</h1>
 <p>Der findes ingen switch, der gør alle EXE-filer lydløse. Det rigtige argument afhænger af den motor, der har bygget installeren. Find motoren først, og brug derefter dens switch. <code>{file}</code> nedenfor er den citerede sti til installeren.</p>
-<p>Version <strong>1.9.2</strong>. <a href="find-silent-switche.html">Find switchene til en hvilken som helst installer</a>.</p>
+<p>Version <strong>1.9.3</strong>. <a href="find-silent-switche.html">Find switchene til en hvilken som helst installer</a>.</p>
 <h2>De almindelige motorer</h2>
 <div class="table-wrap"><table><thead><tr><th>Installer</th><th>Silent install</th><th>Detaljer</th></tr></thead><tbody><tr><td>MSI</td><td><code>msiexec /i &quot;{file}&quot; /qn</code></td><td><a href="msi-silent-installation.html">MSI (Windows Installer)</a></td></tr><tr><td>Inno Setup</td><td><code>&quot;{file}&quot; /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-</code></td><td><a href="inno-setup-silent-installation.html">Inno Setup</a></td></tr><tr><td>NSIS</td><td><code>&quot;{file}&quot; /S</code></td><td><a href="nsis-silent-installation.html">NSIS (Nullsoft Scriptable Install System)</a></td></tr><tr><td>InstallShield</td><td><code>&quot;{file}&quot; /s /v&quot;/qn&quot;</code></td><td><a href="installshield-silent-installation.html">InstallShield</a></td></tr><tr><td>WiX Burn</td><td><code>&quot;{file}&quot; /quiet</code></td><td><a href="wix-burn-silent-installation.html">WiX Burn bundle</a></td></tr><tr><td>Advanced Installer</td><td><code>&quot;{file}&quot; /exenoui /qn</code></td><td><a href="advanced-installer-silent-installation.html">Advanced Installer</a></td></tr><tr><td>MSIX</td><td><code>Add-AppxPackage -Path &quot;{file}&quot;</code></td><td><a href="msix-silent-installation.html">MSIX and AppX</a></td></tr></tbody></table></div>
 <h2>Andre motorer</h2>
@@ -92,7 +92,7 @@
 <p>Mange setup-programmer viser ingen hjælp. Motoren har stadig en kendt silent-form. Find motoren, og brug dens switch.</p>
     </article>
     <footer>
-      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.9.2/InstallScout-1.9.2.zip">Hent 1.9.2 (.zip)</a> · <a href="../">InstallScout</a></p>
+      <p><a href="https://github.com/mthorngaard/InstallScout-releases/releases/download/v1.9.3/InstallScout-1.9.3.zip">Hent 1.9.3 (.zip)</a> · <a href="../">InstallScout</a></p>
     </footer>
   </div>
 </body>
