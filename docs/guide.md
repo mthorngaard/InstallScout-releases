@@ -4,14 +4,14 @@ InstallScout takes a Windows installer **all the way to Intune**. You give it an
 
 Silent switches are one step. The destination is the package in Intune.
 
-Version **1.9.3**. Quick start: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). Technical reference: [reference-en.md](reference-en.md). PDF: [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.9.3). Danish: [vejledning.md](vejledning.md).
+Version **1.9.4**. Quick start: [quickstart-en.md](quickstart-en.md). [Find the silent switches](find-silent-switches.md). Technical reference: [reference-en.md](reference-en.md). PDF: [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.9.4). Danish: [vejledning.md](vejledning.md).
 
 [Expected hit rate](#expected-hit-rate) for the package and detection is further down in this guide.
 
 | File | Engine | Typical result |
 |---|---|---|
 | `Git-2.51.0-64-bit.exe` | Inno Setup | Local and online agree on `/VERYSILENT …` · **System** · not unpacked |
-| `jre-8u491-windows-x64.exe` | InstallShield | Local `/s /v"/qn"` · online Java 8 `/S` · **System** |
+| `jre-8u491-windows-x64.exe` | InstallShield | Local `/s` · online Java 8 `/S` · **System** |
 | `AcroRdrDC….exe` | Self Extractor | Outer `/sAll /rs /rps /msi /quiet` · online **Acrobat Reader** · **System** |
 | `SlackSetup.exe` | Squirrel | Per-user · **User** |
 
@@ -157,10 +157,10 @@ Inno does **not** use `/S`. That is in the notes. The Commands tab also shows th
 Java Platform SE 8 is detected as InstallShield. The silent line becomes:
 
 ```text
-jre-8u491-windows-x64.exe /s /v"/qn"
+jre-8u491-windows-x64.exe /s
 ```
 
-`/s` is InstallShield; `/v"/qn"` is passed to the embedded MSI. That is the local, file-based truth — even if WinGet names the product differently.
+Oracle's Java installer looks like InstallShield but takes `/s` alone. `/s /v"/qn"` gave exit -80 in a Sandbox test of `jre-8u491`, so InstallScout recommends only `/s` for Oracle Java. Other InstallShield files still get `/s /v"/qn"`, where `/v"/qn"` is passed to the embedded MSI.
 
 In the PSADT package, an InstallShield line that contains quotes is started through `cmd /d /s /c`, so `/v"/qn"` is preserved. The package elevates itself when it is not already running as administrator. Intune as SYSTEM is already administrator and skips that.
 

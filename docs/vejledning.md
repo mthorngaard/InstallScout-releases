@@ -4,14 +4,14 @@ InstallScout tager en Windows-installer **hele vejen til Intune**. Du giver det 
 
 Silent-switche er ét trin. Målet er pakken i Intune.
 
-Version **1.9.3**. Quick start: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Teknisk reference: [reference.md](reference.md). PDF: [InstallScout-vejledning.pdf](InstallScout-vejledning.pdf?v=1.9.3). English: [guide.md](guide.md) · [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.9.3).
+Version **1.9.4**. Quick start: [quickstart.md](quickstart.md). [Find silent-switchene](find-silent-switche.md). Teknisk reference: [reference.md](reference.md). PDF: [InstallScout-vejledning.pdf](InstallScout-vejledning.pdf?v=1.9.4). English: [guide.md](guide.md) · [InstallScout-guide.pdf](InstallScout-guide.pdf?v=1.9.4).
 
 [Forventet træfsikkerhed](#forventet-træfsikkerhed) for pakke og detection står længere nede i vejledningen.
 
 | Fil | Motor | Typisk resultat |
 |---|---|---|
 | `Git-2.51.0-64-bit.exe` | Inno Setup | Lokal og online enige om `/VERYSILENT …` · **System** · pakkes ikke ud |
-| `jre-8u491-windows-x64.exe` | InstallShield | Lokal `/s /v"/qn"` · online Java 8 `/S` · **System** |
+| `jre-8u491-windows-x64.exe` | InstallShield | Lokal `/s` · online Java 8 `/S` · **System** |
 | `AcroRdrDC….exe` | Self Extractor | Ydre `/sAll /rs /rps /msi /quiet` · online **Acrobat Reader** · **System** |
 | `SlackSetup.exe` | Squirrel | Per-user · **User** |
 
@@ -157,10 +157,10 @@ Inno bruger **ikke** `/S`. Det står i noterne. Kommandoer-fanen viser også Pow
 Java Platform SE 8 detekteres som InstallShield. Silent-linjen bliver:
 
 ```text
-jre-8u491-windows-x64.exe /s /v"/qn"
+jre-8u491-windows-x64.exe /s
 ```
 
-`/s` er InstallShield; `/v"/qn"` sendes videre til den indlejrede MSI. Det er den lokale, filbaserede sandhed – også selv om WinGet kalder produktet noget andet.
+Oracles Java-installer ligner InstallShield, men tager `/s` alene. `/s /v"/qn"` gav exit -80 i en Sandbox-test af `jre-8u491`, så InstallScout anbefaler kun `/s` til Oracle Java. Andre InstallShield-filer får stadig `/s /v"/qn"`, hvor `/v"/qn"` sendes videre til den indlejrede MSI.
 
 I PSADT-pakken startes en InstallShield-linje med anførselstegn via `cmd /d /s /c`, så `/v"/qn"` bevares. Pakken hæver sig selv, hvis den ikke allerede kører som administrator. Intune som SYSTEM er allerede administrator og springer det over.
 
